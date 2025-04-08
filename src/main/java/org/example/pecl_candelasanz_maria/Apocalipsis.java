@@ -5,13 +5,13 @@ import java.util.concurrent.Semaphore;
 
 public class Apocalipsis {
     private ListaHilos listaDentroZonaComun;
-    private TextField txtDentroZonaComun;
+    private TextField HumanosZonaComun;
     private Semaphore semaforo;
 
-    public Apocalipsis(TextField txtDentroZonaComun){
-        this.txtDentroZonaComun = txtDentroZonaComun;
+    public Apocalipsis(TextField humanosZonaComun){
+        this.HumanosZonaComun = humanosZonaComun;
         this.semaforo = new Semaphore(10000, true);
-        this.listaDentroZonaComun = new ListaHilos(txtDentroZonaComun);
+        this.listaDentroZonaComun = new ListaHilos(HumanosZonaComun);
     }
 
     public void entrarZonaComun(Humano h){
