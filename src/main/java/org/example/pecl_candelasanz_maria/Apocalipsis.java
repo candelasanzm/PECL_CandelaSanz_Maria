@@ -11,12 +11,14 @@ public class Apocalipsis {
     public Apocalipsis(JTextField txtDentroZonaComun){
         this.txtDentroZonaComun = txtDentroZonaComun;
         this.semaforo = new Semaphore(10000, true);
+        this.listaDentroZonaComun = new ListaHilos(txtDentroZonaComun);
     }
 
     public void entrarZonaComun(Humano h){
         try {
             semaforo.acquire();
             listaDentroZonaComun.meterLista(h);
+            System.out.println("se añadio a la lista");
         } catch (Exception e) {
             System.out.println("Error en Apocalipsis " + e);
         }

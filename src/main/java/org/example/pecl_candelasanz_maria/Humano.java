@@ -13,11 +13,12 @@ public class Humano extends Thread {
 
     public void run(){
         try{
+            System.out.println("nuevo humano");
             ap.entrarZonaComun(this);
             sleep((int) Math.random() * 1000 + 1000);
             ap.salirZonaComun(this);
         } catch(Exception e){
-            System.out.println("Error en humano"+e);
+            System.out.println("Error en humano" + e);
         }
     }
 }

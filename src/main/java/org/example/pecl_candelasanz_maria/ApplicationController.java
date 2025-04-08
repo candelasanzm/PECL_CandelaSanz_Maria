@@ -1,19 +1,19 @@
 package org.example.pecl_candelasanz_maria;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 import javax.swing.*;
 
-public class HelloController {
+public class ApplicationController {
     @FXML
-    private JTextField zonaComunTextField;
+    private JTextField HumanosZonaComun;
 
     private Apocalipsis ap;
 
     @FXML
     public void initialize() {
-        ap = new Apocalipsis(zonaComunTextField);
+        HumanosZonaComun = new JTextField();
+        ap = new Apocalipsis(HumanosZonaComun);
+        crearHumano();
     }
 
     @FXML
