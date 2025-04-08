@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="79.0" layoutX="14.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="79.0" layoutX="211.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="79.0" layoutX="408.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="79.0" layoutX="14.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="79.0" layoutX="14.0" layoutY="280.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="79.0" layoutX="211.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="79.0" layoutX="211.0" layoutY="280.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="79.0" layoutX="408.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="79.0" layoutX="408.0" layoutY="280.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="41.0" prefHeight="37.0" prefWidth="178.0" text="REFUGIO" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="211.0" layoutY="41.0" prefHeight="37.0" prefWidth="178.0" text="TÚNELES" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="408.0" layoutY="41.0" prefHeight="37.0" prefWidth="178.0" text="ZONA DE RIESGO" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Black" size="14.0" />
+            </font>
+        </Label>
+        <TextField fx:id="HumanosZonaComun" layoutX="28.0" layoutY="308.0" prefHeight="37.0" prefWidth="149.0" />
+        <Label alignment="CENTER" layoutX="27.0" layoutY="286.0" prefHeight="17.0" prefWidth="149.0" text="Zona común" />
+    </children>
+</AnchorPane>
