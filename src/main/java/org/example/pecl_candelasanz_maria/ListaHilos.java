@@ -1,18 +1,17 @@
 package org.example.pecl_candelasanz_maria;
 
-import javax.swing.*;
+import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
 public class ListaHilos {
     private ArrayList<Thread> listado;
-    private JTextField txt;
+    private TextField txt;
 
-    public ArrayList<Thread> getListado()
-    {
+    public ArrayList<Thread> getListado() {
         return listado;
     }
 
-    public ListaHilos(JTextField txt){
+    public ListaHilos(TextField txt){
         this.txt = txt;
         listado = new ArrayList<>();
     }
@@ -29,7 +28,7 @@ public class ListaHilos {
 
     public void imprimirLista(){
         String txtLista = "";
-        for(int i = 0; i< listado.size(); i++){
+        for(int i = 0; i < listado.size(); i++){
             txtLista = txtLista + "-" + listado.get(i).getName();
         }
         txt.setText(txtLista);

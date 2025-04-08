@@ -1,14 +1,14 @@
 package org.example.pecl_candelasanz_maria;
 
-import javax.swing.*;
+import javafx.scene.control.TextField;
 import java.util.concurrent.Semaphore;
 
 public class Apocalipsis {
     private ListaHilos listaDentroZonaComun;
-    private JTextField txtDentroZonaComun;
+    private TextField txtDentroZonaComun;
     private Semaphore semaforo;
 
-    public Apocalipsis(JTextField txtDentroZonaComun){
+    public Apocalipsis(TextField txtDentroZonaComun){
         this.txtDentroZonaComun = txtDentroZonaComun;
         this.semaforo = new Semaphore(10000, true);
         this.listaDentroZonaComun = new ListaHilos(txtDentroZonaComun);

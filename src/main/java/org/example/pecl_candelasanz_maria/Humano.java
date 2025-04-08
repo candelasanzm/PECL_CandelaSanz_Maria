@@ -11,6 +11,10 @@ public class Humano extends Thread {
         this.ap = ap;
     }
 
+    public String getID(){
+        return id;
+    }
+
     public void run(){
         try{
             System.out.println("nuevo humano");

@@ -1,17 +1,16 @@
 package org.example.pecl_candelasanz_maria;
 
 import javafx.fxml.FXML;
-import javax.swing.*;
+import javafx.scene.control.TextField;
 
 public class ApplicationController {
     @FXML
-    private JTextField HumanosZonaComun;
+    private TextField HumanosZonaComun;
 
     private Apocalipsis ap;
 
     @FXML
     public void initialize() {
-        HumanosZonaComun = new JTextField();
         ap = new Apocalipsis(HumanosZonaComun);
         crearHumano();
     }
