@@ -29,7 +29,8 @@ public class ListaHilos {
     public void imprimirLista(){
         String txtLista = "";
         for(int i = 0; i < listado.size(); i++){
-            txtLista = txtLista + "-" + listado.get(i).getName();
+            Humano h = (Humano) listado.get(i); //obtiene el hilo
+            txtLista = txtLista + "-" + h.getID();
         }
         txt.setText(txtLista);
     }

@@ -6,18 +6,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pecl_candelasanz_maria.ApplicationController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="79.0" layoutX="14.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="79.0" layoutX="211.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="79.0" layoutX="408.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="211.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="58.0" layoutX="408.0" layoutY="99.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="79.0" layoutX="14.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="79.0" layoutX="14.0" layoutY="280.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="79.0" layoutX="211.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="79.0" layoutX="211.0" layoutY="280.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="79.0" layoutX="408.0" layoutY="189.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="79.0" layoutX="408.0" layoutY="280.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="41.0" prefHeight="37.0" prefWidth="178.0" text="REFUGIO" textAlignment="CENTER">
             <font>
                 <Font name="Arial Black" size="14.0" />
@@ -35,5 +30,31 @@
         </Label>
     <TextField fx:id="HumanosZonaComun" layoutX="28.0" layoutY="308.0" prefHeight="37.0" prefWidth="149.0" />
         <Label alignment="CENTER" layoutX="27.0" layoutY="286.0" prefHeight="17.0" prefWidth="149.0" text="Zona común" />
+      <TextField fx:id="Tunel1" layoutX="278.0" layoutY="116.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="EntradaT1" layoutX="222.0" layoutY="109.0" prefHeight="37.0" prefWidth="47.0" />
+      <TextField fx:id="SalidaT1" layoutX="333.0" layoutY="110.0" prefHeight="37.0" prefWidth="47.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="211.0" layoutY="167.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+      <TextField fx:id="Tunel2" layoutX="278.0" layoutY="184.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="EntradaT2" layoutX="222.0" layoutY="177.0" prefHeight="37.0" prefWidth="47.0" />
+      <TextField fx:id="SalidaT2" layoutX="333.0" layoutY="178.0" prefHeight="37.0" prefWidth="47.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="212.0" layoutY="235.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+      <TextField fx:id="Tunel3" layoutX="279.0" layoutY="252.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="EntradaT3" layoutX="223.0" layoutY="245.0" prefHeight="37.0" prefWidth="47.0" />
+      <TextField fx:id="SalidaT3" layoutX="334.0" layoutY="246.0" prefHeight="37.0" prefWidth="47.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="212.0" layoutY="303.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+      <TextField fx:id="Tunel4" layoutX="279.0" layoutY="320.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="EntradaT4" layoutX="223.0" layoutY="313.0" prefHeight="37.0" prefWidth="47.0" />
+      <TextField fx:id="SalidaT4" layoutX="334.0" layoutY="314.0" prefHeight="37.0" prefWidth="47.0" />
+      <TextField fx:id="HumanosRiesgo1" layoutX="422.0" layoutY="109.0" prefHeight="37.0" prefWidth="63.0" />
+      <TextField fx:id="ZombiesRiesgo1" layoutX="510.0" layoutY="110.0" prefHeight="37.0" prefWidth="63.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="58.0" layoutX="408.0" layoutY="166.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+      <TextField fx:id="HumanosRiesgo2" layoutX="422.0" layoutY="176.0" prefHeight="37.0" prefWidth="63.0" />
+      <TextField fx:id="ZombiesRiesgo2" layoutX="510.0" layoutY="177.0" prefHeight="37.0" prefWidth="63.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="58.0" layoutX="408.0" layoutY="235.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+      <TextField fx:id="HumanosRiesgo3" layoutX="422.0" layoutY="245.0" prefHeight="37.0" prefWidth="63.0" />
+      <TextField fx:id="ZombiesRiesgo3" layoutX="510.0" layoutY="246.0" prefHeight="37.0" prefWidth="63.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a3f46d" height="58.0" layoutX="408.0" layoutY="303.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
+      <TextField fx:id="HumanosRiesgo4" layoutX="422.0" layoutY="313.0" prefHeight="37.0" prefWidth="63.0" />
+      <TextField fx:id="ZombiesRiesgo4" layoutX="510.0" layoutY="314.0" prefHeight="37.0" prefWidth="63.0" />
     </children>
 </AnchorPane>

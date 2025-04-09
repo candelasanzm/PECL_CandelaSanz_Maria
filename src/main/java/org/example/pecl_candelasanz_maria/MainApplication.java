@@ -13,11 +13,11 @@ public class MainApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vista.fxml"));
         Parent root = loader.load();
 
+        ApplicationController app = loader.getController();
+
         stage.setTitle("Apocalipsis Zombie");
         stage.setScene(new Scene(root));
         stage.show();
-        ApplicationController app = new ApplicationController();
-        app.initialize();
     }
 
     public static void main(String[] args) {
