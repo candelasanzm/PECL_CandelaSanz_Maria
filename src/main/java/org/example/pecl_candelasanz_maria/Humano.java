@@ -23,8 +23,12 @@ public class Humano extends Thread {
             ap.salirZonaComun(this);
             int tunel = (int) (Math.random() * 4) + 1; //elige entre 4 tuneles
             ap.irTunel(tunel,this);
+            sleep((int) (Math.random() * 3000) + 2000); //estan en la zona de riesgo
+            //comida
+            ap.irRefugio(tunel, this);
         } catch(Exception e){
             System.out.println("Error en humano" + e);
         }
     }
+
 }

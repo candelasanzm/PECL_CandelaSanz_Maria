@@ -13,13 +13,17 @@ public class Apocalipsis {
     private TextField[] EntradaT;
     private TextField[] Interiortunel;
     private TextField[] HumanosRiesgo;
+    private TextField[] SalidaT;
+    private TextField HumanosZonaDescanso;
 
     private ListaHilos[] listaEntradaT;
     private ListaHilos[] listaTunel;
     private ListaHilos[] listaHumanosRiesgo;
+    private ListaHilos[] listaSalidaT;
+    private ListaHilos listaDentroZonaDescanso;
 
-    public Apocalipsis(TextField humanosZonaComun, TextField[] EntradaT, TextField[] Interiortunel, TextField[] HumanosRiesgo ){
-        this.HumanosZonaComun = humanosZonaComun;
+    public Apocalipsis(TextField HumanosZonaComun, TextField[] EntradaT, TextField[] Interiortunel, TextField[] HumanosRiesgo, TextField[] SalidaT, TextField HumanosZonaDescanso ){
+        this.HumanosZonaComun = HumanosZonaComun;
         this.semaforoZonaComun = new Semaphore(10000, true);
         this.listaDentroZonaComun = new ListaHilos(HumanosZonaComun);
 
@@ -42,6 +46,13 @@ public class Apocalipsis {
         for(int i=0; i<4 ;i++){
             listaHumanosRiesgo[i] = new ListaHilos(HumanosRiesgo[i]);
         }
+
+        listaSalidaT = new ListaHilos[4];
+        for(int i=0; i<4;i++){
+            listaSalidaT[i] = new ListaHilos(SalidaT[i]);
+        }
+
+        this.listaDentroZonaDescanso = new ListaHilos(HumanosZonaDescanso);
     }
 
     public void entrarZonaComun(Humano h){
@@ -68,19 +79,30 @@ public class Apocalipsis {
         tuneles[idTunel-1].salirExterior(h);
     }
 
+    public void irRefugio(int idTunel, Humano h){
+        tuneles[idTunel-1].irRefugio(h);
+    }
+
     public void meterEntradaTunel(int idTunel, Humano h){
         listaEntradaT[idTunel-1].meterLista(h);
     }
-    public void meterTunel(int idTunel, Humano h){
+    public void meterSalidaTunel(int idTunel, Humano h){
+        listaSalidaT[idTunel-1].meterLista(h);
+    }
+    public void meterTunelIda(int idTunel, Humano h){
         listaEntradaT[idTunel-1].sacarLista(h);
         listaTunel[idTunel-1].meterLista(h);
     }
-
+    public void meterTunelVuelta(int idTunel, Humano h){
+        listaSalidaT[idTunel-1].sacarLista(h);
+        listaTunel[idTunel-1].meterLista(h);
+    }
     public void meterRiesgoHumanos(int idTunel, Humano h){
         listaTunel[idTunel-1].sacarLista(h);
         listaHumanosRiesgo[idTunel-1].meterLista(h);
     }
-
-
-
+    public void meterZonaDescanso(int idTunel, Humano h){
+        listaTunel[idTunel-1].sacarLista(h);
+        listaDentroZonaDescanso.meterLista(h);
+    }
 }

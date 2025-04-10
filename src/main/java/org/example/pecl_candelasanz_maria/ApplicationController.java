@@ -32,6 +32,16 @@ public class ApplicationController {
     private TextField HumanosRiesgo3;
     @FXML
     private TextField HumanosRiesgo4;
+    @FXML
+    private TextField SalidaT1;
+    @FXML
+    private TextField SalidaT2;
+    @FXML
+    private TextField SalidaT3;
+    @FXML
+    private TextField SalidaT4;
+    @FXML
+    private TextField HumanosZonaDescanso;
 
     private Apocalipsis ap;
 
@@ -40,17 +50,23 @@ public class ApplicationController {
         TextField[] EntradaT = {EntradaT1, EntradaT2, EntradaT3, EntradaT4};
         TextField[] Interiortunel = {Tunel1, Tunel2, Tunel3, Tunel4};
         TextField[] HumanosRiesgo = {HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4};
+        TextField[] SalidaT = {SalidaT1, SalidaT2, SalidaT3, SalidaT4};
 
-        ap = new Apocalipsis(HumanosZonaComun, EntradaT, Interiortunel, HumanosRiesgo);
+        ap = new Apocalipsis(HumanosZonaComun, EntradaT, Interiortunel, HumanosRiesgo, SalidaT, HumanosZonaDescanso);
         crearHumano();
     }
 
     @FXML
     protected void crearHumano() {
         for(int i=0; i<10; i++) {
-            Humano h = new Humano(ap);
-            h.start();
-            //Thread.sleep((int)(Math.random()*1500)+500); //se crean escalonados
+            try{
+                Humano h = new Humano(ap);
+                h.start();
+                //h.sleep((int)(Math.random()*1500)+500); //se crean escalonados
+            }catch(Exception e){
+                System.out.println("Error al crear los humanos "+e);
+            }
+
         }
     }
 }

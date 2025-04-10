@@ -1,5 +1,6 @@
 package org.example.pecl_candelasanz_maria;
 
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
@@ -32,6 +33,9 @@ public class ListaHilos {
             Humano h = (Humano) listado.get(i); //obtiene el hilo
             txtLista = txtLista + "-" + h.getID();
         }
-        txt.setText(txtLista);
+        final String textoImprimir = txtLista.toString();
+
+        Platform.runLater(() -> {txt.setText(textoImprimir);
+        });
     }
 }
