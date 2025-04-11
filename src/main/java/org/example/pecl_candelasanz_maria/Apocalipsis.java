@@ -26,51 +26,48 @@ public class Apocalipsis {
     private ListaHilos listaComedor;
 
     // Variables para las funciones de coger y dejar comida
-    private int maxComida;
-    private int[] comidas;
-    private int numComida = 0;
-    private int in = 0;
-    private int out = 0;
-    private int almacenComida = 0;
+    private int cantComida = 0;
+    private TextField HumanosComida;
+
 
     public Apocalipsis(TextField HumanosZonaComun, TextField[] EntradaT, TextField[] InteriorTunel, TextField[] HumanosRiesgo, TextField[] SalidaT,
-                       TextField HumanosZonaDescanso, TextField HumanosComedor){
+                       TextField HumanosZonaDescanso, TextField HumanosComedor, TextField HumanosComida) {
         this.HumanosZonaComun = HumanosZonaComun;
         this.semaforoZonaComun = new Semaphore(5000, true);
         this.listaDentroZonaComun = new ListaHilos(HumanosZonaComun);
+        this.listaDentroZonaDescanso = new ListaHilos(HumanosZonaDescanso);
         this.listaComedor = new ListaHilos(HumanosComedor);
 
         tuneles = new Tunel[4];
-        for(int i = 0; i < 4; i++){
-            tuneles[i] = new Tunel(i + 1,this); //id:1,2,3,4
+        for (int i = 0; i < 4; i++) {
+            tuneles[i] = new Tunel(i + 1, this); //id:1,2,3,4
         }
 
         listaEntradaT = new ListaHilos[4];
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             listaEntradaT[i] = new ListaHilos(EntradaT[i]);
         }
 
         listaTunel = new ListaHilos[4];
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             listaTunel[i] = new ListaHilos(InteriorTunel[i]);
         }
 
         listaHumanosRiesgo = new ListaHilos[4];
-        for(int i = 0; i < 4 ; i++){
+        for (int i = 0; i < 4; i++) {
             listaHumanosRiesgo[i] = new ListaHilos(HumanosRiesgo[i]);
         }
 
         listaSalidaT = new ListaHilos[4];
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             listaSalidaT[i] = new ListaHilos(SalidaT[i]);
         }
-        this.listaDentroZonaDescanso = new ListaHilos(HumanosZonaDescanso);
 
-        this.maxComida = 2;
-        comidas = new int[maxComida];
+        this.HumanosComida = HumanosComida;
+
     }
 
-    public void entrarZonaComun(Humano h){
+    public void entrarZonaComun(Humano h) {
         try {
             semaforoZonaComun.acquire();
             listaDentroZonaComun.meterLista(h);
@@ -80,7 +77,7 @@ public class Apocalipsis {
         }
     }
 
-    public void salirZonaComun(Humano h){
+    public void salirZonaComun(Humano h) {
         try {
             listaDentroZonaComun.sacarLista(h);
             System.out.println("Humano " + h.getID() + " sale de la zona común");
@@ -90,70 +87,81 @@ public class Apocalipsis {
         }
     }
 
-    public void irTunel(int idTunel, Humano h){
+    public void irTunel(int idTunel, Humano h) {
         tuneles[idTunel - 1].salirExterior(h);
     }
 
-    public void irRefugio(int idTunel, Humano h){
+    public void irRefugio(int idTunel, Humano h) {
         tuneles[idTunel - 1].irRefugio(h);
     }
 
-    public void meterEntradaTunel(int idTunel, Humano h){ // en la interfaz el primer cuadrante
-        listaEntradaT[idTunel-1].meterLista(h);
+    public void meterEntradaTunel(int idTunel, Humano h) { // en la interfaz el primer cuadrante
+        listaEntradaT[idTunel - 1].meterLista(h);
     }
 
-    public void meterSalidaTunel(int idTunel, Humano h){
+    public void meterSalidaTunel(int idTunel, Humano h) {
         listaSalidaT[idTunel - 1].meterLista(h);
     }
 
-    public void meterTunelIda(int idTunel, Humano h){ // van de izquierda a derecha en el túnel
+    public void meterTunelIda(int idTunel, Humano h) { // van de izquierda a derecha en el túnel
         listaEntradaT[idTunel - 1].sacarLista(h);
         listaTunel[idTunel - 1].meterLista(h);
     }
 
-    public void meterTunelVuelta(int idTunel, Humano h){ // van de derecha a izquierda en el túnel
+    public void meterTunelVuelta(int idTunel, Humano h) { // van de derecha a izquierda en el túnel
         listaSalidaT[idTunel - 1].sacarLista(h);
         listaTunel[idTunel - 1].meterLista(h);
     }
 
-    public void meterRiesgoHumanos(int idTunel, Humano h){
+    public void meterRiesgoHumanos(int idTunel, Humano h) {
         listaTunel[idTunel - 1].sacarLista(h);
         listaHumanosRiesgo[idTunel - 1].meterLista(h);
     }
 
-    public void meterZonaDescanso(int idTunel, Humano h){
+    public void meterZonaDescanso(int idTunel, Humano h) {
         listaTunel[idTunel - 1].sacarLista(h);
         listaDentroZonaDescanso.meterLista(h);
     }
 
-    public void meterComedor(Humano humano){
-        listaComedor.meterLista(humano);
+    public void meterComedor(Humano h) {
+        listaDentroZonaDescanso.sacarLista(h);
+        listaComedor.meterLista(h);
     }
 
-    public void salirComedor(Humano h){
+    public void salirComedor(Humano h) {
         listaComedor.sacarLista(h);
     }
 
-    // Comida
-    public synchronized int[] cogerComida() throws InterruptedException{
-        while (numComida < 2){
-            wait();
-        }
-
-        int[] comida = new int[2];
-        for (int i = 0; i < 2; i++){
-            comidas[i] = comidas[out];
-            comidas[out] = -1;
-            out = (out + 1) % maxComida;
-            numComida--;
-        }
-        notifyAll();
-        return comida;
+    public void meterZonaDescansoAtaque(Humano h) {
+        listaComedor.sacarLista(h);
+        listaDentroZonaDescanso.meterLista(h);
     }
 
-    public synchronized void dejarComida(int comida) throws InterruptedException{
-        almacenComida += comida;
-        System.out.println("Se añadió la comida al almacén. Total de comida en el almacén " + almacenComida);
-        Platform.runLater(() -> HumanosComedor.setText("Comida almacenada: " + almacenComida));
+    public void salirZonaDescansoAtaque(Humano h) {
+        listaDentroZonaDescanso.sacarLista(h);
+    }
+
+
+    // Comida
+    public synchronized void cogerComida(Humano h) throws InterruptedException { //coge comida del comedor
+        while (cantComida < 2) {
+            System.out.println(h.getID() + " espera porque no hay comida");
+            wait();
+        }
+        cantComida--;
+        System.out.println(h.getID() + " coge comida");
+        imprimirComida();
+    }
+
+    public synchronized void dejarComida(Humano h, int comida) throws InterruptedException {
+        cantComida += comida;
+        System.out.println(h.getID() + " añadio la comida");
+        imprimirComida();
+        notifyAll();
+    }
+
+    public void imprimirComida() {
+        Platform.runLater(() -> {HumanosComida.setText(String.valueOf(cantComida));
+        });
     }
 }
