@@ -58,13 +58,13 @@ public class ApplicationController {
 
     @FXML
     protected void crearHumano() {
-        for(int i=0; i<10; i++) {
+        for(int i = 0; i < 10; i++) {
             try{
                 Humano h = new Humano(ap);
                 h.start();
-                //h.sleep((int)(Math.random()*1500)+500); //se crean escalonados
+                h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
             }catch(Exception e){
-                System.out.println("Error al crear los humanos "+e);
+                System.out.println("Error al crear los humanos " + e);
             }
 
         }

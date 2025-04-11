@@ -17,15 +17,24 @@ public class Humano extends Thread {
 
     public void run(){
         try{
-            System.out.println("nuevo humano "+ id);
+            // Se crea el humano
+            System.out.println("Nuevo humano " + id);
+            // El humano empieza en la zona común
             ap.entrarZonaComun(this);
             sleep((int) (Math.random() * 1000) + 1000);
+            // El humano sale de la zona común por un túnel elegido de forma aleatoria
             ap.salirZonaComun(this);
-            int tunel = (int) (Math.random() * 4) + 1; //elige entre 4 tuneles
+            int tunel = (int) (Math.random() * 4) + 1;
             ap.irTunel(tunel,this);
-            sleep((int) (Math.random() * 3000) + 2000); //estan en la zona de riesgo
-            //comida
+            // En la zona exterior están un tiempo aleatorio
+            sleep((int) (Math.random() * 3000) + 2000);
+            //Coge comida
+            ap.cogerComida();
+            // Hacer lo del ataque
+            // El humano vuelve a la zona Común
             ap.irRefugio(tunel, this);
+            // Dejar comida
+            ap.dejarComida(2);
         } catch(Exception e){
             System.out.println("Error en humano" + e);
         }
