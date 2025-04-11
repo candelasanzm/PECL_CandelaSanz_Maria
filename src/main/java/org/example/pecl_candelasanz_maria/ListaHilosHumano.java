@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
-public class ListaHilos {
+public class ListaHilosHumano {
     private ArrayList<Thread> listado;
     private TextField txt;
 
@@ -12,7 +12,7 @@ public class ListaHilos {
         return listado;
     }
 
-    public ListaHilos(TextField txt){
+    public ListaHilosHumano(TextField txt){
         this.txt = txt;
         listado = new ArrayList<>();
     }

@@ -17,31 +17,32 @@ public class Humano extends Thread {
 
     public void run(){
         try{
-            // Se crea el humano
-            System.out.println("Nuevo humano " + id);
-            // El humano empieza en la zona común
-            ap.entrarZonaComun(this);
-            sleep((int) (Math.random() * 1000) + 1000);
-            // El humano sale de la zona común por un túnel elegido de forma aleatoria
-            ap.salirZonaComun(this);
-            int tunel = (int) (Math.random() * 4) + 1;
-            ap.irTunel(tunel,this);
-            // En la zona exterior están un tiempo aleatorio
-            sleep((int) (Math.random() * 3000) + 2000);
-            //Coge comida
-            System.out.println("Humano " + id + " está recolectando comida");
+           while(true){
+               // Se crea el humano
+               System.out.println("Nuevo humano " + id);
+               // El humano empieza en la zona común
+               ap.entrarZonaComun(this);
+               sleep((int) (Math.random() * 1000) + 1000);
+               // El humano sale de la zona común por un túnel elegido de forma aleatoria
+               ap.salirZonaComun(this);
+               int tunel = (int) (Math.random() * 4) + 1;
+               ap.irTunel(tunel,this);
+               // En la zona exterior están un tiempo aleatorio
+               sleep((int) (Math.random() * 3000) + 2000);
+               //Coge comida
+               System.out.println("Humano " + id + " está recolectando comida");
 
-            // Hacer lo del ataque
-            // El humano vuelve a la zona Común
-            ap.irRefugio(tunel, this);
-            // Dejar comida
-            ap.dejarComida(this,2);
-            sleep((int) (Math.random() * 2000) + 2000); //duerme en la zona de descanso
-            // Entrar al comedor
-            ap.meterComedor(this);
-            // Come
-            ap.cogerComida(this);
-            //Si le atacan vuelve a la zona de descanso
+               // Hacer lo del ataque
+               // El humano vuelve a la zona Común
+               ap.irRefugio(tunel, this);
+               // Dejar comida
+               ap.dejarComida(this,2);
+               sleep((int) (Math.random() * 2000) + 2000); //duerme en la zona de descanso
+               // Entrar al comedor
+               ap.meterComedor(this);
+               // Come
+               ap.cogerComida(this);
+               //Si le atacan vuelve a la zona de descanso
             /*
             if(atacado){
                 ap.meterZonaDescansoAtaque(this);
@@ -51,7 +52,7 @@ public class Humano extends Thread {
                 ap.salirComedor(this);
             }
             */
-
+           }
         } catch(Exception e){
             System.out.println("Error en humano" + e);
         }

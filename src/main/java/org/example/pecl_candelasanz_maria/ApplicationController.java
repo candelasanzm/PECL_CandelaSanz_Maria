@@ -46,6 +46,14 @@ public class ApplicationController {
     private TextField HumanosComedor;
     @FXML
     private TextField HumanosComida;
+    @FXML
+    private TextField ZombiesRiesgo1;
+    @FXML
+    private TextField ZombiesRiesgo2;
+    @FXML
+    private TextField ZombiesRiesgo3;
+    @FXML
+    private TextField ZombiesRiesgo4;
 
     private Apocalipsis ap;
 
@@ -55,9 +63,11 @@ public class ApplicationController {
         TextField[] InteriorTunel = {Tunel1, Tunel2, Tunel3, Tunel4};
         TextField[] HumanosRiesgo = {HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4};
         TextField[] SalidaT = {SalidaT1, SalidaT2, SalidaT3, SalidaT4};
+        TextField[] ZombiesRiesgo = {ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4};
 
-        ap = new Apocalipsis(HumanosZonaComun, EntradaT, InteriorTunel, HumanosRiesgo, SalidaT, HumanosZonaDescanso, HumanosComedor, HumanosComida);
+        ap = new Apocalipsis(HumanosZonaComun, EntradaT, InteriorTunel, HumanosRiesgo, SalidaT, HumanosZonaDescanso, HumanosComedor, HumanosComida, ZombiesRiesgo);
         crearHumano();
+        crearZombie();
     }
 
     @FXML
@@ -72,5 +82,11 @@ public class ApplicationController {
             }
 
         }
+    }
+
+    @FXML
+    protected void crearZombie() { //Paciente 0
+        Zombie z = new Zombie(ap);
+        z.start();
     }
 }

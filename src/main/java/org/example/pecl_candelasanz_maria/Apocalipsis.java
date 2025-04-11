@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import java.util.concurrent.Semaphore;
 
 public class Apocalipsis {
-    private ListaHilos listaDentroZonaComun;
+    private ListaHilosHumano listaDentroZonaComun;
     private TextField HumanosZonaComun;
     private Semaphore semaforoZonaComun;
 
@@ -17,13 +17,15 @@ public class Apocalipsis {
     private TextField[] SalidaT;
     private TextField HumanosZonaDescanso;
     private TextField HumanosComedor;
+    private TextField[] ZombiesRiesgo;
 
-    private ListaHilos[] listaEntradaT;
-    private ListaHilos[] listaTunel;
-    private ListaHilos[] listaHumanosRiesgo;
-    private ListaHilos[] listaSalidaT;
-    private ListaHilos listaDentroZonaDescanso;
-    private ListaHilos listaComedor;
+    private ListaHilosHumano[] listaEntradaT;
+    private ListaHilosHumano[] listaTunel;
+    private ListaHilosHumano[] listaHumanosRiesgo;
+    private ListaHilosHumano[] listaSalidaT;
+    private ListaHilosHumano listaDentroZonaDescanso;
+    private ListaHilosHumano listaComedor;
+    private ListaHilosZombie[] listaZombiesRiesgo;
 
     // Variables para las funciones de coger y dejar comida
     private int cantComida = 0;
@@ -31,36 +33,41 @@ public class Apocalipsis {
 
 
     public Apocalipsis(TextField HumanosZonaComun, TextField[] EntradaT, TextField[] InteriorTunel, TextField[] HumanosRiesgo, TextField[] SalidaT,
-                       TextField HumanosZonaDescanso, TextField HumanosComedor, TextField HumanosComida) {
+                       TextField HumanosZonaDescanso, TextField HumanosComedor, TextField HumanosComida, TextField[] ZombiesRiesgo) {
         this.HumanosZonaComun = HumanosZonaComun;
         this.semaforoZonaComun = new Semaphore(5000, true);
-        this.listaDentroZonaComun = new ListaHilos(HumanosZonaComun);
-        this.listaDentroZonaDescanso = new ListaHilos(HumanosZonaDescanso);
-        this.listaComedor = new ListaHilos(HumanosComedor);
+        this.listaDentroZonaComun = new ListaHilosHumano(HumanosZonaComun);
+        this.listaDentroZonaDescanso = new ListaHilosHumano(HumanosZonaDescanso);
+        this.listaComedor = new ListaHilosHumano(HumanosComedor);
 
         tuneles = new Tunel[4];
         for (int i = 0; i < 4; i++) {
             tuneles[i] = new Tunel(i + 1, this); //id:1,2,3,4
         }
 
-        listaEntradaT = new ListaHilos[4];
+        listaEntradaT = new ListaHilosHumano[4];
         for (int i = 0; i < 4; i++) {
-            listaEntradaT[i] = new ListaHilos(EntradaT[i]);
+            listaEntradaT[i] = new ListaHilosHumano(EntradaT[i]);
         }
 
-        listaTunel = new ListaHilos[4];
+        listaTunel = new ListaHilosHumano[4];
         for (int i = 0; i < 4; i++) {
-            listaTunel[i] = new ListaHilos(InteriorTunel[i]);
+            listaTunel[i] = new ListaHilosHumano(InteriorTunel[i]);
         }
 
-        listaHumanosRiesgo = new ListaHilos[4];
+        listaHumanosRiesgo = new ListaHilosHumano[4];
         for (int i = 0; i < 4; i++) {
-            listaHumanosRiesgo[i] = new ListaHilos(HumanosRiesgo[i]);
+            listaHumanosRiesgo[i] = new ListaHilosHumano(HumanosRiesgo[i]);
         }
 
-        listaSalidaT = new ListaHilos[4];
+        listaSalidaT = new ListaHilosHumano[4];
         for (int i = 0; i < 4; i++) {
-            listaSalidaT[i] = new ListaHilos(SalidaT[i]);
+            listaSalidaT[i] = new ListaHilosHumano(SalidaT[i]);
+        }
+
+        listaZombiesRiesgo = new ListaHilosZombie[4];
+        for (int i = 0; i < 4; i++) {
+            listaZombiesRiesgo[i] = new ListaHilosZombie(ZombiesRiesgo[i]);
         }
 
         this.HumanosComida = HumanosComida;
@@ -126,6 +133,9 @@ public class Apocalipsis {
         listaDentroZonaDescanso.sacarLista(h);
         listaComedor.meterLista(h);
     }
+    public void salirComedor(Humano h) {  //ES POR SI NO HA SIDO ATACADO
+        listaComedor.sacarLista(h);
+    }
 
     public void meterZonaDescansoAtaque(Humano h) {
         listaComedor.sacarLista(h);
@@ -158,5 +168,15 @@ public class Apocalipsis {
     public void imprimirComida() {
         Platform.runLater(() -> {HumanosComida.setText(String.valueOf(cantComida));
         });
+    }
+
+    public void moverZonaZombie(Zombie z, int zona){
+        int zonaAnterior = z.getZona();
+        if(zonaAnterior != -1){ //si ya tiene zona se elimina de la zona en la que estaba
+            listaZombiesRiesgo[zonaAnterior].sacarLista(z);
+        }
+        listaZombiesRiesgo[zona].meterLista(z);
+        z.setZona(zona); //actualizamos la nueva zona
+        System.out.println(z.getID() + " se ha movido de zona");
     }
 }
