@@ -64,7 +64,6 @@ public class Apocalipsis {
         }
 
         this.HumanosComida = HumanosComida;
-
     }
 
     public void entrarZonaComun(Humano h) {
@@ -128,10 +127,6 @@ public class Apocalipsis {
         listaComedor.meterLista(h);
     }
 
-    public void salirComedor(Humano h) {
-        listaComedor.sacarLista(h);
-    }
-
     public void meterZonaDescansoAtaque(Humano h) {
         listaComedor.sacarLista(h);
         listaDentroZonaDescanso.meterLista(h);
@@ -149,13 +144,13 @@ public class Apocalipsis {
             wait();
         }
         cantComida--;
-        System.out.println(h.getID() + " coge comida");
+        System.out.println("Humano " + h.getID() + " coge comida");
         imprimirComida();
     }
 
     public synchronized void dejarComida(Humano h, int comida) throws InterruptedException {
         cantComida += comida;
-        System.out.println(h.getID() + " añadio la comida");
+        System.out.println(h.getID() + " añadió comida");
         imprimirComida();
         notifyAll();
     }
