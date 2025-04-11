@@ -1,5 +1,6 @@
 package org.example.pecl_candelasanz_maria;
 
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import java.util.concurrent.Semaphore;
 
@@ -15,12 +16,14 @@ public class Apocalipsis {
     private TextField[] HumanosRiesgo;
     private TextField[] SalidaT;
     private TextField HumanosZonaDescanso;
+    private TextField HumanosComedor;
 
     private ListaHilos[] listaEntradaT;
     private ListaHilos[] listaTunel;
     private ListaHilos[] listaHumanosRiesgo;
     private ListaHilos[] listaSalidaT;
     private ListaHilos listaDentroZonaDescanso;
+    private ListaHilos listaComedor;
 
     // Variables para las funciones de coger y dejar comida
     private int maxComida;
@@ -31,10 +34,11 @@ public class Apocalipsis {
     private int almacenComida = 0;
 
     public Apocalipsis(TextField HumanosZonaComun, TextField[] EntradaT, TextField[] InteriorTunel, TextField[] HumanosRiesgo, TextField[] SalidaT,
-                       TextField HumanosZonaDescanso){
+                       TextField HumanosZonaDescanso, TextField HumanosComedor){
         this.HumanosZonaComun = HumanosZonaComun;
         this.semaforoZonaComun = new Semaphore(5000, true);
         this.listaDentroZonaComun = new ListaHilos(HumanosZonaComun);
+        this.listaComedor = new ListaHilos(HumanosComedor);
 
         tuneles = new Tunel[4];
         for(int i = 0; i < 4; i++){
@@ -42,22 +46,22 @@ public class Apocalipsis {
         }
 
         listaEntradaT = new ListaHilos[4];
-        for(int i = 0; i < 4;i++){
+        for(int i = 0; i < 4; i++){
             listaEntradaT[i] = new ListaHilos(EntradaT[i]);
         }
 
         listaTunel = new ListaHilos[4];
-        for(int i = 0; i < 4;i++){
+        for(int i = 0; i < 4; i++){
             listaTunel[i] = new ListaHilos(InteriorTunel[i]);
         }
 
         listaHumanosRiesgo = new ListaHilos[4];
-        for(int i = 0; i < 4 ;i++){
+        for(int i = 0; i < 4 ; i++){
             listaHumanosRiesgo[i] = new ListaHilos(HumanosRiesgo[i]);
         }
 
         listaSalidaT = new ListaHilos[4];
-        for(int i = 0; i < 4;i++){
+        for(int i = 0; i < 4; i++){
             listaSalidaT[i] = new ListaHilos(SalidaT[i]);
         }
         this.listaDentroZonaDescanso = new ListaHilos(HumanosZonaDescanso);
@@ -70,7 +74,7 @@ public class Apocalipsis {
         try {
             semaforoZonaComun.acquire();
             listaDentroZonaComun.meterLista(h);
-            System.out.println("Humano " + h.getID() + " se añadió a la lista");
+            System.out.println("Humano " + h.getID() + " entra a la zona común");
         } catch (Exception e) {
             System.out.println("Error en Apocalipsis Zona Común" + e);
         }
@@ -79,7 +83,7 @@ public class Apocalipsis {
     public void salirZonaComun(Humano h){
         try {
             listaDentroZonaComun.sacarLista(h);
-            System.out.println("Humano " + h.getID() + " se eliminó de la lista");
+            System.out.println("Humano " + h.getID() + " sale de la zona común");
             semaforoZonaComun.release();
         } catch (Exception e) {
             System.out.println("Error en Apocalipsis Zona Común " + e);
@@ -122,6 +126,14 @@ public class Apocalipsis {
         listaDentroZonaDescanso.meterLista(h);
     }
 
+    public void meterComedor(Humano humano){
+        listaComedor.meterLista(humano);
+    }
+
+    public void salirComedor(Humano h){
+        listaComedor.sacarLista(h);
+    }
+
     // Comida
     public synchronized int[] cogerComida() throws InterruptedException{
         while (numComida < 2){
@@ -140,15 +152,8 @@ public class Apocalipsis {
     }
 
     public synchronized void dejarComida(int comida) throws InterruptedException{
-        while (numComida == maxComida){
-            wait();
-        }
-
-        comidas[in] = comida;
-        numComida++;
-        in = (in + 1) % maxComida;
-        System.out.println("Se añadió la comida ");
-        almacenComida++;
-        notifyAll();
+        almacenComida += comida;
+        System.out.println("Se añadió la comida al almacén. Total de comida en el almacén " + almacenComida);
+        Platform.runLater(() -> HumanosComedor.setText("Comida almacenada: " + almacenComida));
     }
 }

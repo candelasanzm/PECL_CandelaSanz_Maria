@@ -42,17 +42,19 @@ public class ApplicationController {
     private TextField SalidaT4;
     @FXML
     private TextField HumanosZonaDescanso;
+    @FXML
+    private TextField HumanosComedor;
 
     private Apocalipsis ap;
 
     @FXML
     public void initialize() {
         TextField[] EntradaT = {EntradaT1, EntradaT2, EntradaT3, EntradaT4};
-        TextField[] Interiortunel = {Tunel1, Tunel2, Tunel3, Tunel4};
+        TextField[] InteriorTunel = {Tunel1, Tunel2, Tunel3, Tunel4};
         TextField[] HumanosRiesgo = {HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4};
         TextField[] SalidaT = {SalidaT1, SalidaT2, SalidaT3, SalidaT4};
 
-        ap = new Apocalipsis(HumanosZonaComun, EntradaT, Interiortunel, HumanosRiesgo, SalidaT, HumanosZonaDescanso);
+        ap = new Apocalipsis(HumanosZonaComun, EntradaT, InteriorTunel, HumanosRiesgo, SalidaT, HumanosZonaDescanso, HumanosComedor);
         crearHumano();
     }
 

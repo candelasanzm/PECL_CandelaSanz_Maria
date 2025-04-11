@@ -29,12 +29,19 @@ public class Humano extends Thread {
             // En la zona exterior están un tiempo aleatorio
             sleep((int) (Math.random() * 3000) + 2000);
             //Coge comida
+            System.out.println("Humano " + id + " está recolectando comida");
             ap.cogerComida();
             // Hacer lo del ataque
             // El humano vuelve a la zona Común
             ap.irRefugio(tunel, this);
             // Dejar comida
             ap.dejarComida(2);
+            System.out.println("Humano " + id + " ha dejado la comida");
+            // Entrar en la zona de descanso
+            ap.meterZonaDescanso(tunel, this);
+            sleep((int) (Math.random() * 2000) + 2000);
+            // Entrar al comedor
+            ap.meterComedor(this);
         } catch(Exception e){
             System.out.println("Error en humano" + e);
         }
