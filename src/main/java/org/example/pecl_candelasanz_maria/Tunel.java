@@ -6,21 +6,23 @@ import java.util.concurrent.Semaphore;
 
 public class Tunel {
     private Apocalipsis ap;
-    private Semaphore semaforoTunel;
-    private int id;
-    private CyclicBarrier b;
-    private final LinkedBlockingQueue colaTunel = new LinkedBlockingQueue<>(); //sin limite
+    private Semaphore semaforoTunel; // controla que el acceso al tunel sea de uno en uno
+    private int id; // identificador del tunel
+    private CyclicBarrier b; // permite que los humanos puedan pasar en grupos
+    private final LinkedBlockingQueue colaTunel = new LinkedBlockingQueue<>(); // sin limite
 
     public Tunel(int id, Apocalipsis ap){
         this.id = id;
         this.ap = ap;
-        this.semaforoTunel = new Semaphore(1); //entran de uno en uno
-        this.b = new CyclicBarrier(3); //pasan en grupos de 3
+        this.semaforoTunel = new Semaphore(1); // entran de uno en uno
+        this.b = new CyclicBarrier(3); // pasan en grupos de 3
     }
 
     public void salirExterior(Humano h){
         try {
-            ap.meterEntradaTunel(id, h);
+            // Humano entra en túnel
+            System.out.println("Humano " + h.getID() + " intenta entrar al túnel " + id);
+            ap.moverHumano(0, id, h);
             System.out.println("Humano " + h.getID() + " entra túnel " + id);
             //PRIORIDAD
             synchronized (this) {
@@ -30,16 +32,16 @@ public class Tunel {
                 }
             }
             b.await(); //espera a que haya 3 humanos
-
             semaforoTunel.acquire();
-            ap.meterTunelIda(id,h);
+
             System.out.println(h.getID() + " atraviesa túnel" + id);
             Thread.sleep(1000);
             semaforoTunel.release();
-            ap.meterRiesgoHumanos(id,h);
+
+            ap.moverHumano(id, 7 + id - 3,h);
             System.out.println("Humano " + h.getID() + " entra en la zona de riesgo " + id);
-        }catch(Exception e){
-            System.out.println("Error en túnel" + e);
+        } catch (Exception e) {
+            System.out.println("Error en túnel " + e.getMessage());
         }
     }
 
@@ -47,15 +49,16 @@ public class Tunel {
         try {
             System.out.println(h.getID() + " va a la salida");
             colaTunel.put(h); //se mete en la cola
-            ap.meterSalidaTunel(id, h);
+            ap.moverHumano(7 + id - 3, id, h);
 
             semaforoTunel.acquire(); //de uno en uno
             colaTunel.remove();
-            ap.meterTunelVuelta(id, h);
+
             System.out.println(h.getID() + " entra en túnel de vuelta");
             Thread.sleep(1000);
             semaforoTunel.release();
-            ap.meterZonaDescanso(id, h);
+
+            ap.moverHumano(id, 1, h);
 
             synchronized (this) {
                 notifyAll();

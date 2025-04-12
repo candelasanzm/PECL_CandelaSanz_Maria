@@ -3,19 +3,9 @@ package org.example.pecl_candelasanz_maria;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-import javax.swing.*;
-
 public class ApplicationController {
     @FXML
     private TextField HumanosZonaComun;
-    @FXML
-    private TextField EntradaT1;
-    @FXML
-    private TextField EntradaT2;
-    @FXML
-    private TextField EntradaT3;
-    @FXML
-    private TextField EntradaT4;
     @FXML
     private TextField Tunel1;
     @FXML
@@ -32,14 +22,6 @@ public class ApplicationController {
     private TextField HumanosRiesgo3;
     @FXML
     private TextField HumanosRiesgo4;
-    @FXML
-    private TextField SalidaT1;
-    @FXML
-    private TextField SalidaT2;
-    @FXML
-    private TextField SalidaT3;
-    @FXML
-    private TextField SalidaT4;
     @FXML
     private TextField HumanosZonaDescanso;
     @FXML
@@ -59,13 +41,22 @@ public class ApplicationController {
 
     @FXML
     public void initialize() {
-        TextField[] EntradaT = {EntradaT1, EntradaT2, EntradaT3, EntradaT4};
+        // Creo arrays de TextFields para el constructor
+        TextField[] zonasTxtField = {
+                HumanosZonaComun, Tunel1, Tunel2, Tunel3, Tunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4, HumanosZonaDescanso, HumanosComedor
+        };
+        TextField[] zombiesTxtField = {
+                ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4
+        };
+
+        /*TextField[] EntradaT = {EntradaT1, EntradaT2, EntradaT3, EntradaT4};
         TextField[] InteriorTunel = {Tunel1, Tunel2, Tunel3, Tunel4};
         TextField[] HumanosRiesgo = {HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4};
         TextField[] SalidaT = {SalidaT1, SalidaT2, SalidaT3, SalidaT4};
-        TextField[] ZombiesRiesgo = {ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4};
+        TextField[] ZombiesRiesgo = {ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4};*/
 
-        ap = new Apocalipsis(HumanosZonaComun, EntradaT, InteriorTunel, HumanosRiesgo, SalidaT, HumanosZonaDescanso, HumanosComedor, HumanosComida, ZombiesRiesgo);
+        ap = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
+        //Humano humano = (Humano) new Thread();
         crearHumano();
         crearZombie();
     }

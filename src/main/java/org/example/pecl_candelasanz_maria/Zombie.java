@@ -27,16 +27,16 @@ public class Zombie extends Thread{
     public void run(){
         try {
             while(true){
-                System.out.println("Nuevo zombie");
-                int nuevazona = (int) (Math.random() * 4); //zonas 0,1,2,3
-                //Accede zona
-                ap.moverZonaZombie(this, nuevazona);
-                //ataque
-                //permanece en la zona
+                System.out.println("Se ha creado un nuevo zombie con id " + id);
+                int nuevaZona = 7 + (int) (Math.random() * 4); // genera un id entre 7 y 10 ya que las zonas de riesgo son la 7, 8, 9 y 10
+                // Accede zona
+                ap.moverZonaZombie(this, nuevaZona);
+                // Ataque
+                // Permanece en la zona
                 sleep((int) (Math.random() * 1000) + 2000);
             }
         }catch(Exception e){
-            System.out.println("Error en zombie "+e);
+            System.out.println("Error en zombie " + e);
         }
     }
 }
