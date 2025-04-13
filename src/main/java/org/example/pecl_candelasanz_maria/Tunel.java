@@ -22,8 +22,8 @@ public class Tunel {
         try {
             // Humano entra en túnel
             System.out.println("Humano " + h.getID() + " intenta entrar al túnel " + id);
-            ap.moverHumano(0, id, h);
-            System.out.println("Humano " + h.getID() + " entra túnel " + id);
+            ap.moverHumano(ap.getZonas(id), h);
+            System.out.println("Humano " + h.getID() + " está esperando para formar grupo en el túnel " + id);
             //PRIORIDAD
             synchronized (this) {
                 while (!colaTunel.isEmpty()) {
@@ -31,14 +31,16 @@ public class Tunel {
                     wait();
                 }
             }
+
             b.await(); //espera a que haya 3 humanos
-            semaforoTunel.acquire();
+            System.out.println("Grupo formado en el túnel " + id);
+            semaforoTunel.acquire(); // acceden al túnel de uno en uno
 
             System.out.println(h.getID() + " atraviesa túnel" + id);
-            Thread.sleep(1000);
-            semaforoTunel.release();
+            Thread.sleep(1000); // tiempo de cruce
+            semaforoTunel.release(); // se libera el acceso al túnel
 
-            ap.moverHumano(id, 7 + id - 3,h);
+            ap.moverHumano(ap.getZonas(15 + id - 7),h);
             System.out.println("Humano " + h.getID() + " entra en la zona de riesgo " + id);
         } catch (Exception e) {
             System.out.println("Error en túnel " + e.getMessage());
@@ -47,18 +49,18 @@ public class Tunel {
 
     public void irRefugio(Humano h){
         try {
-            System.out.println(h.getID() + " va a la salida");
+            System.out.println(h.getID() + " regresa a la zona segura desde el túnel " + id);
             colaTunel.put(h); //se mete en la cola
-            ap.moverHumano(7 + id - 3, id, h);
+            ap.moverHumano(ap.getZonas(11 + id - 3), h);
 
             semaforoTunel.acquire(); //de uno en uno
             colaTunel.remove();
 
-            System.out.println(h.getID() + " entra en túnel de vuelta");
+            System.out.println("Humano " + h.getID() + " entra en túnel de vuelta");
             Thread.sleep(1000);
             semaforoTunel.release();
 
-            ap.moverHumano(id, 1, h);
+            ap.moverHumano(ap.getZonas(0), h);
 
             synchronized (this) {
                 notifyAll();

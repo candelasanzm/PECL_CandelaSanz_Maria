@@ -40,20 +40,20 @@
 
         <!-- Túneles -->
         <TextField fx:id="Tunel1" layoutX="278.0" layoutY="116.0" prefHeight="25.0" prefWidth="47.0" />
-        <TextField fx:id="EntradaT1" layoutX="222.0" layoutY="109.0" prefHeight="37.0" prefWidth="47.0" />
-        <TextField fx:id="SalidaT1" layoutX="333.0" layoutY="110.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="EntradaTunel1" layoutX="222.0" layoutY="109.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="SalidaTunel1" layoutX="333.0" layoutY="110.0" prefHeight="37.0" prefWidth="47.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="211.0" layoutY="167.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
         <TextField fx:id="Tunel2" layoutX="278.0" layoutY="184.0" prefHeight="25.0" prefWidth="47.0" />
-        <TextField fx:id="EntradaT2" layoutX="222.0" layoutY="177.0" prefHeight="37.0" prefWidth="47.0" />
-        <TextField fx:id="SalidaT2" layoutX="333.0" layoutY="178.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="EntradaTunel2" layoutX="222.0" layoutY="177.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="SalidaTunel2" layoutX="333.0" layoutY="178.0" prefHeight="37.0" prefWidth="47.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="212.0" layoutY="235.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
         <TextField fx:id="Tunel3" layoutX="279.0" layoutY="252.0" prefHeight="25.0" prefWidth="47.0" />
-        <TextField fx:id="EntradaT3" layoutX="223.0" layoutY="245.0" prefHeight="37.0" prefWidth="47.0" />
-        <TextField fx:id="SalidaT3" layoutX="334.0" layoutY="246.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="EntradaTunel3" layoutX="223.0" layoutY="245.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="SalidaTunel3" layoutX="334.0" layoutY="246.0" prefHeight="37.0" prefWidth="47.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbc82" height="58.0" layoutX="212.0" layoutY="303.0" stroke="TRANSPARENT" strokeType="INSIDE" width="178.0" />
         <TextField fx:id="Tunel4" layoutX="279.0" layoutY="320.0" prefHeight="25.0" prefWidth="47.0" />
-        <TextField fx:id="EntradaT4" layoutX="223.0" layoutY="313.0" prefHeight="37.0" prefWidth="47.0" />
-        <TextField fx:id="SalidaT4" layoutX="334.0" layoutY="314.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="EntradaTunel4" layoutX="223.0" layoutY="313.0" prefHeight="37.0" prefWidth="47.0" />
+        <TextField fx:id="SalidaTunel4" layoutX="334.0" layoutY="314.0" prefHeight="37.0" prefWidth="47.0" />
 
         <!-- Zonas de Riesgo -->
         <TextField fx:id="HumanosRiesgo1" layoutX="422.0" layoutY="109.0" prefHeight="37.0" prefWidth="63.0" />

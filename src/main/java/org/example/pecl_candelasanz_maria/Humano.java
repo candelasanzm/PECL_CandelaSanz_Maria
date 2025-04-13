@@ -4,15 +4,25 @@ public class Humano extends Thread {
     private Apocalipsis ap;
     private String id;
     private static int contador = 0;
+    private Zona zona;
 
-    public Humano(Apocalipsis ap){
+    public Humano(Apocalipsis ap, Zona zona){
         contador++;
         this.id = String.format("H%04d", contador);
         this.ap = ap;
+        this.zona = zona;
     }
 
     public String getID(){
         return id;
+    }
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
     }
 
     public void run(){
@@ -23,7 +33,7 @@ public class Humano extends Thread {
 
                // El humano empieza en la zona común
                System.out.println("Humano " + id + " está en la zona común");
-               ap.entrarZona(0, this);
+               ap.moverHumano(ap.getZonas(0), this);
                sleep((int) (Math.random() * 1000) + 1000);
 
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
@@ -47,12 +57,12 @@ public class Humano extends Thread {
 
                // Va a la zona de descanso
                System.out.println("Humano " + id + " entra en la zona de descanso");
-               ap.moverHumano(0, 1, this);
+               ap.moverHumano(ap.getZonas(1), this);
                sleep((int) (Math.random() * 2000) + 2000); //duerme en la zona de descanso
 
                // Comer en el comedor
                System.out.println("Humano " + id + " entra al comedor");
-               ap.moverHumano(1, 2,this);
+               ap.moverHumano(ap.getZonas(2),this);
 
                // Come
                ap.cogerComida(this);

@@ -1,11 +1,20 @@
 package org.example.pecl_candelasanz_maria;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 public class ApplicationController {
     @FXML
     private TextField HumanosZonaComun;
+    @FXML
+    private TextField EntradaTunel1;
+    @FXML
+    private TextField EntradaTunel2;
+    @FXML
+    private TextField EntradaTunel3;
+    @FXML
+    private TextField EntradaTunel4;
     @FXML
     private TextField Tunel1;
     @FXML
@@ -14,6 +23,14 @@ public class ApplicationController {
     private TextField Tunel3;
     @FXML
     private TextField Tunel4;
+    @FXML
+    private TextField SalidaTunel1;
+    @FXML
+    private TextField SalidaTunel2;
+    @FXML
+    private TextField SalidaTunel3;
+    @FXML
+    private TextField SalidaTunel4;
     @FXML
     private TextField HumanosRiesgo1;
     @FXML
@@ -43,29 +60,23 @@ public class ApplicationController {
     public void initialize() {
         // Creo arrays de TextFields para el constructor
         TextField[] zonasTxtField = {
-                HumanosZonaComun, Tunel1, Tunel2, Tunel3, Tunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4, HumanosZonaDescanso, HumanosComedor
+                HumanosZonaComun, EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4, Tunel1, Tunel2, Tunel3, Tunel4, SalidaTunel1, SalidaTunel2, SalidaTunel3, SalidaTunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4, HumanosZonaDescanso, HumanosComedor
         };
         TextField[] zombiesTxtField = {
                 ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4
         };
 
-        /*TextField[] EntradaT = {EntradaT1, EntradaT2, EntradaT3, EntradaT4};
-        TextField[] InteriorTunel = {Tunel1, Tunel2, Tunel3, Tunel4};
-        TextField[] HumanosRiesgo = {HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4};
-        TextField[] SalidaT = {SalidaT1, SalidaT2, SalidaT3, SalidaT4};
-        TextField[] ZombiesRiesgo = {ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4};*/
-
         ap = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
         //Humano humano = (Humano) new Thread();
-        crearHumano();
-        crearZombie();
+        Platform.runLater(() -> { crearHumano();
+                                  crearZombie();});
     }
 
     @FXML
     protected void crearHumano() {
         for(int i = 0; i < 10; i++) {
             try{
-                Humano h = new Humano(ap);
+                Humano h = new Humano(ap, ap.getZonas(0));
                 h.start();
                 //h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
             }catch(Exception e){
