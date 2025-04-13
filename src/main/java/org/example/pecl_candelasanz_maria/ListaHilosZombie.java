@@ -36,7 +36,7 @@ public class ListaHilosZombie {
         }
         final String textoImprimir = txtLista.toString();
 
-        Platform.runLater(() -> {txt.setText(textoImprimir);
+        Platform.runLater(() -> {txt.setText(textoImprimir); //muestra en la interfaz
         });
     }
 }

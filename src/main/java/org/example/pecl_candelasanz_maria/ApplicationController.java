@@ -62,14 +62,14 @@ public class ApplicationController {
         TextField[] zonasTxtField = {
                 HumanosZonaComun, EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4, Tunel1, Tunel2, Tunel3, Tunel4, SalidaTunel1, SalidaTunel2, SalidaTunel3, SalidaTunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4, HumanosZonaDescanso, HumanosComedor
         };
+
         TextField[] zombiesTxtField = {
                 ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4
         };
 
         ap = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
-        //Humano humano = (Humano) new Thread();
-        Platform.runLater(() -> { crearHumano();
-                                  crearZombie();});
+        crearHumano();
+        crearZombie();
     }
 
     @FXML

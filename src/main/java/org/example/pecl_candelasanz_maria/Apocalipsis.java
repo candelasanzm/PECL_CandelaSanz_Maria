@@ -37,6 +37,9 @@ public class Apocalipsis {
     private ListaHilosZombie[] listaZombies;
     private TextField[] zombiesTxtField;
 
+    //Tuneles
+    private Tunel[] tuneles;
+
     // Semáforo para controlar las distintas zonas
     //private Semaphore[] semaforosZonas;
 
@@ -77,12 +80,18 @@ public class Apocalipsis {
         for (int i = 15; i < 19; i++) { // ya que los zombies solo se mueven por las zonas de riesgo que tienen ids del 15 al 18
             listaZombies[i - 15] = new ListaHilosZombie(zombiesTxtField[i - 15]);
         }
+
+        tuneles = new Tunel[4];
+        for(int i=0; i<4; i++){
+            tuneles[i]=new Tunel(3+i, this); //id=3,4,5,6
+        }
     }
 
     public Zona getZonas(int zona) {
         return zonas[zona];
     }
 
+    /*
     // Imprimir en la interfaz
     public void imprimirZonas(Humano h){
         switch (h.getZona().getIdZona()){
@@ -126,13 +135,20 @@ public class Apocalipsis {
                 Platform.runLater(() -> {zonasTxtField[18].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 4
         }
     }
+     */
 
     // Movimiento entre zonas
     public void moverHumano(Zona zonaDestino, Humano h) {
         try {
-            System.out.println("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
+            Zona zonaActual = h.getZona();
+            if (zonaActual != null) {
+                listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
+            }
+
+            listaHumanos[zonaDestino.getIdZona()].meterLista(h); //mete en la nueva zona y actualiza interfaz
             h.setZona(zonaDestino);
-            imprimirZonas(h);
+            System.out.println("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
+
         } catch (Exception e) {
             System.out.println("Error al mover humano " + e.getMessage());
         }
@@ -189,5 +205,9 @@ public class Apocalipsis {
 
             System.out.println(zona.getNombre() + " tiene " + cantHumanos + " humanos");
         }
+    }
+
+    public Tunel getTunel(int idTunel){
+        return tuneles[idTunel];
     }
 }
