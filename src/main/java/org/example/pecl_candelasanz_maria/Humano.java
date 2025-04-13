@@ -43,7 +43,7 @@ public class Humano extends Thread {
                tunel.salirExterior(this);
 
                // El humano está en la zona de riesgo
-
+               /*
                sleep((int) (Math.random() * 3000) + 2000);
                System.out.println("Humano " + id + " recolecta 2 piezas de comida");
 
@@ -68,7 +68,7 @@ public class Humano extends Thread {
                // Come
                ap.cogerComida(this);
                sleep((int) (Math.random() * 3000) + 2000);
-
+                */
                //Si le atacan vuelve a la zona de descanso
                /*
                if(atacado){

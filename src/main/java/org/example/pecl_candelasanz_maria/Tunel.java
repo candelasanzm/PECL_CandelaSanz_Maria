@@ -22,8 +22,9 @@ public class Tunel {
         try {
             // Humano entra en túnel
             System.out.println("Humano " + h.getID() + " intenta entrar al túnel " + id);
+            //Mover a la entrada del tunel
             ap.moverHumano(ap.getZonas(id), h);
-            System.out.println("Humano " + h.getID() + " está esperando para formar grupo en el túnel " + id);
+
             //PRIORIDAD
             synchronized (this) {
                 while (!colaTunel.isEmpty()) {
@@ -32,15 +33,21 @@ public class Tunel {
                 }
             }
 
+            System.out.println("Humano " + h.getID() + " está esperando para formar grupo en el túnel " + id);
             b.await(); //espera a que haya 3 humanos
             System.out.println("Grupo formado en el túnel " + id);
-            semaforoTunel.acquire(); // acceden al túnel de uno en uno
 
+            //Entra al tunel
+            semaforoTunel.acquire(); // acceden al túnel de uno en uno
+            int tunelInterior = 7 + (id - 3); //Zonas 7,8,9,10
+            ap.moverHumano(ap.getZonas(tunelInterior), h);
             System.out.println(h.getID() + " atraviesa túnel" + id);
             Thread.sleep(1000); // tiempo de cruce
             semaforoTunel.release(); // se libera el acceso al túnel
 
-            ap.moverHumano(ap.getZonas(15 + id - 7),h);
+            //mover zona riesgo
+            int zonaRiesgo = 15 + (id - 3); //Zonas 15,16,17,18
+            ap.moverHumano(ap.getZonas(zonaRiesgo), h);
             System.out.println("Humano " + h.getID() + " entra en la zona de riesgo " + id);
         } catch (Exception e) {
             System.out.println("Error en túnel " + e.getMessage());
