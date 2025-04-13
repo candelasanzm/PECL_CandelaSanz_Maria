@@ -49,6 +49,8 @@ public class Tunel {
             int zonaRiesgo = 15 + (id - 3); //Zonas 15,16,17,18
             ap.moverHumano(ap.getZonas(zonaRiesgo), h);
             System.out.println("Humano " + h.getID() + " entra en la zona de riesgo " + id);
+
+
         } catch (Exception e) {
             System.out.println("Error en túnel " + e.getMessage());
         }
@@ -57,21 +59,29 @@ public class Tunel {
     public void irRefugio(Humano h){
         try {
             System.out.println(h.getID() + " regresa a la zona segura desde el túnel " + id);
-            colaTunel.put(h); //se mete en la cola
-            ap.moverHumano(ap.getZonas(11 + id - 3), h);
+            colaTunel.put(h); //se mete en la cola de salida
+
+            //entra a la  salida
+            int zonaSalida = 11 + (id - 3); //zonas 11,12,13,14
+            ap.moverHumano(ap.getZonas(zonaSalida), h);
 
             semaforoTunel.acquire(); //de uno en uno
-            colaTunel.remove();
+            colaTunel.remove(); //cruza el tunel
 
+            //entra al interior del tunel
+            int tunelInterior = 7 + (id - 3); //Zonas 7,8,9,10
+            ap.moverHumano(ap.getZonas(tunelInterior), h);
             System.out.println("Humano " + h.getID() + " entra en túnel de vuelta");
             Thread.sleep(1000);
             semaforoTunel.release();
 
-            ap.moverHumano(ap.getZonas(0), h);
+            //Mover Zona descanso
+            ap.moverHumano(ap.getZonas(1), h);
 
             synchronized (this) {
                 notifyAll();
             }
+
         } catch (Exception e) {
             System.out.println("Error en túnel " + e);
         }

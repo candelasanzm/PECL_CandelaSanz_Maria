@@ -60,7 +60,7 @@ public class ApplicationController {
     public void initialize() {
         // Creo arrays de TextFields para el constructor
         TextField[] zonasTxtField = {
-                HumanosZonaComun, EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4, Tunel1, Tunel2, Tunel3, Tunel4, SalidaTunel1, SalidaTunel2, SalidaTunel3, SalidaTunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4, HumanosZonaDescanso, HumanosComedor
+                HumanosZonaComun, HumanosZonaDescanso, HumanosComedor, EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4, Tunel1, Tunel2, Tunel3, Tunel4, SalidaTunel1, SalidaTunel2, SalidaTunel3, SalidaTunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4
         };
 
         TextField[] zombiesTxtField = {

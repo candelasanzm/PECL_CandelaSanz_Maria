@@ -144,11 +144,9 @@ public class Apocalipsis {
             if (zonaActual != null) {
                 listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
             }
-
+            System.out.println("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
             listaHumanos[zonaDestino.getIdZona()].meterLista(h); //mete en la nueva zona y actualiza interfaz
             h.setZona(zonaDestino);
-            System.out.println("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
-
         } catch (Exception e) {
             System.out.println("Error al mover humano " + e.getMessage());
         }

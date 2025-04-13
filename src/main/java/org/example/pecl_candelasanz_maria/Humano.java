@@ -27,13 +27,12 @@ public class Humano extends Thread {
 
     public void run(){
         try{
+            // Se crea el humano
+            System.out.println("Nuevo humano " + id);
            while(true) {
-               // Se crea el humano
-               System.out.println("Nuevo humano " + id);
-
                // El humano empieza en la zona común
+                ap.moverHumano(ap.getZonas(0),this);
                System.out.println("Humano " + id + " está en la zona común");
-               ap.moverHumano(ap.getZonas(0), this);
                sleep((int) (Math.random() * 1000) + 1000);
 
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
@@ -43,7 +42,7 @@ public class Humano extends Thread {
                tunel.salirExterior(this);
 
                // El humano está en la zona de riesgo
-               /*
+
                sleep((int) (Math.random() * 3000) + 2000);
                System.out.println("Humano " + id + " recolecta 2 piezas de comida");
 
@@ -51,14 +50,13 @@ public class Humano extends Thread {
 
                // El humano vuelve a la zona Común
                System.out.println("Humano " + id + " vuelve al refugio");
-               //tunel.irRefugio(this);
+               tunel.irRefugio(this);
 
                // Dejar comida
                ap.dejarComida(this, 2);
 
-               // Va a la zona de descanso
+               //Zona descanso
                System.out.println("Humano " + id + " entra en la zona de descanso");
-               ap.moverHumano(ap.getZonas(1), this);
                sleep((int) (Math.random() * 2000) + 2000); //duerme en la zona de descanso
 
                // Comer en el comedor
@@ -68,7 +66,7 @@ public class Humano extends Thread {
                // Come
                ap.cogerComida(this);
                sleep((int) (Math.random() * 3000) + 2000);
-                */
+
                //Si le atacan vuelve a la zona de descanso
                /*
                if(atacado){
