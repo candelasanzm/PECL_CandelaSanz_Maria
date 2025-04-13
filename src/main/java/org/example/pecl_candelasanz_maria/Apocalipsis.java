@@ -53,25 +53,25 @@ public class Apocalipsis {
         listaZombies = new ListaHilosZombie[4]; // los zombies solo se mueven por las zonas de riesgo
         //semaforosZonas = new Semaphore[19]; // tenemos un semáforo para cada zona
 
-        zonas[0] = new Zona(0, "zonaComun");
-        zonas[1] = new Zona(1, "zonaDescanso");
-        zonas[2] = new Zona(2, "comedor");
-        zonas[3] = new Zona(3, "entradaTunel1");
-        zonas[4] = new Zona(4, "entradaTunel2");
-        zonas[5] = new Zona(5, "entradaTunel3");
-        zonas[6] = new Zona(6, "entradaTunel4");
-        zonas[7] = new Zona(7, "tunel1");
-        zonas[8] = new Zona(8, "tunel2");
-        zonas[9] = new Zona(9, "tunel3");
-        zonas[10] = new Zona(10, "tunel4");
-        zonas[11] = new Zona(11, "salidaTunel1");
-        zonas[12] = new Zona(12, "salidaTunel2");
-        zonas[13] = new Zona(13, "salidaTunel3");
-        zonas[14] = new Zona(14, "salidaTunel4");
-        zonas[15] = new Zona(15, "zonaRiesgo1");
-        zonas[16] = new Zona(16, "zonaRiesgo2");
-        zonas[17] = new Zona(17, "zonaRiesgo3");
-        zonas[18] = new Zona(18, "zonaRiesgo4");
+        zonas[0] = new Zona(0, "Zona Común");
+        zonas[1] = new Zona(1, "Zona Descanso");
+        zonas[2] = new Zona(2, "Comedor");
+        zonas[3] = new Zona(3, "Entrada Túnel 1");
+        zonas[4] = new Zona(4, "Entrada Túnel 2");
+        zonas[5] = new Zona(5, "Entrada Túnel 3");
+        zonas[6] = new Zona(6, "Entrada Túnel 4");
+        zonas[7] = new Zona(7, "Túnel 1");
+        zonas[8] = new Zona(8, "Túnel 2");
+        zonas[9] = new Zona(9, "Túnel 3");
+        zonas[10] = new Zona(10, "Túnel 4");
+        zonas[11] = new Zona(11, "Salida Túnel 1");
+        zonas[12] = new Zona(12, "Salida Túnel 2");
+        zonas[13] = new Zona(13, "Salida Túnel 3");
+        zonas[14] = new Zona(14, "Salida Túnel 4");
+        zonas[15] = new Zona(15, "Zona Riesgo 1");
+        zonas[16] = new Zona(16, "Zona Riesgo 2");
+        zonas[17] = new Zona(17, "Zona Riesgo 3");
+        zonas[18] = new Zona(18, "Zona Riesgo 4");
 
         for (int i = 0; i < zonas.length; i++) {
             listaHumanos[i] = new ListaHilosHumano(zonasTxtField[i]);
@@ -82,8 +82,8 @@ public class Apocalipsis {
         }
 
         tuneles = new Tunel[4];
-        for(int i=0; i<4; i++){
-            tuneles[i]=new Tunel(3+i, this); //id=3,4,5,6
+        for(int i = 0; i < 4; i++){
+            tuneles[i]=new Tunel(3 + i, this); //id=3,4,5,6
         }
     }
 
@@ -91,51 +91,10 @@ public class Apocalipsis {
         return zonas[zona];
     }
 
-    /*
-    // Imprimir en la interfaz
-    public void imprimirZonas(Humano h){
-        switch (h.getZona().getIdZona()){
-            case 0:
-                Platform.runLater(() -> {zonasTxtField[0].setText(String.valueOf(h.getID()));}); // impresión en la zona común
-            case 1:
-                Platform.runLater(() -> {zonasTxtField[1].setText(String.valueOf(h.getID()));}); // impresión en la zona descanso
-            case 2:
-                Platform.runLater(() -> {zonasTxtField[2].setText(String.valueOf(h.getID()));}); // impresión en el comedor
-            case 3:
-                Platform.runLater(() -> {zonasTxtField[3].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 1
-            case 4:
-                Platform.runLater(() -> {zonasTxtField[4].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 2
-            case 5:
-                Platform.runLater(() -> {zonasTxtField[5].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 3
-            case 6:
-                Platform.runLater(() -> {zonasTxtField[6].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 4
-            case 7:
-                Platform.runLater(() -> {zonasTxtField[7].setText(String.valueOf(h.getID()));}); // impresión en túnel 1
-            case 8:
-                Platform.runLater(() -> {zonasTxtField[8].setText(String.valueOf(h.getID()));}); // impresión en túnel 2
-            case 9:
-                Platform.runLater(() -> {zonasTxtField[9].setText(String.valueOf(h.getID()));}); // impresión en túnel 3
-            case 10:
-                Platform.runLater(() -> {zonasTxtField[10].setText(String.valueOf(h.getID()));}); // impresión en túnel 4
-            case 11:
-                Platform.runLater(() -> {zonasTxtField[11].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 1
-            case 12:
-                Platform.runLater(() -> {zonasTxtField[12].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 2
-            case 13:
-                Platform.runLater(() -> {zonasTxtField[13].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 3
-            case 14:
-                Platform.runLater(() -> {zonasTxtField[14].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 4
-            case 15:
-                Platform.runLater(() -> {zonasTxtField[15].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 1
-            case 16:
-                Platform.runLater(() -> {zonasTxtField[16].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 2
-            case 17:
-                Platform.runLater(() -> {zonasTxtField[17].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 3
-            case 18:
-                Platform.runLater(() -> {zonasTxtField[18].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 4
-        }
+
+    public Tunel getTunel(int idTunel){
+        return tuneles[idTunel];
     }
-     */
 
     // Movimiento entre zonas
     public void moverHumano(Zona zonaDestino, Humano h) {
@@ -144,6 +103,7 @@ public class Apocalipsis {
             if (zonaActual != null) {
                 listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
             }
+
             System.out.println("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
             listaHumanos[zonaDestino.getIdZona()].meterLista(h); //mete en la nueva zona y actualiza interfaz
             h.setZona(zonaDestino);
@@ -159,7 +119,7 @@ public class Apocalipsis {
             wait();
         }
         cantComida--;
-        System.out.println("Humano " + h.getID() + " coge comida y come");
+        System.out.println("Humano " + h.getID() + " coge comida y va a comer. Quedan " + cantComida + " piezas de comida");
         imprimirComida();
     }
 
@@ -171,8 +131,7 @@ public class Apocalipsis {
     }
 
     public void imprimirComida() { // imprime en la interfaz la cantidad de comida que hay
-        Platform.runLater(() -> {HumanosComida.setText(String.valueOf(cantComida));
-        });
+        Platform.runLater(() -> {HumanosComida.setText(String.valueOf(cantComida));});
     }
 
     // Movimiento de los zombies entre zonas
@@ -205,7 +164,4 @@ public class Apocalipsis {
         }
     }
 
-    public Tunel getTunel(int idTunel){
-        return tuneles[idTunel];
-    }
 }

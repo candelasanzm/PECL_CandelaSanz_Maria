@@ -27,22 +27,22 @@ public class Humano extends Thread {
 
     public void run(){
         try{
-            // Se crea el humano
-            System.out.println("Nuevo humano " + id);
+           // Se crea el humano
+           System.out.println("Nuevo humano " + id);
+
            while(true) {
                // El humano empieza en la zona común
-                ap.moverHumano(ap.getZonas(0),this);
-               System.out.println("Humano " + id + " está en la zona común");
+               ap.moverHumano(ap.getZonas(0),this);
+               System.out.println("Humano " + id + " está en la Zona Común");
                sleep((int) (Math.random() * 1000) + 1000);
 
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
                int tunelID = 3 + (int) (Math.random() * 4); // sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
                Tunel tunel = ap.getTunel(tunelID - 3);
-               System.out.println("Humano " + id + " se mueve al tunel " + tunelID);
+               System.out.println("Humano " + id + " está en la Entrada del Túnel " + tunelID);
                tunel.salirExterior(this);
 
                // El humano está en la zona de riesgo
-
                sleep((int) (Math.random() * 3000) + 2000);
                System.out.println("Humano " + id + " recolecta 2 piezas de comida");
 
@@ -56,11 +56,11 @@ public class Humano extends Thread {
                ap.dejarComida(this, 2);
 
                //Zona descanso
-               System.out.println("Humano " + id + " entra en la zona de descanso");
+               System.out.println("Humano " + id + " entra en la Zona de Descanso");
                sleep((int) (Math.random() * 2000) + 2000); //duerme en la zona de descanso
 
                // Comer en el comedor
-               System.out.println("Humano " + id + " entra al comedor");
+               System.out.println("Humano " + id + " entra al Comedor");
                ap.moverHumano(ap.getZonas(2),this);
 
                // Come
@@ -77,7 +77,6 @@ public class Humano extends Thread {
                    ap.salirComedor(this);
                }
                */
-
            }
         } catch(Exception e){
             System.out.println("Error en humano" + e);
