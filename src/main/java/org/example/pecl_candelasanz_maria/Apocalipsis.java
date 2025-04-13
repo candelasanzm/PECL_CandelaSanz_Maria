@@ -83,11 +83,56 @@ public class Apocalipsis {
         return zonas[zona];
     }
 
+    // Imprimir en la interfaz
+    public void imprimirZonas(Humano h){
+        switch (h.getZona().getIdZona()){
+            case 0:
+                Platform.runLater(() -> {zonasTxtField[0].setText(String.valueOf(h.getID()));});
+            case 1:
+                Platform.runLater(() -> {zonasTxtField[1].setText(String.valueOf(h.getID()));});
+            case 2:
+                Platform.runLater(() -> {zonasTxtField[2].setText(String.valueOf(h.getID()));});
+            case 3:
+                Platform.runLater(() -> {zonasTxtField[3].setText(String.valueOf(h.getID()));});
+            case 4:
+                Platform.runLater(() -> {zonasTxtField[4].setText(String.valueOf(h.getID()));});
+            case 5:
+                Platform.runLater(() -> {zonasTxtField[5].setText(String.valueOf(h.getID()));});
+            case 6:
+                Platform.runLater(() -> {zonasTxtField[6].setText(String.valueOf(h.getID()));});
+            case 7:
+                Platform.runLater(() -> {zonasTxtField[7].setText(String.valueOf(h.getID()));});
+            case 8:
+                Platform.runLater(() -> {zonasTxtField[8].setText(String.valueOf(h.getID()));});
+            case 9:
+                Platform.runLater(() -> {zonasTxtField[9].setText(String.valueOf(h.getID()));});
+            case 10:
+                Platform.runLater(() -> {zonasTxtField[10].setText(String.valueOf(h.getID()));});
+            case 11:
+                Platform.runLater(() -> {zonasTxtField[11].setText(String.valueOf(h.getID()));});
+            case 12:
+                Platform.runLater(() -> {zonasTxtField[12].setText(String.valueOf(h.getID()));});
+            case 13:
+                Platform.runLater(() -> {zonasTxtField[13].setText(String.valueOf(h.getID()));});
+            case 14:
+                Platform.runLater(() -> {zonasTxtField[14].setText(String.valueOf(h.getID()));});
+            case 15:
+                Platform.runLater(() -> {zonasTxtField[15].setText(String.valueOf(h.getID()));});
+            case 16:
+                Platform.runLater(() -> {zonasTxtField[16].setText(String.valueOf(h.getID()));});
+            case 17:
+                Platform.runLater(() -> {zonasTxtField[17].setText(String.valueOf(h.getID()));});
+            case 18:
+                Platform.runLater(() -> {zonasTxtField[18].setText(String.valueOf(h.getID()));});
+        }
+    }
+
     // Movimiento entre zonas
     public void moverHumano(Zona zonaDestino, Humano h) {
         try {
             System.out.println("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
             h.setZona(zonaDestino);
+            imprimirZonas(h);
         } catch (Exception e) {
             System.out.println("Error al mover humano " + e.getMessage());
         }
