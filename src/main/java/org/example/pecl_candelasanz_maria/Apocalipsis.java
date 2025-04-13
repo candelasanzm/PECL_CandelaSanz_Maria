@@ -119,17 +119,17 @@ public class Apocalipsis {
     // Movimiento de los zombies entre zonas
     public void moverZonaZombie(Zombie z, int zona){
         // Limito el movimiento del zombie entre las zonas de riesgo
-        if (zona < 7 || zona > 10){
+        if (zona < 15 || zona > 18){
             System.out.println("Zombie " + z.getID() + " no puede moverse a esa zona");
         }
 
         int zonaAnterior = z.getZona();
         try {
             if(zonaAnterior != -1){ // si ya tiene zona se elimina de la zona en la que estaba
-                listaZombies[zonaAnterior - 7].sacarLista(z);
+                listaZombies[zonaAnterior - 15].sacarLista(z);
             }
 
-            listaZombies[zona - 7].meterLista(z);
+            listaZombies[zona - 15].meterLista(z);
             z.setZona(zona); // actualizamos la nueva zona
             System.out.println("Zombie " + z.getID() + " se ha movido a zona " + zonas[zona].getNombre());
         } catch (Exception e) {

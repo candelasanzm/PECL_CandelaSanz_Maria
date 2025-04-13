@@ -37,10 +37,10 @@ public class Humano extends Thread {
                sleep((int) (Math.random() * 1000) + 1000);
 
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
-               int tunelID = 3 + (int) (Math.random() * 4); // sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
+               /*int tunelID = 3 + (int) (Math.random() * 4); // sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
                Tunel tunel = new Tunel(tunelID, ap);
                System.out.println("Humano " + id + " se mueve al tunel " + tunelID);
-               tunel.salirExterior(this);
+               tunel.salirExterior(this);*/
 
                // El humano está en la zona de riesgo
                sleep((int) (Math.random() * 3000) + 2000);
@@ -50,7 +50,7 @@ public class Humano extends Thread {
 
                // El humano vuelve a la zona Común
                System.out.println("Humano " + id + " vuelve al refugio");
-               tunel.irRefugio(this);
+               //tunel.irRefugio(this);
 
                // Dejar comida
                ap.dejarComida(this, 2);

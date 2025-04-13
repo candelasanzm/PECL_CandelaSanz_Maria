@@ -28,7 +28,7 @@ public class Zombie extends Thread{
         try {
             while(true){
                 System.out.println("Se ha creado un nuevo zombie con id " + id);
-                int nuevaZona = 7 + (int) (Math.random() * 4); // genera un id entre 7 y 10 ya que las zonas de riesgo son la 7, 8, 9 y 10
+                int nuevaZona = 15 + (int) (Math.random() * 4); // genera un id entre 15 y 18 ya que las zonas de riesgo son la 15, 16, 17 y 18
                 // Accede zona
                 ap.moverZonaZombie(this, nuevaZona);
                 // Ataque
