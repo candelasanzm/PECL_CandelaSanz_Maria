@@ -87,43 +87,43 @@ public class Apocalipsis {
     public void imprimirZonas(Humano h){
         switch (h.getZona().getIdZona()){
             case 0:
-                Platform.runLater(() -> {zonasTxtField[0].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[0].setText(String.valueOf(h.getID()));}); // impresión en la zona común
             case 1:
-                Platform.runLater(() -> {zonasTxtField[1].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[1].setText(String.valueOf(h.getID()));}); // impresión en la zona descanso
             case 2:
-                Platform.runLater(() -> {zonasTxtField[2].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[2].setText(String.valueOf(h.getID()));}); // impresión en el comedor
             case 3:
-                Platform.runLater(() -> {zonasTxtField[3].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[3].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 1
             case 4:
-                Platform.runLater(() -> {zonasTxtField[4].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[4].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 2
             case 5:
-                Platform.runLater(() -> {zonasTxtField[5].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[5].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 3
             case 6:
-                Platform.runLater(() -> {zonasTxtField[6].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[6].setText(String.valueOf(h.getID()));}); // impresión en la entrada túnel 4
             case 7:
-                Platform.runLater(() -> {zonasTxtField[7].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[7].setText(String.valueOf(h.getID()));}); // impresión en túnel 1
             case 8:
-                Platform.runLater(() -> {zonasTxtField[8].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[8].setText(String.valueOf(h.getID()));}); // impresión en túnel 2
             case 9:
-                Platform.runLater(() -> {zonasTxtField[9].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[9].setText(String.valueOf(h.getID()));}); // impresión en túnel 3
             case 10:
-                Platform.runLater(() -> {zonasTxtField[10].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[10].setText(String.valueOf(h.getID()));}); // impresión en túnel 4
             case 11:
-                Platform.runLater(() -> {zonasTxtField[11].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[11].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 1
             case 12:
-                Platform.runLater(() -> {zonasTxtField[12].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[12].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 2
             case 13:
-                Platform.runLater(() -> {zonasTxtField[13].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[13].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 3
             case 14:
-                Platform.runLater(() -> {zonasTxtField[14].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[14].setText(String.valueOf(h.getID()));}); // impresión en la salida túnel 4
             case 15:
-                Platform.runLater(() -> {zonasTxtField[15].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[15].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 1
             case 16:
-                Platform.runLater(() -> {zonasTxtField[16].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[16].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 2
             case 17:
-                Platform.runLater(() -> {zonasTxtField[17].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[17].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 3
             case 18:
-                Platform.runLater(() -> {zonasTxtField[18].setText(String.valueOf(h.getID()));});
+                Platform.runLater(() -> {zonasTxtField[18].setText(String.valueOf(h.getID()));}); // impresión en la zona de riesgo 4
         }
     }
 
