@@ -43,13 +43,15 @@ public class Zombie extends Thread{
                 // Intenta atacar si hay humanos, sino cambia de zona
                 if (apocalipsis.getListaHumanosEnZona(nuevaZona).getListado().isEmpty()){
                     // si no hay humanos cambia de zona
-                    System.out.println("Zombie " + id + " no encuentra humanos en la zona " + nuevaZona);
-
+                    System.out.println("Zombie " + id + " no encuentra humanos en la zona " + (nuevaZona -14));
+                    // Espera  antes de moverse
+                    Thread.sleep((int)(Math.random() * 1000) + 2000);
                 } else { // si hay humanos ataca
                     ListaHilosHumano listaHumanosEnZona = apocalipsis.getListaHumanosEnZona(nuevaZona);
                     int numHumanosEnZona = listaHumanosEnZona.getListado().size();
 
-                    System.out.println("Zombie " + id + " encuentra " + numHumanosEnZona + " humanos en la zona " + nuevaZona);
+                    System.out.println("Zombie " + id + " encuentra " + numHumanosEnZona + " humanos en la zona " + (nuevaZona-14));
+                    //intenta atacar
                     apocalipsis.comprobarParaAtacar(this, apocalipsis.getZonas(nuevaZona));
                 }
             }

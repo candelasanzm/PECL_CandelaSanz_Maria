@@ -21,7 +21,7 @@ public class Tunel {
     public void salirExterior(Humano h){
         try {
             // Humano entra en túnel
-            System.out.println("Humano " + h.getID() + " intenta entrar al Túnel " + id);
+            System.out.println("Humano " + h.getID() + " intenta entrar al Túnel " + (id-2));
             //Mover a la entrada del tunel
             apocalipsis.moverHumano(apocalipsis.getZonas(id), h);
 
@@ -33,22 +33,22 @@ public class Tunel {
                 }
             }
 
-            System.out.println("Humano " + h.getID() + " está esperando para formar grupo en el Túnel " + id);
+            System.out.println("Humano " + h.getID() + " está esperando para formar grupo en el Túnel " + (id-2));
             barrier.await(); //espera a que haya 3 humanos
-            System.out.println("Humano " + id + " forma grupo en el Túnel " + id);
+            System.out.println("Humano " + h.getID() + " forma grupo en el Túnel " + (id-2));
 
             //Entra al tunel
             semaforoTunel.acquire(); // acceden al túnel de uno en uno
             int tunelInterior = 7 + (id - 3); //Zonas 7,8,9,10
             apocalipsis.moverHumano(apocalipsis.getZonas(tunelInterior), h);
-            System.out.println(h.getID() + " atraviesa Túnel" + id);
+            System.out.println(h.getID() + " atraviesa Túnel" + (id-2));
             Thread.sleep(1000); // tiempo de cruce
             semaforoTunel.release(); // se libera el acceso al túnel
 
             //mover zona riesgo
             int zonaRiesgo = 15 + (id - 3); //Zonas 15,16,17,18
             apocalipsis.moverHumano(apocalipsis.getZonas(zonaRiesgo), h);
-            System.out.println("Humano " + h.getID() + " entra en la Zona de Riesgo " + id);
+            System.out.println("Humano " + h.getID() + " entra en la Zona de Riesgo " + (id-2));
 
 
         } catch (Exception e) {

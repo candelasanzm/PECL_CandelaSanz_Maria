@@ -59,7 +59,7 @@ public class Humano extends Thread {
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
                int tunelID = 3 + (int) (Math.random() * 4); // sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
                Tunel tunel = apocalipsis.getTunel(tunelID - 3);
-               System.out.println("Humano " + id + " está en la Entrada del Túnel " + tunelID);
+               System.out.println("Humano " + id + " está en la Entrada del Túnel " + (tunelID-2));
                tunel.salirExterior(this);
 
                // El humano está en la zona de riesgo
@@ -68,7 +68,7 @@ public class Humano extends Thread {
                    System.out.println("Humano " + id + " no pudo defenderse y muere");
                    break;
 
-               } else if (apocalipsis.isDefendido()) {
+               } else if (isMarcado()) {
                    //Si le atacan vuelve directamente a la zona de descanso
                    apocalipsis.moverHumano(apocalipsis.getZonas(1), this); // si el humano se consigue defender pasa a la zona de descanso sin recoger la comida
                    System.out.println("Humano " + id + " está marcado y regresa a la zona segura sin recolectar comida");
@@ -94,6 +94,16 @@ public class Humano extends Thread {
                // Come
                apocalipsis.cogerComida(this);
                sleep((int) (Math.random() * 3000) + 2000);
+
+               if(isMarcado()){
+                   //Vuelve a la zona de descanso
+                   apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
+                   System.out.println("Humano " + id + " está marcado y vuelve a descansar");
+                   Thread.sleep((int)(Math.random()*2)+3);
+
+                   //Se recupera
+                   setMarcado(false);
+               }
 
            }
         } catch(Exception e){

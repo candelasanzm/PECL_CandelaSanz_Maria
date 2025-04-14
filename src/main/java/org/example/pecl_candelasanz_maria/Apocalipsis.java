@@ -141,15 +141,9 @@ public class Apocalipsis {
     }
 
     // Funciones relacionadas con el ataque para el humano
-    public boolean isDefendido(){
+    public boolean isDefendido(){ //devuelve true cuando se salva
         int posibilidad = (int) (Math.random() * 3) + 1; // la posibilidad de supervivencia será de 1, 2 o 3
-        boolean muere = true;
-
-        if (posibilidad < 3){ // si sale 3 será 3 tercios que implica muerto
-            muere = false;
-        }
-
-        return muere;
+        return posibilidad < 3; //Si sale 3 es false
     }
 
     public void defenderse(Humano humano, Zombie zombie){
@@ -158,13 +152,12 @@ public class Apocalipsis {
             System.out.println("Humano " + humano.getID() + " se ha defendido exitosamente y está marcado por el ataque del zombie " + zombie.getID());
         } else {
             humano.setVivo(false);
-
-            System.out.println("El humano " + humano.getID() + " no ha podido defenderse del ataque del zombie " + zombie.getID() + " y muere. Renace como Zombie " + zombie.getID());
+            System.out.println("El humano " + humano.getID() + " no ha podido defenderse del ataque del zombie " + zombie.getID() + " y muere. Renace como Zombie ");
         }
     }
 
     // Funciones relacionadas con el ataque para el zombie
-    public void comprobarParaAtacar(Zombie zombie, Zona zona){
+    public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona){
         ListaHilosHumano listaHumanosEnZona = listaHumanos[zona.getIdZona()]; // obtengo la lista de humanos que hay en la zona que deseo
 
         if (listaHumanosEnZona.getListado().isEmpty()){ // compruebo si la lista es vacía porque entonces el zombie no puede atacar
@@ -175,6 +168,7 @@ public class Apocalipsis {
             } catch (InterruptedException e) {
                 System.out.println("Error al esperar humanos " + e.getMessage());
             }
+            return; //no hay humanos sale
         }
 
         int idHumano = (int) (Math.random() * listaHumanosEnZona.getListado().size()); // cojo un humano al azar de entre los que hay en la zona
@@ -193,6 +187,8 @@ public class Apocalipsis {
 
         // Comprobamos que pasa con el humano después del ataque
         if (!objetivo.isVivo()){
+            //Elimina al humano de la lista
+            listaHumanos[zona.getIdZona()].sacarLista(objetivo);
             zombie.anadirMuerte();
             renacerComoZombie(objetivo,zona);
         } else if(objetivo.isMarcado()) {
@@ -207,6 +203,7 @@ public class Apocalipsis {
         //Crear zombie
         Zombie z = new Zombie(this,id);
         moverZonaZombie(z, zona.getIdZona());
+        System.out.println("Zombie " + id + " ha renacido en la zona " + zona.getNombre());
         z.start();
     }
 
