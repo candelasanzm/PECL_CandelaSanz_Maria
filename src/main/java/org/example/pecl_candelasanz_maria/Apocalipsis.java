@@ -6,25 +6,6 @@ import java.util.concurrent.Semaphore;
 
 public class Apocalipsis {
     // Zonas
-    private Zona zonaComun;
-    private Zona zonaDescanso;
-    private Zona comedor;
-    private Zona entradaTunel1;
-    private Zona entradaTunel2;
-    private Zona entradaTunel3;
-    private Zona entradaTunel4;
-    private Zona tunel1;
-    private Zona tunel2;
-    private Zona tunel3;
-    private Zona tunel4;
-    private Zona salidaTunel1;
-    private Zona salidaTunel2;
-    private Zona salidaTunel3;
-    private Zona salidaTunel4;
-    private Zona zonaRiesgo1;
-    private Zona zonaRiesgo2;
-    private Zona zonaRiesgo3;
-    private Zona zonaRiesgo4;
     private Zona[] zonas; // Creo un array para almacenar las distintas zonas
 
     // Variables Humanos
@@ -39,6 +20,10 @@ public class Apocalipsis {
 
     //Tuneles
     private Tunel[] tuneles;
+
+    // Variables para ver si el humano está vivo o marcado
+    private boolean vivo = true;
+    private boolean marcado = false;
 
     // Semáforo para controlar las distintas zonas
     //private Semaphore[] semaforosZonas;
@@ -87,13 +72,33 @@ public class Apocalipsis {
         }
     }
 
+    // Getter para extraer los datos necesarios
+    public ListaHilosHumano getListaHumanosEnZona(int zona) {
+        return listaHumanos[zona];
+    }
+
     public Zona getZonas(int zona) {
         return zonas[zona];
     }
 
-
     public Tunel getTunel(int idTunel){
         return tuneles[idTunel];
+    }
+
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setVivo(boolean vivo){
+        this.vivo = vivo;
+    }
+
+    public boolean isMarcado() {
+        return marcado;
+    }
+
+    public void setMarcado(boolean marcado) {
+        this.marcado = marcado;
     }
 
     // Movimiento entre zonas
@@ -123,9 +128,9 @@ public class Apocalipsis {
         imprimirComida();
     }
 
-    public synchronized void dejarComida(Humano h, int comida) throws InterruptedException {
+    public synchronized void dejarComida(Humano h, int comida){
         cantComida += comida;
-        System.out.println(h.getID() + " añadió comida");
+        System.out.println(h.getID() + " añadió 2 piezas de comida");
         imprimirComida();
         notifyAll();
     }
@@ -155,6 +160,66 @@ public class Apocalipsis {
         }
     }
 
+    // Funciones relacionadas con el ataque para el humano
+    public boolean isDefendido(){
+        int posibilidad = (int) (Math.random() * 3) + 1; // la posibilidad de supervivencia será de 1, 2 o 3
+        boolean muere = true;
+
+        if (posibilidad < 3){ // si sale 3 será 3 tercios que implica muerto
+            muere = false;
+        }
+
+        return muere;
+    }
+
+    public void defenderse(Humano humano, Zombie zombie){
+        if (isDefendido()){
+            marcado = true;
+            System.out.println("Humano " + humano.getID() + " se ha defendido exitosamente y está marcado por el ataque del zombie " + zombie.getID());
+        } else {
+            vivo = false;
+
+            System.out.println("El humano " + humano.getID() + " no ha podido defenderse y muere. Renace como Zombie " + zombie.getID());
+        }
+    }
+
+    // Funciones relacionadas con el ataque para el zombie
+    public void comprobarParaAtacar(Zombie zombie, Zona zona){
+        ListaHilosHumano listaHumanosEnZona = listaHumanos[zona.getIdZona()]; // obtengo la lista de humanos que hay en la zona que deseo
+
+        if (listaHumanosEnZona.getListado().isEmpty()){ // compruebo si la lista es vacía porque entonces el zombie no puede atacar
+            System.out.println("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
+
+            try { // espera entre 2 y 3 segundos antes de cambiar de zona
+                Thread.sleep((int) (Math.random() * 1000) + 2000);
+            } catch (InterruptedException e) {
+                System.out.println("Error al esperar humanos " + e.getMessage());
+            }
+        }
+
+        int idHumano = (int) (Math.random() * listaHumanosEnZona.getListado().size()); // cojo un humano al azar de entre los que hay en la zona
+        Humano objetivo = listaHumanosEnZona.getListado().get(idHumano);
+
+        System.out.println("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
+
+        // El ataque dura entre 0.5 y 1.5 segundos
+        try {
+            Thread.sleep((int) (Math.random() * 1000) + 500);
+        } catch (InterruptedException e) {
+            System.out.println("Error durante el ataque " + e.getMessage());
+        }
+
+        defenderse(objetivo, zombie); // vemos si el humano se defiende
+
+        // Comprobamos que pasa con el humano después del ataque
+        if (!vivo){
+            zombie.anadirMuerte();
+            System.out.println("Zombie " + zombie.getID() + " ha matado al humano " + objetivo.getID());
+        } else if(marcado) {
+            System.out.println("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
+        }
+    }
+
     // Contar humanos en zonas
     public void recuentoHumanos(){
         for (Zona zona : zonas) {
@@ -164,4 +229,12 @@ public class Apocalipsis {
         }
     }
 
+    // Contar Zombies en zonas
+    public void recuentoZombies(){
+        for (Zona zona : zonas) {
+            int cantZombies = listaZombies[zona.getIdZona()].getListado().size();
+
+            System.out.println(zona.getNombre() + " tiene " + cantZombies + " zombies");
+        }
+    }
 }

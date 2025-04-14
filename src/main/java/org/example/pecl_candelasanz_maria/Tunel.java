@@ -5,17 +5,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
 
 public class Tunel {
-    private Apocalipsis ap;
+    private Apocalipsis apocalipsis;
     private Semaphore semaforoTunel; // controla que el acceso al tunel sea de uno en uno
     private int id; // identificador del tunel
-    private CyclicBarrier b; // permite que los humanos puedan pasar en grupos
+    private CyclicBarrier barrier; // permite que los humanos puedan pasar en grupos
     private final LinkedBlockingQueue colaTunel = new LinkedBlockingQueue<>(); // sin limite
 
-    public Tunel(int id, Apocalipsis ap){
+    public Tunel(int id, Apocalipsis apocalipsis){
         this.id = id;
-        this.ap = ap;
+        this.apocalipsis = apocalipsis;
         this.semaforoTunel = new Semaphore(1); // entran de uno en uno
-        this.b = new CyclicBarrier(3); // pasan en grupos de 3
+        this.barrier = new CyclicBarrier(3); // pasan en grupos de 3
     }
 
     public void salirExterior(Humano h){
@@ -23,7 +23,7 @@ public class Tunel {
             // Humano entra en túnel
             System.out.println("Humano " + h.getID() + " intenta entrar al Túnel " + id);
             //Mover a la entrada del tunel
-            ap.moverHumano(ap.getZonas(id), h);
+            apocalipsis.moverHumano(apocalipsis.getZonas(id), h);
 
             //PRIORIDAD
             synchronized (this) {
@@ -34,20 +34,20 @@ public class Tunel {
             }
 
             System.out.println("Humano " + h.getID() + " está esperando para formar grupo en el Túnel " + id);
-            b.await(); //espera a que haya 3 humanos
+            barrier.await(); //espera a que haya 3 humanos
             System.out.println("Humano " + id + " forma grupo en el Túnel " + id);
 
             //Entra al tunel
             semaforoTunel.acquire(); // acceden al túnel de uno en uno
             int tunelInterior = 7 + (id - 3); //Zonas 7,8,9,10
-            ap.moverHumano(ap.getZonas(tunelInterior), h);
+            apocalipsis.moverHumano(apocalipsis.getZonas(tunelInterior), h);
             System.out.println(h.getID() + " atraviesa Túnel" + id);
             Thread.sleep(1000); // tiempo de cruce
             semaforoTunel.release(); // se libera el acceso al túnel
 
             //mover zona riesgo
             int zonaRiesgo = 15 + (id - 3); //Zonas 15,16,17,18
-            ap.moverHumano(ap.getZonas(zonaRiesgo), h);
+            apocalipsis.moverHumano(apocalipsis.getZonas(zonaRiesgo), h);
             System.out.println("Humano " + h.getID() + " entra en la Zona de Riesgo " + id);
 
 
@@ -63,20 +63,20 @@ public class Tunel {
 
             //entra a la  salida
             int zonaSalida = 11 + (id - 3); //zonas 11,12,13,14
-            ap.moverHumano(ap.getZonas(zonaSalida), h);
+            apocalipsis.moverHumano(apocalipsis.getZonas(zonaSalida), h);
 
             semaforoTunel.acquire(); //de uno en uno
             colaTunel.remove(); //cruza el tunel
 
             //entra al interior del tunel
             int tunelInterior = 7 + (id - 3); //Zonas 7,8,9,10
-            ap.moverHumano(ap.getZonas(tunelInterior), h);
+            apocalipsis.moverHumano(apocalipsis.getZonas(tunelInterior), h);
             System.out.println("Humano " + h.getID() + " entra en Túnel de vuelta");
             Thread.sleep(1000);
             semaforoTunel.release();
 
             //Mover Zona descanso
-            ap.moverHumano(ap.getZonas(1), h);
+            apocalipsis.moverHumano(apocalipsis.getZonas(1), h);
 
             synchronized (this) {
                 notifyAll();

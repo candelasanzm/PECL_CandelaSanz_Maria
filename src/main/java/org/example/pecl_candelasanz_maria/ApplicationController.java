@@ -54,7 +54,7 @@ public class ApplicationController {
     @FXML
     private TextField ZombiesRiesgo4;
 
-    private Apocalipsis ap;
+    private Apocalipsis apocalipsis;
 
     @FXML
     public void initialize() {
@@ -67,7 +67,7 @@ public class ApplicationController {
                 ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4
         };
 
-        ap = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
+        apocalipsis = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
         crearHumano();
         crearZombie();
     }
@@ -76,7 +76,7 @@ public class ApplicationController {
     protected void crearHumano() {
         for(int i = 0; i < 10; i++) {
             try{
-                Humano h = new Humano(ap, ap.getZonas(0));
+                Humano h = new Humano(apocalipsis, apocalipsis.getZonas(0));
                 h.start();
                 //h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
             }catch(Exception e){
@@ -88,7 +88,7 @@ public class ApplicationController {
 
     @FXML
     protected void crearZombie() { //Paciente 0
-        Zombie z = new Zombie(ap);
+        Zombie z = new Zombie(apocalipsis);
         z.start();
     }
 }
