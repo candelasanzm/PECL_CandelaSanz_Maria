@@ -179,7 +179,7 @@ public class Apocalipsis {
         } else {
             vivo = false;
 
-            System.out.println("El humano " + humano.getID() + " no ha podido defenderse y muere. Renace como Zombie " + zombie.getID());
+            System.out.println("El humano " + humano.getID() + " no ha podido defenderse del ataque del zombie " + zombie.getID() + " y muere. Renace como Zombie " + zombie.getID());
         }
     }
 
@@ -214,10 +214,14 @@ public class Apocalipsis {
         // Comprobamos que pasa con el humano después del ataque
         if (!vivo){
             zombie.anadirMuerte();
-            System.out.println("Zombie " + zombie.getID() + " ha matado al humano " + objetivo.getID());
+            renacerComoZombie();
         } else if(marcado) {
             System.out.println("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
         }
+    }
+
+    public void renacerComoZombie(){
+
     }
 
     // Contar humanos en zonas

@@ -46,6 +46,7 @@ public class Humano extends Thread {
                sleep((int) (Math.random() * 3000) + 2000);
                if (! apocalipsis.isVivo()) {
                    System.out.println("Humano " + id + " no pudo defenderse y muere");
+                   break;
 
                } else if (apocalipsis.isDefendido()) {
                    //Si le atacan vuelve directamente a la zona de descanso
@@ -54,9 +55,8 @@ public class Humano extends Thread {
                    sleep((int) (Math.random() * 2000) + 3000);
 
                } else { // Si no es atacado
-                   System.out.println("Humano " + id + " recolecta 2 piezas de comida");
                    // El humano vuelve a la zona segura
-                   System.out.println("Humano " + id + " vuelve al refugio");
+                   System.out.println("Humano " + id + " recolecta 2 piezas de comida y vuelve al refugio");
                    tunel.irRefugio(this);
 
                    // Deja comida en el "almacén"
