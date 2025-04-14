@@ -6,6 +6,10 @@ public class Humano extends Thread {
     private static int contador = 0;
     private Zona zona;
 
+    // Variables para ver si el humano está vivo o marcado
+    private boolean vivo = true;
+    private boolean marcado = false;
+
     public Humano(Apocalipsis apocalipsis, Zona zona){
         contador++;
         this.id = String.format("H%04d", contador);
@@ -23,6 +27,22 @@ public class Humano extends Thread {
 
     public void setZona(Zona zona) {
         this.zona = zona;
+    }
+
+    public boolean isVivo() {
+        return vivo;
+    }
+
+    public void setVivo(boolean vivo){
+        this.vivo = vivo;
+    }
+
+    public boolean isMarcado() {
+        return marcado;
+    }
+
+    public void setMarcado(boolean marcado) {
+        this.marcado = marcado;
     }
 
     public void run(){
@@ -44,7 +64,7 @@ public class Humano extends Thread {
 
                // El humano está en la zona de riesgo
                sleep((int) (Math.random() * 3000) + 2000);
-               if (! apocalipsis.isVivo()) {
+               if (! isVivo()) {
                    System.out.println("Humano " + id + " no pudo defenderse y muere");
                    break;
 

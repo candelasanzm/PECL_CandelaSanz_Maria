@@ -21,10 +21,6 @@ public class Apocalipsis {
     //Tuneles
     private Tunel[] tuneles;
 
-    // Variables para ver si el humano está vivo o marcado
-    private boolean vivo = true;
-    private boolean marcado = false;
-
     // Semáforo para controlar las distintas zonas
     //private Semaphore[] semaforosZonas;
 
@@ -83,22 +79,6 @@ public class Apocalipsis {
 
     public Tunel getTunel(int idTunel){
         return tuneles[idTunel];
-    }
-
-    public boolean isVivo() {
-        return vivo;
-    }
-
-    public void setVivo(boolean vivo){
-        this.vivo = vivo;
-    }
-
-    public boolean isMarcado() {
-        return marcado;
-    }
-
-    public void setMarcado(boolean marcado) {
-        this.marcado = marcado;
     }
 
     // Movimiento entre zonas
@@ -174,10 +154,10 @@ public class Apocalipsis {
 
     public void defenderse(Humano humano, Zombie zombie){
         if (isDefendido()){
-            marcado = true;
+            humano.setMarcado(true);
             System.out.println("Humano " + humano.getID() + " se ha defendido exitosamente y está marcado por el ataque del zombie " + zombie.getID());
         } else {
-            vivo = false;
+            humano.setVivo(false);
 
             System.out.println("El humano " + humano.getID() + " no ha podido defenderse del ataque del zombie " + zombie.getID() + " y muere. Renace como Zombie " + zombie.getID());
         }
@@ -212,16 +192,22 @@ public class Apocalipsis {
         defenderse(objetivo, zombie); // vemos si el humano se defiende
 
         // Comprobamos que pasa con el humano después del ataque
-        if (!vivo){
+        if (!objetivo.isVivo()){
             zombie.anadirMuerte();
-            renacerComoZombie();
-        } else if(marcado) {
+            renacerComoZombie(objetivo,zona);
+        } else if(objetivo.isMarcado()) {
             System.out.println("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
         }
     }
 
-    public void renacerComoZombie(){
+    public void renacerComoZombie(Humano h, Zona zona){
+        //nuevo id de zombie
+        String id = h.getID().replace("H", "Z");
 
+        //Crear zombie
+        Zombie z = new Zombie(this,id);
+        moverZonaZombie(z, zona.getIdZona());
+        z.start();
     }
 
     // Contar humanos en zonas

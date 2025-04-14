@@ -88,7 +88,7 @@ public class ApplicationController {
 
     @FXML
     protected void crearZombie() { //Paciente 0
-        Zombie z = new Zombie(apocalipsis);
+        Zombie z = new Zombie(apocalipsis,"Z0000");
         z.start();
     }
 }
