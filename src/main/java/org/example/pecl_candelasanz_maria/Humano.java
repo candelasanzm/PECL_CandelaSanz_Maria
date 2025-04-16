@@ -103,6 +103,7 @@ public class Humano extends Thread {
                    setMarcado(false);
                }
 
+               apocalipsis.recuentoHumanos(); // vemos cuantos humanos hay en cada zona
            }
         } catch(Exception e){
             apocalipsisLogs.registrarEvento("Error en humano" + e);

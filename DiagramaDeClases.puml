@@ -1,0 +1,156 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Apocalipsis
+class ApocalipsisLogs
+class ApplicationController
+class Humano
+class ListaHilosHumano
+class ListaHilosZombie
+class Tunel
+class Zombie
+class Zona
+
+class Zona{
+-idZona : int
+-nombre : String
++getIdZona() : int
++getNombre() : String
+}
+
+class ListaHilosHumano{
+-listado : ArratList<Humano>
+-txt : TextField
++getListado() : ArratList<Humano>
++ListaHilosHumano(txt : TextField)
++meterLista(h : Humano)
++sacarLista(h : Humano)
++imprimirLista()
+}
+
+class ListaHilosZombie{
+-listado : ArratList<Zombie>
+-txt : TextField
++getListado() : ArratList<Zombie>
++ListaHilosZombie(txt : TextField)
++meterLista(z : Zombie)
++sacarLista(z : Zombie)
++imprimirLista()
+}
+
+class Tunel{
+-apocalipsis : Apocalipsis
+-semaforoTunel : Semaphore
+-id : int
+-barrier : CyclicBarrier
+-colaTunel : LinkedBlockingQueue
+-apocalipsisLogs : ApocalipsisLogs
++Tunel(id : int, apocalipsis : Apocalipsis)
++salirExterior(h : Humano)
++irRefugio(h : Humano)
+}
+
+class Apocalipsis{
+-zonas : Zona[]
+-listaHumanos : ListaHilosHumano[]
+-zonasTxtField : TextField[]
+-cantComida = 0 : int
+-HumanosComida : TextField
+-listaZombies : ListaHilosZombie[]
+-zombiesTxtField : TextField[]
+-tuneles : Tunel[]
+-apocalipsisLogs : ApocalipsisLogs
+
++Apocalipsis(zonasTxtField : TextField[], humanosComida : TextField, zombiesTxtField : TextField[])
++getListaHumanosEnZona(zona : int) : ListaHilosHumano
++getZonas(zona : int) : Zona
++getTunel(idTunel : int) : Tunel
++moverHumano(zonaDestino : Zona, h : Humano)
++cogerComida(h : Humano)
++dejarComida(h : Humano, comida : int)
++imprimirComida()
++moverZonaZombie(z : Zombie, zona : int)
++isDefendido() : boolean
++defenderse(humano : Humano, zombie : Zombie)
++ComprobarParaAtacar(zombie : Zombie, zona : Zona)
++renacerComoZombie(h : Humano, zona : Zona)
++recuentoHumanos()
++recuentoZombies
+}
+
+class Humano extends Thread {
+-apocalipsis : Apocalipsis
+-id : String
+-contador = 0 : int
+-zona : Zona
+-apocalipsisLogs : ApocalipsisLogs
+-vivo = true : boolean
+-marcado = false : boolean
++Humano(apocalipsis : Apocalipsis, zona : Zona)
++getId() : String
++getZona() : Zona
++setZona(zona : Zona)
++isVivo() : boolean
++setVivo(vivo : boolean)
++isMarcado() : boolean
++setMarcado(marcado : boolean)
++run()
+}
+
+class Zombie extends Thread{
+-apocalipsis : Apocalipsis
+-id : String
+-zona = -1 : int
+-contadorMuertes = 0 : int
+-apocalipsisLogs : ApocalipsisLogs
++Zombie(apocalipsis : Apocalipsis, id : String)
++getZona() : int
++setZona(zona : int)
++getId() : String
++anadirMuerte()
++getContadorMuertes() : int
++run()
+}
+
+class ApocalipsisLogs{
+-recursoCompartido : ApocalipsisLogs
+-nombreArchivo = "apocalipsis.txt" : String
+-formatoFecha : DateTimeFormatter
++ApocalipsisLogs()
++getInstancia() : ApocalipsisLogs
++registrarEvento(mensaje : String)
+}
+
+class ApplicationController{
+-HumanosZonaComun : TextField
+-EntradaTunel1 : TextField
+-EntradaTunel2 : TextField
+-EntradaTunel3 : TextField
+-EntradaTunel4 : TextField
+-Tunel1 : TextField
+-Tunel2 : TextField
+-Tunel3 : TextField
+-Tunel4 : TextField
+-SalidaTunel1 : TextField
+-SalidaTunel2 : TextField
+-SalidaTunel3 : TextField
+-SalidaTunel4 : TextField
+-HumanosRiesgo1 : TextField
+-HumanosRiesgo2 : TextField
+-HumanosRiesgo3 : TextField
+-HumanosRiesgo4 : TextField
+-HumanosZonaDescanso : TextField
+-HumanosComedor : TextField
+-HumanosComida : TextField
+-ZombiesRiesgo1 : TextField
+-ZombiesRiesgo2 : TextField
+-ZombiesRiesgo3 : TextField
+-ZombiesRiesgo4 : TextField
+-apocalipsis : Apocalipsis
+-apocalipsisLogs : ApocalipsisLogs
++initialize()
+#crearHumano()
+#crearZombie()
+}
+
+@enduml

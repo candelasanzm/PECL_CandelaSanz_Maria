@@ -55,6 +55,8 @@ public class Zombie extends Thread{
                     //intenta atacar
                     apocalipsis.comprobarParaAtacar(this, apocalipsis.getZonas(nuevaZona));
                 }
+
+                apocalipsis.recuentoZombies(); // vemos cuantos zombies hay en cada zona
             }
         }catch(Exception e){
             apocalipsisLogs.registrarEvento("Error en zombie " + e);
