@@ -21,9 +21,6 @@ public class Apocalipsis {
     //Tuneles
     private Tunel[] tuneles;
 
-    // Semáforo para controlar las distintas zonas
-    //private Semaphore[] semaforosZonas;
-
     public Apocalipsis(TextField[] zonasTxtField, TextField humanosComida, TextField[] zombiesTxtField) {
         this.zonasTxtField = zonasTxtField;
         this.HumanosComida = humanosComida;
@@ -32,7 +29,6 @@ public class Apocalipsis {
         zonas = new Zona[19]; // array para almacenar las distintas zonas
         listaHumanos = new ListaHilosHumano[19]; // array que almacena "sublistas", listas de cada zona, es decir, si tengo zona[0], listaHumanos[0] será la lista de humanos que se encuentren en la zona 0
         listaZombies = new ListaHilosZombie[4]; // los zombies solo se mueven por las zonas de riesgo
-        //semaforosZonas = new Semaphore[19]; // tenemos un semáforo para cada zona
 
         zonas[0] = new Zona(0, "Zona Común");
         zonas[1] = new Zona(1, "Zona Descanso");

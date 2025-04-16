@@ -1,6 +1,5 @@
 package org.example.pecl_candelasanz_maria;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
