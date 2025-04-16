@@ -54,6 +54,7 @@ public class ApplicationController {
     private TextField ZombiesRiesgo4;
 
     private Apocalipsis apocalipsis;
+    private ApocalipsisLogs apocalipsisLogs = ApocalipsisLogs.getInstancia();
 
     @FXML
     public void initialize() {
@@ -81,7 +82,7 @@ public class ApplicationController {
                 h.start();
                 h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
             }catch(Exception e){
-                System.out.println("Error al crear los humanos " + e);
+                apocalipsisLogs.registrarEvento("Error al crear los humanos " + e);
             }
 
         }
@@ -89,7 +90,11 @@ public class ApplicationController {
 
     @FXML
     protected void crearZombie() { //Paciente 0
-        Zombie z = new Zombie(apocalipsis,"Z0000");
-        z.start();
+        try {
+            Zombie z = new Zombie(apocalipsis,"Z0000");
+            z.start();
+        } catch (Exception e) {
+            apocalipsisLogs.registrarEvento("Error al crear zombi: " + e.getMessage());
+        }
     }
 }

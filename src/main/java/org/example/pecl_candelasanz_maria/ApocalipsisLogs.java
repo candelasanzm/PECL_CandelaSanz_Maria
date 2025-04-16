@@ -29,13 +29,11 @@ public class ApocalipsisLogs {
     }
 
     public synchronized void registrarEvento(String mensaje){
-        String tiempo = LocalDateTime.now().format(formatoFecha);
-        String entrada = tiempo + " - " + mensaje;
+        String entrada = LocalDateTime.now().format(formatoFecha) + " - " + mensaje;
 
         try {
             escribirArchivo.write(entrada);
             escribirArchivo.newLine(); // salto de línea
-            escribirArchivo.flush(); // escribe inmediatamente en el archivo
         } catch (IOException e) {
             System.out.println("Error al escribir archivo: " + e.getMessage());
         }

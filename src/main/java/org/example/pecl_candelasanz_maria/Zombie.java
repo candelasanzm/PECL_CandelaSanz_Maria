@@ -5,6 +5,7 @@ public class Zombie extends Thread{
     private String id;
     private int zona = -1; //Si es -1 todavia no tiene zona
     private int contadorMuertes = 0;
+    private ApocalipsisLogs apocalipsisLogs = ApocalipsisLogs.getInstancia();
 
     public Zombie(Apocalipsis apocalipsis, String id) {
         this.apocalipsis = apocalipsis;
@@ -33,7 +34,7 @@ public class Zombie extends Thread{
 
     public void run(){
         try {
-            System.out.println("Se ha creado un nuevo zombie con id " + id);
+            apocalipsisLogs.registrarEvento("Se ha creado un nuevo zombie con id " + id);
             while(true){
 
                 // Elige la zona a la que moverse
@@ -43,20 +44,20 @@ public class Zombie extends Thread{
                 // Intenta atacar si hay humanos, sino cambia de zona
                 if (apocalipsis.getListaHumanosEnZona(nuevaZona).getListado().isEmpty()){
                     // si no hay humanos cambia de zona
-                    System.out.println("Zombie " + id + " no encuentra humanos en la zona " + (nuevaZona -14));
-                    // Espera  antes de moverse
+                    apocalipsisLogs.registrarEvento("Zombie " + id + " no encuentra humanos en la Zona de Riesgo " + (nuevaZona - 14));
+                    // Espera antes de moverse
                     Thread.sleep((int)(Math.random() * 1000) + 2000);
                 } else { // si hay humanos ataca
                     ListaHilosHumano listaHumanosEnZona = apocalipsis.getListaHumanosEnZona(nuevaZona);
                     int numHumanosEnZona = listaHumanosEnZona.getListado().size();
 
-                    System.out.println("Zombie " + id + " encuentra " + numHumanosEnZona + " humanos en la zona " + (nuevaZona-14));
+                    apocalipsisLogs.registrarEvento("Zombie " + id + " encuentra " + numHumanosEnZona + " humanos en la Zona de Riesgo " + (nuevaZona - 14));
                     //intenta atacar
                     apocalipsis.comprobarParaAtacar(this, apocalipsis.getZonas(nuevaZona));
                 }
             }
         }catch(Exception e){
-            System.out.println("Error en zombie " + e);
+            apocalipsisLogs.registrarEvento("Error en zombie " + e);
         }
     }
 }
