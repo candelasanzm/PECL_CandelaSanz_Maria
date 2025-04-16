@@ -66,10 +66,12 @@ public class ApplicationController {
         TextField[] zombiesTxtField = {
                 ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4
         };
-
+        //Crear apocalipsis
         apocalipsis = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
+        //Crear primer zombie
         crearZombie();
-        crearHumano();
+        //Crear humanos
+        new Thread(() -> crearHumano()).start();
     }
 
     @FXML
@@ -78,7 +80,7 @@ public class ApplicationController {
             try{
                 Humano h = new Humano(apocalipsis, apocalipsis.getZonas(0));
                 h.start();
-                // h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
+                h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
             }catch(Exception e){
                 System.out.println("Error al crear los humanos " + e);
             }
