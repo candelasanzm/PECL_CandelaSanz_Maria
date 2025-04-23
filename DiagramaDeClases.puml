@@ -19,9 +19,9 @@ class Zona{
 }
 
 class ListaHilosHumano{
--listado : ArratList<Humano>
+-listado : ArrayList<Humano>
 -txt : TextField
-+getListado() : ArratList<Humano>
++getListado() : ArrayList<Humano>
 +ListaHilosHumano(txt : TextField)
 +meterLista(h : Humano)
 +sacarLista(h : Humano)
@@ -29,9 +29,9 @@ class ListaHilosHumano{
 }
 
 class ListaHilosZombie{
--listado : ArratList<Zombie>
+-listado : ArrayList<Zombie>
 -txt : TextField
-+getListado() : ArratList<Zombie>
++getListado() : ArrayList<Zombie>
 +ListaHilosZombie(txt : TextField)
 +meterLista(z : Zombie)
 +sacarLista(z : Zombie)
@@ -75,7 +75,7 @@ class Apocalipsis{
 +ComprobarParaAtacar(zombie : Zombie, zona : Zona)
 +renacerComoZombie(h : Humano, zona : Zona)
 +recuentoHumanos()
-+recuentoZombies
++recuentoZombies()
 }
 
 class Humano extends Thread {
@@ -152,5 +152,13 @@ class ApplicationController{
 #crearHumano()
 #crearZombie()
 }
+
+Apocalipsis --|> Zona
+Apocalipsis --|> ListaHilosHumano
+Apocalipsis --|> ListaHilosZombie
+Apocalipsis --|> Tunel
+Humano --|> Zona
+Zombie --|> Zona
+ApplicationController --|> Apocalipsis
 
 @enduml
