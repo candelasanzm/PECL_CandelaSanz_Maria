@@ -159,6 +159,7 @@ public class Apocalipsis {
     public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona){
         ListaHilosHumano listaHumanosEnZona = listaHumanos[zona.getIdZona()]; // obtengo la lista de humanos que hay en la zona que deseo
 
+        //YO CREO QUE ESTO SE PUEDE QUITAR, YA SE EVALUA EN ZOMBIE
         if (listaHumanosEnZona.getListado().isEmpty()){ // compruebo si la lista es vacía porque entonces el zombie no puede atacar
             apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
 
@@ -188,8 +189,8 @@ public class Apocalipsis {
         if (!objetivo.isVivo()){
             //Elimina al humano de la lista
             listaHumanos[zona.getIdZona()].sacarLista(objetivo);
-            zombie.anadirMuerte();
             renacerComoZombie(objetivo,zona);
+            zombie.anadirMuerte();
         } else if(objetivo.isMarcado()) {
             apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
         }

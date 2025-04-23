@@ -40,7 +40,6 @@ public class Zombie extends Thread{
                 // Elige la zona a la que moverse
                 int nuevaZona = 15 + (int) (Math.random() * 4); // genera un id entre 15 y 18 ya que las zonas de riesgo son la 15, 16, 17 y 18
                 apocalipsis.moverZonaZombie(this, nuevaZona);
-
                 // Intenta atacar si hay humanos, sino cambia de zona
                 if (apocalipsis.getListaHumanosEnZona(nuevaZona).getListado().isEmpty()){
                     // si no hay humanos cambia de zona
@@ -55,8 +54,7 @@ public class Zombie extends Thread{
                     //intenta atacar
                     apocalipsis.comprobarParaAtacar(this, apocalipsis.getZonas(nuevaZona));
                 }
-
-                apocalipsis.recuentoZombies(); // vemos cuantos zombies hay en cada zona
+                //apocalipsis.recuentoZombies(); // vemos cuantos zombies hay en cada zona
             }
         }catch(Exception e){
             apocalipsisLogs.registrarEvento("Error en zombie " + e);
