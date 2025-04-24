@@ -43,7 +43,7 @@ class Tunel{
 -semaforoTunel : Semaphore
 -id : int
 -barrier : CyclicBarrier
--colaTunel : LinkedBlockingQueue
+-colaTunel : LinkedBlockingQueue<Humano>
 -apocalipsisLogs : ApocalipsisLogs
 +Tunel(id : int, apocalipsis : Apocalipsis)
 +salirExterior(h : Humano)
@@ -72,7 +72,7 @@ class Apocalipsis{
 +moverZonaZombie(z : Zombie, zona : int)
 +isDefendido() : boolean
 +defenderse(humano : Humano, zombie : Zombie)
-+ComprobarParaAtacar(zombie : Zombie, zona : Zona)
++comprobarParaAtacar(zombie : Zombie, zona : Zona)
 +renacerComoZombie(h : Humano, zona : Zona)
 +recuentoHumanos()
 +recuentoZombies()
@@ -87,7 +87,7 @@ class Humano extends Thread {
 -vivo = true : boolean
 -marcado = false : boolean
 +Humano(apocalipsis : Apocalipsis, zona : Zona)
-+getId() : String
++getID() : String
 +getZona() : Zona
 +setZona(zona : Zona)
 +isVivo() : boolean
@@ -106,7 +106,7 @@ class Zombie extends Thread{
 +Zombie(apocalipsis : Apocalipsis, id : String)
 +getZona() : int
 +setZona(zona : int)
-+getId() : String
++getID() : String
 +anadirMuerte()
 +getContadorMuertes() : int
 +run()
@@ -153,12 +153,17 @@ class ApplicationController{
 #crearZombie()
 }
 
-Apocalipsis --|> Zona
-Apocalipsis --|> ListaHilosHumano
-Apocalipsis --|> ListaHilosZombie
-Apocalipsis --|> Tunel
-Humano --|> Zona
-Zombie --|> Zona
-ApplicationController --|> Apocalipsis
+Apocalipsis *-- Zona
+Apocalipsis *-- ListaHilosHumano
+Apocalipsis *-- ListaHilosZombie
+Apocalipsis *-- Tunel
+Humano --> Zona
+Zombie --> Zona
+ApplicationController *-- Apocalipsis
+ApocalipsisLogs --> Apocalipsis
+ApocalipsisLogs --> Humano
+ApocalipsisLogs --> Zombie
+ApocalipsisLogs --> Tunel
+
 
 @enduml
