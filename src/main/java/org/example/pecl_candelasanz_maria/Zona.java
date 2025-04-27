@@ -13,6 +13,10 @@ public class Zona {
         return idZona;
     }
 
+    public void setIdZona(int idZona) {
+        this.idZona = idZona;
+    }
+
     public String getNombre() {
         return nombre;
     }

@@ -85,6 +85,13 @@ public class Apocalipsis {
         return tuneles[idTunel];
     }
 
+    // Humano empieza en Zona Común
+    public synchronized void empiezaZonaComun(Zona zona, Humano h){
+        apocalipsisLogs.registrarEvento("Humano " + h.getID() + " está en la Zona Común");
+        listaHumanos[zona.getIdZona()].meterLista(h);
+        h.setZona(zona);
+    }
+
     // Movimiento entre zonas
     public synchronized void moverHumano(Zona zonaDestino, Humano h) {
         Zona zonaActual = h.getZona();

@@ -12,7 +12,6 @@ public class Humano extends Thread {
     // Variables para ver si el humano está vivo o marcado
     private boolean vivo = true;
     private boolean marcado = false;
-    private boolean seleccionado = false;
 
     public Humano(Apocalipsis apocalipsis, Zona zona){
         this.id = String.format("H%04d", contador.incrementAndGet());
@@ -51,13 +50,12 @@ public class Humano extends Thread {
     public void run(){
         try{
            // Se crea el humano
-           apocalipsisLogs.registrarEvento("Nuevo humano " + id);
-           apocalipsisLogs.registrarEvento("Humano " + id + " está en la Zona Común");
+           apocalipsisLogs.registrarEvento("Se ha creado un nuevo humano con id " + id);
+           // El humano empieza en la zona común
+           apocalipsis.empiezaZonaComun(apocalipsis.getZonas(0), this);
+           sleep((int) (Math.random() * 1000) + 1000);
 
            while(!Thread.currentThread().isInterrupted()) {
-               // El humano empieza en la zona común
-               apocalipsis.moverHumano(apocalipsis.getZonas(0),this);
-               sleep((int) (Math.random() * 1000) + 1000);
 
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
                int tunelID = 3 + (int) (Math.random() * 4); // sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
@@ -105,7 +103,8 @@ public class Humano extends Thread {
                    setMarcado(false);
                }
 
-               apocalipsis.recuentoHumanos(); // vemos cuantos humanos hay en cada zona
+               // Regresa a la Zona Común
+               apocalipsis.moverHumano(apocalipsis.getZonas(0), this);
            }
         } catch(Exception e){
             apocalipsisLogs.registrarEvento("Error en humano" + e);
