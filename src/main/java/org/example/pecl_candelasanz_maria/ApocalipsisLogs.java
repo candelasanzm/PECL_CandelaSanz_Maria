@@ -5,10 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class ApocalipsisLogs {
     private static ApocalipsisLogs recursoCompartido;
-    private static final String nombreArchivo = "apocalipsis.txt"; // es el nombre del archivo donde se guardarán los log
+    private static final String nombreArchivo = "apocalipsis" + new Date().getTime() + ".txt"; // es el nombre del archivo donde se guardarán los log
     private static final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"); // establezco el formato de fecha y hora que quiero en la entrada de cada log
     private BufferedWriter escribirArchivo;
 

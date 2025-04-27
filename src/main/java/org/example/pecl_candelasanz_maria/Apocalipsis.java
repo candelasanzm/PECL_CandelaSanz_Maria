@@ -88,11 +88,9 @@ public class Apocalipsis {
     // Movimiento entre zonas
     public synchronized void moverHumano(Zona zonaDestino, Humano h) {
         Zona zonaActual = h.getZona();
-        if (zonaActual != null) {
-            listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
-        }
 
         apocalipsisLogs.registrarEvento("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
+        listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
         listaHumanos[zonaDestino.getIdZona()].meterLista(h); //mete en la nueva zona y actualiza interfaz
         h.setZona(zonaDestino);
     }
@@ -167,9 +165,8 @@ public class Apocalipsis {
 
     // Funciones relacionadas con el ataque para el zombie
     public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona){
-        ListaHilosHumano listaHumanosEnZona = listaHumanos[zona.getIdZona()]; // obtengo la lista de humanos que hay en la zona que deseo
 
-        if (listaHumanosEnZona.getListado().isEmpty()){ // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
+        if (listaHumanos[zona.getIdZona()].getListado().isEmpty()){ // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
             apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
 
             try { // Espera entre 2 y 3 segundos antes de cambiar de zona
@@ -180,8 +177,8 @@ public class Apocalipsis {
             return; // Como no hay humanos sale
         }
 
-        int idHumano = (int) (Math.random() * listaHumanosEnZona.getListado().size()); // cojo un humano al azar de entre los que hay en la zona
-        Humano objetivo = listaHumanosEnZona.getListado().get(idHumano);
+        int idHumano = (int) (Math.random() * listaHumanos[zona.getIdZona()].getListado().size()); // cojo un humano al azar de entre los que hay en la zona
+        Humano objetivo = listaHumanos[zona.getIdZona()].getListado().get(idHumano);
 
         apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
 

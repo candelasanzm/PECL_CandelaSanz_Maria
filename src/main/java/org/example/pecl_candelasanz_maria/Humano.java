@@ -12,6 +12,7 @@ public class Humano extends Thread {
     // Variables para ver si el humano está vivo o marcado
     private boolean vivo = true;
     private boolean marcado = false;
+    private boolean seleccionado = false;
 
     public Humano(Apocalipsis apocalipsis, Zona zona){
         this.id = String.format("H%04d", contador.incrementAndGet());

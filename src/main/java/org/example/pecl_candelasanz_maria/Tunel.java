@@ -22,7 +22,7 @@ public class Tunel {
     public void salirExterior(Humano h){
         try {
             // Humano entra en túnel
-            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " intenta entrar al Túnel " + (id-2));
+            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " intenta entrar al Túnel " + (id - 2));
 
             //Mover a la entrada del tunel
             apocalipsis.moverHumano(apocalipsis.getZonas(id), h);
@@ -35,22 +35,22 @@ public class Tunel {
                 }
             }
 
-            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " está esperando para formar grupo en el Túnel " + (id-2));
+            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " está esperando para formar grupo en el Túnel " + (id - 2));
             barrier.await(); // Espera a que haya 3 humanos
-            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " forma grupo en el Túnel " + (id-2));
+            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " forma grupo en el Túnel " + (id - 2));
 
             //Entra al tunel
             semaforoTunel.acquire(); // Acceden al túnel de uno en uno
             int tunelInterior = 7 + (id - 3); // Zonas 7,8,9,10
             apocalipsis.moverHumano(apocalipsis.getZonas(tunelInterior), h);
-            apocalipsisLogs.registrarEvento(h.getID() + " atraviesa Túnel" + (id-2));
+            apocalipsisLogs.registrarEvento(h.getID() + " atraviesa Túnel" + (id - 2));
             Thread.sleep(1000); // Tiempo de cruce del túnel
             semaforoTunel.release(); // Se libera el acceso al túnel
 
             // Mover zona riesgo
             int zonaRiesgo = 15 + (id - 3); // Zonas 15,16,17,18
             apocalipsis.moverHumano(apocalipsis.getZonas(zonaRiesgo), h);
-            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " entra en la Zona de Riesgo " + (id-2));
+            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " entra en la Zona de Riesgo " + (id - 2));
 
         } catch (Exception e) {
             apocalipsisLogs.registrarEvento("Error en Túnel " + e.getMessage());
