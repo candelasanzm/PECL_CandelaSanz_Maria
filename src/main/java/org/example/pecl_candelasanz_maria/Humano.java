@@ -1,9 +1,11 @@
 package org.example.pecl_candelasanz_maria;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Humano extends Thread {
     private Apocalipsis apocalipsis;
     private String id;
-    private static int contador = 0;
+    private static AtomicInteger contador = new AtomicInteger(0);
     private Zona zona;
     private ApocalipsisLogs apocalipsisLogs = ApocalipsisLogs.getInstancia();
 
@@ -12,8 +14,7 @@ public class Humano extends Thread {
     private boolean marcado = false;
 
     public Humano(Apocalipsis apocalipsis, Zona zona){
-        contador++;
-        this.id = String.format("H%04d", contador);
+        this.id = String.format("H%04d", contador.incrementAndGet());
         this.apocalipsis = apocalipsis;
         this.zona = zona;
     }
@@ -52,7 +53,7 @@ public class Humano extends Thread {
            apocalipsisLogs.registrarEvento("Nuevo humano " + id);
            apocalipsisLogs.registrarEvento("Humano " + id + " está en la Zona Común");
 
-           while(true) {
+           while(!Thread.currentThread().isInterrupted()) {
                // El humano empieza en la zona común
                apocalipsis.moverHumano(apocalipsis.getZonas(0),this);
                sleep((int) (Math.random() * 1000) + 1000);
@@ -107,6 +108,7 @@ public class Humano extends Thread {
            }
         } catch(Exception e){
             apocalipsisLogs.registrarEvento("Error en humano" + e);
+            Thread.currentThread().isInterrupted();
         }
     }
 

@@ -3,6 +3,9 @@ package org.example.pecl_candelasanz_maria;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class ApplicationController {
     @FXML
     private TextField HumanosZonaComun;
@@ -60,27 +63,35 @@ public class ApplicationController {
     public void initialize() {
         // Creo arrays de TextFields para el constructor
         TextField[] zonasTxtField = {
-                HumanosZonaComun, HumanosZonaDescanso, HumanosComedor, EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4, Tunel1, Tunel2, Tunel3, Tunel4, SalidaTunel1, SalidaTunel2, SalidaTunel3, SalidaTunel4, HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4
+                HumanosZonaComun, HumanosZonaDescanso, HumanosComedor,
+                EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4,
+                Tunel1, Tunel2, Tunel3, Tunel4,
+                SalidaTunel1, SalidaTunel2, SalidaTunel3, SalidaTunel4,
+                HumanosRiesgo1, HumanosRiesgo2, HumanosRiesgo3, HumanosRiesgo4
         };
 
         TextField[] zombiesTxtField = {
                 ZombiesRiesgo1, ZombiesRiesgo2, ZombiesRiesgo3, ZombiesRiesgo4
         };
+
         //Crear apocalipsis
         apocalipsis = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
+
         //Crear primer zombie
         crearZombie();
+
         //Crear humanos
-        new Thread(() -> crearHumano()).start();
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        executorService.execute(this :: crearHumano);
     }
 
     @FXML
     protected void crearHumano() {
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 20; i++) {
             try{
                 Humano h = new Humano(apocalipsis, apocalipsis.getZonas(0));
                 h.start();
-                h.sleep((int)(Math.random() * 1500) + 500); //se crean escalonados
+                h.sleep((int)(Math.random() * 1500) + 500); // Se crean escalonados
             }catch(Exception e){
                 apocalipsisLogs.registrarEvento("Error al crear los humanos " + e);
             }

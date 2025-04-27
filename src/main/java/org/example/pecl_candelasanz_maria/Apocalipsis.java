@@ -3,16 +3,21 @@ package org.example.pecl_candelasanz_maria;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Apocalipsis {
     // Zonas
     private Zona[] zonas; // Creo un array para almacenar las distintas zonas
 
     // Variables Humanos
-    private ListaHilosHumano[] listaHumanos; // lista donde vamos a manejar todos los humanos
-    private TextField[] zonasTxtField; // array de textfields para la interfaz
-    private int cantComida = 0; // vemos cuánta comida hay
+    private ListaHilosHumano[] listaHumanos; // Lista donde vamos a manejar todos los humanos
+    private TextField[] zonasTxtField; // Array de Textfields para la interfaz
+    private int cantComida = 0; // Vemos cuánta comida hay, "almacén" de comida
     private TextField HumanosComida;
+    private Lock comidaLock = new ReentrantLock();
+    private Condition comidaDisponible = comidaLock.newCondition();
 
     // Variables Zombies
     private ListaHilosZombie[] listaZombies;
@@ -29,9 +34,9 @@ public class Apocalipsis {
         this.HumanosComida = humanosComida;
         this.zombiesTxtField = zombiesTxtField;
 
-        zonas = new Zona[19]; // array para almacenar las distintas zonas
-        listaHumanos = new ListaHilosHumano[19]; // array que almacena "sublistas", listas de cada zona, es decir, si tengo zona[0], listaHumanos[0] será la lista de humanos que se encuentren en la zona 0
-        listaZombies = new ListaHilosZombie[4]; // los zombies solo se mueven por las zonas de riesgo
+        zonas = new Zona[19]; // Array para almacenar las distintas zonas
+        listaHumanos = new ListaHilosHumano[19]; // Array que almacena "sublistas", listas de cada zona, es decir, si tengo zona[0], listaHumanos[0] será la lista de humanos que se encuentren en la zona 0
+        listaZombies = new ListaHilosZombie[4]; // Los zombies solo se mueven por las zonas de riesgo
 
         zonas[0] = new Zona(0, "Zona Común");
         zonas[1] = new Zona(1, "Zona Descanso");
@@ -57,13 +62,13 @@ public class Apocalipsis {
             listaHumanos[i] = new ListaHilosHumano(zonasTxtField[i]);
         }
 
-        for (int i = 15; i < 19; i++) { // ya que los zombies solo se mueven por las zonas de riesgo que tienen ids del 15 al 18
+        for (int i = 15; i < 19; i++) { // Ya que los zombies solo se mueven por las zonas de riesgo que tienen ids del 15 al 18
             listaZombies[i - 15] = new ListaHilosZombie(zombiesTxtField[i - 15]);
         }
 
         tuneles = new Tunel[4];
         for(int i = 0; i < 4; i++){
-            tuneles[i]=new Tunel(3 + i, this); //id=3,4,5,6
+            tuneles[i]=new Tunel(3 + i, this); // Id = 3, 4, 5, 6
         }
     }
 
@@ -81,37 +86,43 @@ public class Apocalipsis {
     }
 
     // Movimiento entre zonas
-    public void moverHumano(Zona zonaDestino, Humano h) {
-        try {
-            Zona zonaActual = h.getZona();
-            if (zonaActual != null) {
-                listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
-            }
-
-            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
-            listaHumanos[zonaDestino.getIdZona()].meterLista(h); //mete en la nueva zona y actualiza interfaz
-            h.setZona(zonaDestino);
-        } catch (Exception e) {
-            apocalipsisLogs.registrarEvento("Error al mover humano " + e.getMessage());
+    public synchronized void moverHumano(Zona zonaDestino, Humano h) {
+        Zona zonaActual = h.getZona();
+        if (zonaActual != null) {
+            listaHumanos[zonaActual.getIdZona()].sacarLista(h); //saca de la zona anterior y actualiza interfaz
         }
+
+        apocalipsisLogs.registrarEvento("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
+        listaHumanos[zonaDestino.getIdZona()].meterLista(h); //mete en la nueva zona y actualiza interfaz
+        h.setZona(zonaDestino);
     }
 
     // Comida
-    public synchronized void cogerComida(Humano h) throws InterruptedException { // coge comida del comedor y come
-        while (cantComida == 0) {
-            apocalipsisLogs.registrarEvento(h.getID() + " espera porque no hay comida");
-            wait();
+    public void cogerComida(Humano h) throws InterruptedException { // Coge comida del comedor y come
+        comidaLock.lock();
+        try {
+            while (cantComida == 0) {
+                apocalipsisLogs.registrarEvento(h.getID() + " espera porque no hay comida");
+                comidaDisponible.await();
+            }
+            cantComida--;
+            apocalipsisLogs.registrarEvento("Humano " + h.getID() + " coge comida y va a comer. Quedan " + cantComida + " piezas de comida");
+            imprimirComida();
+        } finally {
+            comidaLock.unlock();
         }
-        cantComida--;
-        apocalipsisLogs.registrarEvento("Humano " + h.getID() + " coge comida y va a comer. Quedan " + cantComida + " piezas de comida");
-        imprimirComida();
     }
 
-    public synchronized void dejarComida(Humano h, int comida){
-        cantComida += comida;
-        apocalipsisLogs.registrarEvento(h.getID() + " añadió 2 piezas de comida");
-        imprimirComida();
-        notifyAll();
+    public void dejarComida(Humano h, int comida){
+        comidaLock.lock();
+        try {
+            cantComida += comida;
+            apocalipsisLogs.registrarEvento(h.getID() + " añadió 2 piezas de comida");
+            imprimirComida();
+            comidaDisponible.signal();
+        } finally {
+            comidaLock.unlock();
+        }
     }
 
     public void imprimirComida() { // imprime en la interfaz la cantidad de comida que hay
@@ -123,10 +134,11 @@ public class Apocalipsis {
         // Limito el movimiento del zombie entre las zonas de riesgo
         if (zona < 15 || zona > 18){
             apocalipsisLogs.registrarEvento("Zombie " + z.getID() + " no puede moverse a esa zona");
+            return ; // Se para aquí en ved de seguir ejecutándose
         }
 
         int zonaAnterior = z.getZona();
-        try {
+        synchronized (this){
             if(zonaAnterior != -1){ // si ya tiene zona se elimina de la zona en la que estaba
                 listaZombies[zonaAnterior - 15].sacarLista(z);
             }
@@ -134,8 +146,6 @@ public class Apocalipsis {
             listaZombies[zona - 15].meterLista(z);
             z.setZona(zona); // actualizamos la nueva zona
             apocalipsisLogs.registrarEvento("Zombie " + z.getID() + " se ha movido a zona " + zonas[zona].getNombre());
-        } catch (Exception e) {
-            apocalipsisLogs.registrarEvento("Error al mover zombie " + e.getMessage());
         }
     }
 
@@ -159,16 +169,15 @@ public class Apocalipsis {
     public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona){
         ListaHilosHumano listaHumanosEnZona = listaHumanos[zona.getIdZona()]; // obtengo la lista de humanos que hay en la zona que deseo
 
-        //YO CREO QUE ESTO SE PUEDE QUITAR, YA SE EVALUA EN ZOMBIE
-        if (listaHumanosEnZona.getListado().isEmpty()){ // compruebo si la lista es vacía porque entonces el zombie no puede atacar
+        if (listaHumanosEnZona.getListado().isEmpty()){ // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
             apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
 
-            try { // espera entre 2 y 3 segundos antes de cambiar de zona
+            try { // Espera entre 2 y 3 segundos antes de cambiar de zona
                 Thread.sleep((int) (Math.random() * 1000) + 2000);
             } catch (InterruptedException e) {
                 apocalipsisLogs.registrarEvento("Error al esperar humanos " + e.getMessage());
             }
-            return; //no hay humanos sale
+            return; // Como no hay humanos sale
         }
 
         int idHumano = (int) (Math.random() * listaHumanosEnZona.getListado().size()); // cojo un humano al azar de entre los que hay en la zona
@@ -189,19 +198,21 @@ public class Apocalipsis {
         if (!objetivo.isVivo()){
             //Elimina al humano de la lista
             listaHumanos[zona.getIdZona()].sacarLista(objetivo);
-            renacerComoZombie(objetivo,zona);
             zombie.anadirMuerte();
+            renacerComoZombie(objetivo,zona);
         } else if(objetivo.isMarcado()) {
             apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
         }
     }
 
     public void renacerComoZombie(Humano h, Zona zona){
-        //nuevo id de zombie
-        String id = h.getID().replace("H", "Z");
+        // Eliminar el humano antes de crear el zombie
+        listaHumanos[zona.getIdZona()].sacarLista(h);
 
-        //Crear zombie
+        // Crear zombie
+        String id = h.getID().replace("H", "Z");
         Zombie z = new Zombie(this,id);
+
         moverZonaZombie(z, zona.getIdZona());
         apocalipsisLogs.registrarEvento("Zombie " + id + " ha renacido en la zona " + zona.getNombre());
         z.start();
