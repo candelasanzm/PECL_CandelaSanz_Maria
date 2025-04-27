@@ -221,22 +221,4 @@ public class Apocalipsis {
         apocalipsisLogs.registrarEvento("Zombie " + id + " ha renacido en la zona " + zona.getNombre());
         z.start();
     }
-
-    // Contar humanos en zonas
-    public void recuentoHumanos(){
-        for (Zona zona : zonas) {
-            int cantHumanos = listaHumanos[zona.getIdZona()].getListado().size();
-
-            apocalipsisLogs.registrarEvento(zona.getNombre() + " tiene " + cantHumanos + " humanos");
-        }
-    }
-
-    // Contar Zombies en zonas
-    public void recuentoZombies(){
-        for (Zona zona : zonas) {
-            int cantZombies = listaZombies[zona.getIdZona()].getListado().size();
-
-            apocalipsisLogs.registrarEvento(zona.getNombre() + " tiene " + cantZombies + " zombies");
-        }
-    }
 }
