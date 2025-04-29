@@ -171,8 +171,8 @@ public class Apocalipsis {
     }
 
     // Funciones relacionadas con el ataque para el zombie
-    public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona){
-
+    public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona)
+    {
         if (listaHumanos[zona.getIdZona()].getListado().isEmpty()){ // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
             apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
 
