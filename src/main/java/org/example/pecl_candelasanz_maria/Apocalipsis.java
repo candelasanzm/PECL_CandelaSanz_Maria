@@ -9,11 +9,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Apocalipsis {
     // Zonas
-    private Zona[] zonas; // Creo un array para almacenar las distintas zonas
+    private Zona[] zonas; // Creo una lista para almacenar las distintas zonas
 
     // Variables Humanos
     private ListaHilosHumano[] listaHumanos; // Lista donde vamos a manejar todos los humanos
-    private TextField[] zonasTxtField; // Array de Textfields para la interfaz
+    private TextField[] zonasTxtField; // lista de Textfields para la interfaz
     private int cantComida = 0; // Vemos cuánta comida hay, "almacén" de comida
     private TextField HumanosComida;
     private Lock comidaLock = new ReentrantLock();
@@ -34,8 +34,8 @@ public class Apocalipsis {
         this.HumanosComida = humanosComida;
         this.zombiesTxtField = zombiesTxtField;
 
-        zonas = new Zona[19]; // Array para almacenar las distintas zonas
-        listaHumanos = new ListaHilosHumano[19]; // Array que almacena "sublistas", listas de cada zona, es decir, si tengo zona[0], listaHumanos[0] será la lista de humanos que se encuentren en la zona 0
+        zonas = new Zona[19]; // Lista para almacenar las distintas zonas
+        listaHumanos = new ListaHilosHumano[19]; // Lista que almacena "sublistas", listas de cada zona, es decir, si tengo zona[0], listaHumanos[0] será la lista de humanos que se encuentren en la zona 0
         listaZombies = new ListaHilosZombie[4]; // Los zombies solo se mueven por las zonas de riesgo
 
         zonas[0] = new Zona(0, "Zona Común");
@@ -171,48 +171,49 @@ public class Apocalipsis {
     }
 
     // Funciones relacionadas con el ataque para el zombie
-    public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona)
-    {
-        if (listaHumanos[zona.getIdZona()].getListado().isEmpty()){ // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
-            apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
+    public void comprobarParaAtacar(Zombie zombie, Zona zona){
+        ListaHilosHumano lista = listaHumanos[zona.getIdZona()]; //lista de la zona en que se ataca
+        synchronized (lista) {
+            if (lista.getListado().isEmpty()) { // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
+                apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
 
-            try { // Espera entre 2 y 3 segundos antes de cambiar de zona
-                Thread.sleep((int) (Math.random() * 1000) + 2000);
-            } catch (InterruptedException e) {
-                apocalipsisLogs.registrarEvento("Error al esperar humanos " + e.getMessage());
+                try { // Espera entre 2 y 3 segundos antes de cambiar de zona
+                    Thread.sleep((int) (Math.random() * 1000) + 2000);
+                } catch (InterruptedException e) {
+                    apocalipsisLogs.registrarEvento("Error al esperar humanos " + e.getMessage());
+                }
+                return; // Como no hay humanos sale
             }
-            return; // Como no hay humanos sale
-        }
+            //Elegir objetivo
+            int idHumano = (int) (Math.random() * lista.getListado().size()); // cojo un humano al azar de entre los que hay en la zona
+            Humano objetivo = lista.getListado().get(idHumano);
 
-        int idHumano = (int) (Math.random() * listaHumanos[zona.getIdZona()].getListado().size()); // cojo un humano al azar de entre los que hay en la zona
-        Humano objetivo = listaHumanos[zona.getIdZona()].getListado().get(idHumano);
+            synchronized (objetivo) {
+                apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
 
-        apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
+                // El ataque dura entre 0.5 y 1.5 segundos
+                try {
+                    Thread.sleep((int) (Math.random() * 1000) + 500);
+                } catch (InterruptedException e) {
+                    apocalipsisLogs.registrarEvento("Error durante el ataque " + e.getMessage());
+                }
 
-        // El ataque dura entre 0.5 y 1.5 segundos
-        try {
-            Thread.sleep((int) (Math.random() * 1000) + 500);
-        } catch (InterruptedException e) {
-            apocalipsisLogs.registrarEvento("Error durante el ataque " + e.getMessage());
-        }
+                defenderse(objetivo, zombie); // vemos si el humano se defiende
 
-        defenderse(objetivo, zombie); // vemos si el humano se defiende
-
-        // Comprobamos que pasa con el humano después del ataque
-        if (!objetivo.isVivo()){
-            //Elimina al humano de la lista
-            listaHumanos[zona.getIdZona()].sacarLista(objetivo);
-            zombie.anadirMuerte();
-            renacerComoZombie(objetivo,zona);
-        } else if(objetivo.isMarcado()) {
-            apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
+                // Comprobamos que pasa con el humano después del ataque
+                if (!objetivo.isVivo()) {
+                    //Elimina al humano de la lista
+                    lista.sacarLista(objetivo);
+                    zombie.anadirMuerte();
+                    renacerComoZombie(objetivo, zona);
+                } else if (objetivo.isMarcado()) {
+                    apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
+                }
+            }
         }
     }
 
     public void renacerComoZombie(Humano h, Zona zona){
-        // Eliminar el humano antes de crear el zombie
-        listaHumanos[zona.getIdZona()].sacarLista(h);
-
         // Crear zombie
         String id = h.getID().replace("H", "Z");
         Zombie z = new Zombie(this,id);

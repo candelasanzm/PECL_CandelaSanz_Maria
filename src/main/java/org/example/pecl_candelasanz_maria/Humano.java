@@ -107,8 +107,8 @@ public class Humano extends Thread {
                apocalipsis.moverHumano(apocalipsis.getZonas(0), this);
            }
         } catch(Exception e){
+            Thread.currentThread().interrupt();
             apocalipsisLogs.registrarEvento("Error en humano" + e);
-            Thread.currentThread().isInterrupted();
         }
     }
 

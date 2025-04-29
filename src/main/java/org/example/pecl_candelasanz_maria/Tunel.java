@@ -44,10 +44,6 @@ public class Tunel {
             Thread.sleep(1000); // Tiempo de cruce del túnel
             semaforoTunel.release(); // Se libera el acceso al túnel
 
-            // Mover a la salida del Túnel
-            int salidaTunel = 11 + (id - 3); // Zonas 11, 12, 13, 14
-            apocalipsis.moverHumano(apocalipsis.getZonas(salidaTunel), h);
-
             // Mover zona riesgo
             int zonaRiesgo = 15 + (id - 3); // Zonas 15,16,17,18
             apocalipsis.moverHumano(apocalipsis.getZonas(zonaRiesgo), h);

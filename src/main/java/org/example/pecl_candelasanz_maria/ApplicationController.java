@@ -61,7 +61,7 @@ public class ApplicationController {
 
     @FXML
     public void initialize() {
-        // Creo arrays de TextFields para el constructor
+        // Creo listas de TextFields para el constructor
         TextField[] zonasTxtField = {
                 HumanosZonaComun, HumanosZonaDescanso, HumanosComedor,
                 EntradaTunel1, EntradaTunel2, EntradaTunel3, EntradaTunel4,
@@ -81,17 +81,16 @@ public class ApplicationController {
         crearZombie();
 
         //Crear humanos
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        executorService.execute(this :: crearHumano);
+        new Thread(() -> crearHumano()).start();
     }
 
     @FXML
     protected void crearHumano() {
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < 30; i++) {
             try{
                 Humano h = new Humano(apocalipsis, apocalipsis.getZonas(0));
                 h.start();
-                h.sleep((int)(Math.random() * 1500) + 500); // Se crean escalonados
+                Thread.sleep((int)(Math.random() * 1500) + 500); // Se crean escalonados
             }catch(Exception e){
                 apocalipsisLogs.registrarEvento("Error al crear los humanos " + e);
             }
