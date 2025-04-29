@@ -55,10 +55,10 @@ public class Humano extends Thread {
            apocalipsis.empiezaZonaComun(apocalipsis.getZonas(0), this);
            sleep((int) (Math.random() * 1000) + 1000);
 
-           while(!Thread.currentThread().isInterrupted()) {
+           while(!Thread.currentThread().isInterrupted() && isVivo()) { // Solo sigue la rutina si el hilo no ha sido interrumpido y si el humano está vivo
 
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
-               int tunelID = 3 + (int) (Math.random() * 4); // sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
+               int tunelID = 3 + (int) (Math.random() * 4); // Sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
                Tunel tunel = apocalipsis.getTunel(tunelID - 3);
                tunel.salirExterior(this);
 
@@ -70,7 +70,7 @@ public class Humano extends Thread {
 
                } else if (isMarcado()) {
                    //Si le atacan vuelve directamente a la zona de descanso
-                   apocalipsis.moverHumano(apocalipsis.getZonas(1), this); // si el humano se consigue defender pasa a la zona de descanso sin recoger la comida
+                   apocalipsis.moverHumano(apocalipsis.getZonas(1), this); // Si el humano se consigue defender pasa a la zona de descanso sin recoger la comida
                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y regresa a la zona segura sin recolectar comida");
                    sleep((int) (Math.random() * 2000) + 3000);
 
@@ -83,7 +83,7 @@ public class Humano extends Thread {
                    apocalipsis.dejarComida(this, 2);
 
                    // Entra en la zona de descanso
-                   sleep((int) (Math.random() * 2000) + 2000); //duerme en la zona de descanso
+                   sleep((int) (Math.random() * 2000) + 2000); // Duerme en la zona de descanso
                }
 
                // Comer en el comedor
@@ -94,12 +94,12 @@ public class Humano extends Thread {
                sleep((int) (Math.random() * 3000) + 2000);
 
                if(isMarcado()){
-                   //Vuelve a la zona de descanso
+                   // Vuelve a la zona de descanso
                    apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y vuelve a descansar");
                    Thread.sleep((int)(Math.random() * 2) + 3);
 
-                   //Se recupera
+                   // Se recupera
                    setMarcado(false);
                }
 

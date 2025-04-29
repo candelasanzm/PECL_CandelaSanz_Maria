@@ -34,19 +34,9 @@ public class ApocalipsisLogs {
 
         try {
             escribirArchivo.write(entrada);
-            escribirArchivo.newLine(); // salto de línea
+            escribirArchivo.newLine(); // Salto de línea
         } catch (IOException e) {
             System.out.println("Error al escribir archivo: " + e.getMessage());
-        }
-    }
-
-    public synchronized void cerrarArchivo(){
-        try {
-            if (escribirArchivo != null) {
-                escribirArchivo.close();
-            }
-        } catch (IOException e) {
-            System.out.println("Error al cerrar archivo de log: " + e.getMessage());
         }
     }
 }

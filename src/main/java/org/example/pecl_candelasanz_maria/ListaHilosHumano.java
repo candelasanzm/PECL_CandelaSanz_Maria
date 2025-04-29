@@ -19,7 +19,7 @@ public class ListaHilosHumano {
 
     public synchronized void meterLista(Humano h){
         listado.add(h);
-        imprimirLista();  //cada vez que actualizo imprimo el resultado
+        imprimirLista();  // Cada vez que actualizo imprimo el resultado
     }
 
     public synchronized void sacarLista(Humano h){
@@ -30,12 +30,12 @@ public class ListaHilosHumano {
     public void imprimirLista(){
         String txtLista = "";
         for(int i = 0; i < listado.size(); i++){
-            Humano h = listado.get(i); //obtiene el hilo
+            Humano h = listado.get(i); // Obtiene el hilo
             txtLista = txtLista + "-" + h.getID();
         }
         final String textoImprimir = txtLista.toString();
 
-        Platform.runLater(() -> {txt.setText(textoImprimir); //muestra en la interfaz
+        Platform.runLater(() -> {txt.setText(textoImprimir); // Muestra en la interfaz
         });
     }
 }
