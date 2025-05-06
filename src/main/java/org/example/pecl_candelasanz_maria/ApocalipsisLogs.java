@@ -35,6 +35,7 @@ public class ApocalipsisLogs {
         try {
             escribirArchivo.write(entrada);
             escribirArchivo.newLine(); // Salto de línea
+            System.out.println(entrada);
         } catch (IOException e) {
             System.out.println("Error al escribir archivo: " + e.getMessage());
         }
