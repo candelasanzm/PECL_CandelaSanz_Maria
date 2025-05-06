@@ -2,6 +2,8 @@ package org.example.pecl_candelasanz_maria;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
+
+import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -171,49 +173,94 @@ public class Apocalipsis {
         }
     }
 
-    // Funciones relacionadas con el ataque para el zombie
-    public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona) {
-
-        if (listaHumanos[zona.getIdZona()].getListado().isEmpty()) { // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
-            apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
-
-            try { // Espera entre 2 y 3 segundos antes de cambiar de zona
-                sleep((int) (Math.random() * 1000) + 2000);
-            } catch (InterruptedException e) {
-                apocalipsisLogs.registrarEvento("Error al esperar humanos " + e.getMessage());
+    // Función para el elegir el objetivo al que ataca
+    private Humano obtenerHumano(ListaHilosHumano listaZona){
+        synchronized (listaZona){
+            int tamanoLista = listaZona.getListado().size();
+            if (tamanoLista == 0){
+                return null;
             }
 
-            return; // Como no hay humanos sale
+            // Probar N veces (N = tamaño de la lista) con índices aleatorios
+            boolean[] intentados = new boolean[tamanoLista];
+            int intentos = 0;
+
+            while (intentos < tamanoLista){
+                int indice = (int) (Math.random() * tamanoLista);
+                if (!intentados[indice]){
+                    continue;
+                }
+
+                intentados[indice] = true;
+                Humano objetivo = listaZona.getListado().get(indice);
+
+                if(objetivo.getCerrojoAtaque().tryLock()){
+                    return objetivo;
+                }
+
+                intentos ++;
+            }
         }
 
-        //Elegir objetivo
-        int idHumano = (int) (Math.random() * listaHumanos[zona.getIdZona()].getListado().size()); // Cojo un humano al azar de entre los que hay en la zona
-        Humano objetivo = listaHumanos[zona.getIdZona()].getListado().get(idHumano);
+        return null;
+    }
 
-        apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
+    // Funciones relacionadas con el ataque para el zombie
+    public synchronized void comprobarParaAtacar(Zombie zombie, Zona zona) {
+        Humano objetivo = null;
 
-        // El ataque dura entre 0.5 y 1.5 segundos
-        try {
-            sleep((int) (Math.random() * 1000) + 500);
-        } catch (InterruptedException e) {
+        try{
+            objetivo = obtenerHumano(listaHumanos[zona.getIdZona()]);
+
+            /* if (listaHumanos[zona.getIdZona()].getListado().isEmpty()) { // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
+                apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
+
+                try { // Espera entre 2 y 3 segundos antes de cambiar de zona
+                    sleep((int) (Math.random() * 1000) + 2000);
+                } catch (InterruptedException e) {
+                    apocalipsisLogs.registrarEvento("Error al esperar humanos " + e.getMessage());
+                }
+
+                return; // Como no hay humanos sale
+            } */
+
+            if (objetivo == null){
+                apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " no encontró humanos en " + zona.getNombre());
+            } else {
+                apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
+
+                // El ataque dura entre 0.5 y 1.5 segundos
+                try {
+                    sleep((int) (Math.random() * 1000) + 500);
+                } catch (InterruptedException e) {
+                    apocalipsisLogs.registrarEvento("Error durante el ataque " + e.getMessage());
+                }
+
+                defenderse(objetivo, zombie); // Vemos si el humano se defiende
+
+                // Comprobamos que pasa con el humano después del ataque
+                if (!objetivo.isVivo()) {
+                    Zona zonaActualHumano = objetivo.getZona();
+
+                    synchronized (listaHumanos[zonaActualHumano.getIdZona()]){
+                        // Elimina al humano de la lista
+                        listaHumanos[zonaActualHumano.getIdZona()].sacarLista(objetivo);
+                    }
+
+                    // Interrumpimos el hilo para evitar que se siga ejecutando
+                    objetivo.interrupt();
+
+                    zombie.anadirMuerte();
+                    renacerComoZombie(objetivo, zona);
+                } else if (objetivo.isMarcado()) {
+                    apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
+                }
+            }
+        } catch (InterruptedException e){
             apocalipsisLogs.registrarEvento("Error durante el ataque " + e.getMessage());
-        }
-
-        defenderse(objetivo, zombie); // Vemos si el humano se defiende
-
-        synchronized (listaHumanos[zona.getIdZona()]){
-            // Comprobamos que pasa con el humano después del ataque
-            if (!objetivo.isVivo()) {
-                // Interrumpimos el hilo para evitar que se siga ejecutando
-                objetivo.interrupt();
-
-                // Elimina al humano de la lista
-                listaHumanos[zona.getIdZona()].sacarLista(objetivo);
-
-                zombie.anadirMuerte();
-                renacerComoZombie(objetivo, zona);
-            } else if (objetivo.isMarcado()) {
-                apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
+        } finally {
+            if (objetivo!= null){
+                objetivo.getCerrojoAtaque().unlock();
             }
         }
     }

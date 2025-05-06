@@ -1,6 +1,7 @@
 package org.example.pecl_candelasanz_maria;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Humano extends Thread {
     private Apocalipsis apocalipsis;
@@ -12,6 +13,8 @@ public class Humano extends Thread {
     // Variables para ver si el humano está vivo o marcado
     private boolean vivo = true;
     private boolean marcado = false;
+
+    private ReentrantLock cerrojoAtaque = new ReentrantLock();
 
     public Humano(Apocalipsis apocalipsis, Zona zona){
         this.id = String.format("H%04d", contador.incrementAndGet());
@@ -45,6 +48,10 @@ public class Humano extends Thread {
 
     public void setMarcado(boolean marcado) {
         this.marcado = marcado;
+    }
+
+    public ReentrantLock getCerrojoAtaque(){
+        return cerrojoAtaque;
     }
 
     public void run(){
@@ -97,7 +104,7 @@ public class Humano extends Thread {
                    // Vuelve a la zona de descanso
                    apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y vuelve a descansar");
-                   Thread.sleep((int)(Math.random() * 2) + 3);
+                   sleep((int)(Math.random() * 2) + 3);
 
                    // Se recupera
                    setMarcado(false);
