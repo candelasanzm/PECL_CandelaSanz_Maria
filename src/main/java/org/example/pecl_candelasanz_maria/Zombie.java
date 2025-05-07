@@ -48,7 +48,7 @@ public class Zombie extends Thread{
                     apocalipsisLogs.registrarEvento("Zombie " + id + " no encuentra humanos en la Zona de Riesgo " + (nuevaZona - 14));
 
                     // Espera antes de moverse
-                    Thread.sleep((int)(Math.random() * 1000) + 2000);
+                    sleep((int)(Math.random() * 1000) + 2000);
 
                 } else { // si hay humanos ataca
                     int numHumanosEnZona = apocalipsis.getListaHumanosEnZona(nuevaZona).getListado().size();

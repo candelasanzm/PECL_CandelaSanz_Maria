@@ -56,6 +56,8 @@ class Apocalipsis{
 -zonasTxtField : TextField[]
 -cantComida = 0 : int
 -HumanosComida : TextField
+-comidaLock : Lock
+-comidaDisponible : Condition
 -listaZombies : ListaHilosZombie[]
 -zombiesTxtField : TextField[]
 -tuneles : Tunel[]
@@ -65,6 +67,7 @@ class Apocalipsis{
 +getListaHumanosEnZona(zona : int) : ListaHilosHumano
 +getZonas(zona : int) : Zona
 +getTunel(idTunel : int) : Tunel
++empiezaZonaComun(zona : Zona, h : Humano)
 +moverHumano(zonaDestino : Zona, h : Humano)
 +cogerComida(h : Humano)
 +dejarComida(h : Humano, comida : int)
@@ -72,20 +75,20 @@ class Apocalipsis{
 +moverZonaZombie(z : Zombie, zona : int)
 +isDefendido() : boolean
 +defenderse(humano : Humano, zombie : Zombie)
+-obtenerHumano(listaZona : ListaHilosHumano) : Humano
 +comprobarParaAtacar(zombie : Zombie, zona : Zona)
 +renacerComoZombie(h : Humano, zona : Zona)
-+recuentoHumanos()
-+recuentoZombies()
 }
 
 class Humano extends Thread {
 -apocalipsis : Apocalipsis
 -id : String
--contador = 0 : int
+-contador = 0 : AtomicInteger
 -zona : Zona
 -apocalipsisLogs : ApocalipsisLogs
 -vivo = true : boolean
 -marcado = false : boolean
+-cerrojoAtaque : ReentrantLock
 +Humano(apocalipsis : Apocalipsis, zona : Zona)
 +getID() : String
 +getZona() : Zona
@@ -94,6 +97,7 @@ class Humano extends Thread {
 +setVivo(vivo : boolean)
 +isMarcado() : boolean
 +setMarcado(marcado : boolean)
++getCerrojoAtaque() : ReentrantLock
 +run()
 }
 

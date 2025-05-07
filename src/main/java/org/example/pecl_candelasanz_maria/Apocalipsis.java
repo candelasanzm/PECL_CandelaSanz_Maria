@@ -2,8 +2,6 @@ package org.example.pecl_candelasanz_maria;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
-
-import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -175,6 +173,7 @@ public class Apocalipsis {
 
     // Función para el elegir el objetivo al que ataca
     private Humano obtenerHumano(ListaHilosHumano listaZona){
+        // Sincronizamos el acceso a la lista para evitar los problemas de concurrencia
         synchronized (listaZona){
             int tamanoLista = listaZona.getListado().size();
             if (tamanoLista == 0){
@@ -186,18 +185,24 @@ public class Apocalipsis {
             int intentos = 0;
 
             while (intentos < tamanoLista){
+                // Se selecciona un índice aleatorio dentro del tamaño de la lista
                 int indice = (int) (Math.random() * tamanoLista);
-                if (!intentados[indice]){
+                if (intentados[indice]){
                     continue;
                 }
 
+                // Marcamos el índice como probado
                 intentados[indice] = true;
+
+                // Seleccionamos al humano en la posición llamada índice
                 Humano objetivo = listaZona.getListado().get(indice);
 
+                // Intentamos bloquear el objetivo para que ningún otro zombie le ataque
                 if(objetivo.getCerrojoAtaque().tryLock()){
-                    return objetivo;
+                    return objetivo; // Si se puede bloquear, devolvemos el objetivo
                 }
 
+                // Se añade un intento
                 intentos ++;
             }
         }
@@ -212,22 +217,10 @@ public class Apocalipsis {
         try{
             objetivo = obtenerHumano(listaHumanos[zona.getIdZona()]);
 
-            /* if (listaHumanos[zona.getIdZona()].getListado().isEmpty()) { // Compruebo si la lista es vacía porque entonces el zombie no puede atacar
-                apocalipsisLogs.registrarEvento("No hay humanos en " + zona.getNombre() + " el zombie " + zombie.getID() + " no puede atacar");
-
-                try { // Espera entre 2 y 3 segundos antes de cambiar de zona
-                    sleep((int) (Math.random() * 1000) + 2000);
-                } catch (InterruptedException e) {
-                    apocalipsisLogs.registrarEvento("Error al esperar humanos " + e.getMessage());
-                }
-
-                return; // Como no hay humanos sale
-            } */
-
             if (objetivo == null){
                 apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " no encontró humanos en " + zona.getNombre());
             } else {
-                apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en zona " + zona.getNombre());
+                apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en " + zona.getNombre());
 
                 // El ataque dura entre 0.5 y 1.5 segundos
                 try {
@@ -256,7 +249,7 @@ public class Apocalipsis {
                     apocalipsisLogs.registrarEvento("Humano " + objetivo.getID() + " logró defenderse y ha quedado marcado");
                 }
             }
-        } catch (InterruptedException e){
+        } catch (Exception e){
             apocalipsisLogs.registrarEvento("Error durante el ataque " + e.getMessage());
         } finally {
             if (objetivo!= null){
