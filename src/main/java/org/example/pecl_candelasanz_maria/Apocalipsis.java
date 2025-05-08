@@ -156,16 +156,13 @@ public class Apocalipsis {
     }
 
     // Funciones relacionadas con el ataque para el humano
-    public boolean isDefendido(){ // Devuelve true cuando se salva del ataque
-        int posibilidad = (int) (Math.random() * 3) + 1; // La posibilidad de supervivencia será de 1, 2 o 3
-        return posibilidad < 3; // Si sale 3 es false
-    }
-
     public void defenderse(Humano humano, Zombie zombie){
-        if (isDefendido()){
+        int posibilidad = (int) (Math.random() * 3) + 1; // La posibilidad de supervivencia será de 1, 2 o 3
+
+        if (posibilidad < 3){ // Si sale uno o dos vive, pero queda marcado
             humano.setMarcado(true);
             apocalipsisLogs.registrarEvento("Humano " + humano.getID() + " se ha defendido exitosamente y está marcado por el ataque del zombie " + zombie.getID());
-        } else {
+        } else { // Si sale 3 es false
             humano.setVivo(false);
             apocalipsisLogs.registrarEvento("El humano " + humano.getID() + " no ha podido defenderse del ataque del zombie " + zombie.getID() + " y muere. Renace como Zombie ");
         }
@@ -182,7 +179,7 @@ public class Apocalipsis {
 
             // Probar N veces (N = tamaño de la lista) con índices aleatorios
             boolean[] intentados = new boolean[tamanoLista];
-            int intentos = 0;
+            int intentos = 0; // Variable para que no intente atacar a más humanos de los que hay disponibles en su zona
 
             while (intentos < tamanoLista){
                 // Se selecciona un índice aleatorio dentro del tamaño de la lista
@@ -223,11 +220,7 @@ public class Apocalipsis {
                 apocalipsisLogs.registrarEvento("Zombie " + zombie.getID() + " ataca al humano " + objetivo.getID() + " en " + zona.getNombre());
 
                 // El ataque dura entre 0.5 y 1.5 segundos
-                try {
-                    sleep((int) (Math.random() * 1000) + 500);
-                } catch (InterruptedException e) {
-                    apocalipsisLogs.registrarEvento("Error durante el ataque " + e.getMessage());
-                }
+                sleep((int) (Math.random() * 1000) + 500);
 
                 defenderse(objetivo, zombie); // Vemos si el humano se defiende
 
@@ -258,7 +251,7 @@ public class Apocalipsis {
         }
     }
 
-    public void renacerComoZombie(Humano h, Zona zona){
+    public synchronized void renacerComoZombie(Humano h, Zona zona){
         // Crear zombie
         String id = h.getID().replace("H", "Z");
         Zombie z = new Zombie(this, id);
