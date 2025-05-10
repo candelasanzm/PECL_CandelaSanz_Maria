@@ -158,6 +158,11 @@ public class Apocalipsis {
     }
 
     // Funciones relacionadas con el ataque para el humano
+    public boolean isDefendido(){ // Devuelve true cuando se salva del ataque
+        int posibilidad = (int) (Math.random() * 3) + 1; // La posibilidad de supervivencia será de 1, 2 o 3
+        return posibilidad < 3; // Si sale 3 es false
+    }
+
     public void defenderse(Humano humano, Zombie zombie){
         int posibilidad = (int) (Math.random() * 3) + 1; // La posibilidad de supervivencia será de 1, 2 o 3
 
