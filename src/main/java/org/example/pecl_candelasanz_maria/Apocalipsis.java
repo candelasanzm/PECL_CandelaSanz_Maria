@@ -99,7 +99,7 @@ public class Apocalipsis {
 
         apocalipsisLogs.registrarEvento("Humano " + h.getID() + " se movió de " + h.getZona().getNombre() + " a " + zonaDestino.getNombre());
         listaHumanos[zonaActual.getIdZona()].sacarLista(h); // Saca de la zona anterior y actualiza interfaz
-        if (!Thread.currentThread().isInterrupted() && h.isVivo()){
+        if (!Thread.currentThread().isInterrupted() && h.isVivo()){ // Verificamos que el humano esté vivo antes de entrar en la lista
             listaHumanos[zonaDestino.getIdZona()].meterLista(h); // Mete en la nueva zona y actualiza interfaz
         }
         h.setZona(zonaDestino);
