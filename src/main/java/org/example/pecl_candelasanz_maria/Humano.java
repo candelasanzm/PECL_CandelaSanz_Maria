@@ -54,6 +54,20 @@ public class Humano extends Thread {
         return cerrojoAtaque;
     }
 
+    /*private boolean isZombie(){
+        boolean esZombie = false;
+        for(int i = 0; i < apocalipsis.getListaZombies().length; i++){
+            ListaHilosZombie listaActual = apocalipsis.getListaZombies()[i];
+            for(int j = 0; j < listaActual.getListado().size(); j++){
+                Zombie zombieActual = listaActual.getListado().get(j);
+                if(zombieActual.getID().contains(this.id.substring(1))){ // Cojo el id del humano quitándole la H para verificar si existe un zombie con ese id
+                    esZombie = true;
+                }
+            }
+        }
+        return esZombie;
+    }*/
+
     public void run(){
         try{
            // Se crea el humano
@@ -71,6 +85,8 @@ public class Humano extends Thread {
 
                // El humano está en la zona de riesgo
                sleep((int) (Math.random() * 3000) + 2000);
+
+
                if (! isVivo()) {
                    apocalipsisLogs.registrarEvento("Humano " + id + " no pudo defenderse y muere");
                    break;
