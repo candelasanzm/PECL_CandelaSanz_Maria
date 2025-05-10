@@ -80,6 +80,7 @@ public class Humano extends Thread {
                    apocalipsis.moverHumano(apocalipsis.getZonas(1), this); // Si el humano se consigue defender pasa a la zona de descanso sin recoger la comida
                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y regresa a la zona segura sin recolectar comida");
                    sleep((int) (Math.random() * 2000) + 3000);
+                   setMarcado(false);
 
                } else { // Si no es atacado
                    // El humano vuelve a la zona segura
@@ -99,16 +100,6 @@ public class Humano extends Thread {
                // Come
                apocalipsis.cogerComida(this);
                sleep((int) (Math.random() * 3000) + 2000);
-
-               if(isMarcado()){
-                   // Vuelve a la zona de descanso
-                   apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
-                   apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y vuelve a descansar");
-                   sleep((int)(Math.random() * 2) + 3);
-
-                   // Se recupera
-                   setMarcado(false);
-               }
 
                // Regresa a la Zona Común
                apocalipsis.moverHumano(apocalipsis.getZonas(0), this);
