@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ImplementacionApocalipsisRMI extends UnicastRemoteObject implements ApocalipsisRMI {
     private Apocalipsis apocalipsis;
-    private boolean enEjecucion = false;
+    private boolean enEjecucion = true;
 
     public ImplementacionApocalipsisRMI(Apocalipsis apocalipsis) throws RemoteException {
         this.apocalipsis = apocalipsis;
@@ -86,5 +86,10 @@ public class ImplementacionApocalipsisRMI extends UnicastRemoteObject implements
         } else {
             System.out.println("Simulación Detenida");
         }
+    }
+
+    @Override
+    public boolean estadoEjecucion() throws RemoteException {
+        return enEjecucion;
     }
 }

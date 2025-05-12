@@ -37,6 +37,7 @@ public class ApocalipsisRMIController {
         btnEjecucion.setOnAction(e -> {
             try {
                 apocalipsis.ejecucion();
+                actualizarBoton();
             } catch (Exception ex) {
                 System.out.println("Error al cambiar de estado de ejecución: " + ex.getMessage());
             }
@@ -84,5 +85,14 @@ public class ApocalipsisRMIController {
             resultado += array[i] + " ";
         }
         return resultado.trim(); // Elimina los espacios extra
+    }
+
+    private void actualizarBoton() {
+        try {
+            boolean enEjecucion = apocalipsis.estadoEjecucion();
+            btnEjecucion.setText(enEjecucion ? "Detener Ejecución" : "Reanudar Ejecución");
+        } catch (Exception e) {
+            System.out.println("Error al actualizar Boton: " + e.getMessage());
+        }
     }
 }

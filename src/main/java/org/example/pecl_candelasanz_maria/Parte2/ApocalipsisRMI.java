@@ -10,4 +10,5 @@ public interface ApocalipsisRMI extends Remote {
     int[] getZombiesZonaRiesgo() throws RemoteException;
     String[] getZombiesLetales() throws RemoteException;
     void ejecucion() throws RemoteException;
+    boolean estadoEjecucion() throws RemoteException;
 }
