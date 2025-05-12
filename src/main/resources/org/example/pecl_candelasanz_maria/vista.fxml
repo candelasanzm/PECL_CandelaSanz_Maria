@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="641.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pecl_candelasanz_maria.ApplicationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="641.0" prefWidth="1177.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pecl_candelasanz_maria.Parte1.ApplicationController">
     <!-- Fondo de la interfaz -->
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8addfb" height="150.0" layoutX="35.0" layoutY="100.0" stroke="TRANSPARENT" strokeType="INSIDE" width="335.0" />

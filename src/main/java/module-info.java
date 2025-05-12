@@ -11,7 +11,10 @@ module org.example.pecl_candelasanz_maria {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires java.rmi;
 
     opens org.example.pecl_candelasanz_maria to javafx.fxml;
     exports org.example.pecl_candelasanz_maria;
+    exports org.example.pecl_candelasanz_maria.Parte1;
+    opens org.example.pecl_candelasanz_maria.Parte1 to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria;
+package org.example.pecl_candelasanz_maria.Parte1;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

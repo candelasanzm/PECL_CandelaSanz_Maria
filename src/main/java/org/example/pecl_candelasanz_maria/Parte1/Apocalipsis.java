@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria;
+package org.example.pecl_candelasanz_maria.Parte1;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
@@ -76,6 +76,10 @@ public class Apocalipsis {
     // Getter para extraer los datos necesarios
     public ListaHilosHumano getListaHumanosEnZona(int zona) {
         return listaHumanos[zona];
+    }
+
+    public ListaHilosZombie[] getListaZombies() {
+        return listaZombies;
     }
 
     public Zona getZonas(int zona) {

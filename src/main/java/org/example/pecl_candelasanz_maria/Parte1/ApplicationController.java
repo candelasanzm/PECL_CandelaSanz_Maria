@@ -1,10 +1,7 @@
-package org.example.pecl_candelasanz_maria;
+package org.example.pecl_candelasanz_maria.Parte1;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ApplicationController {
     @FXML
