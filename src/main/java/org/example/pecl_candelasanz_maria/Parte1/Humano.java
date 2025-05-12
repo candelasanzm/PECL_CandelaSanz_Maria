@@ -64,6 +64,9 @@ public class Humano extends Thread {
 
            while(!Thread.currentThread().isInterrupted() && isVivo()) { // Solo sigue la rutina si el hilo no ha sido interrumpido y si el humano está vivo
 
+               //Comprobar paso
+               apocalipsis.getPaso().mirar();
+
                // El humano sale de la zona común por un túnel elegido de forma aleatoria
                int tunelID = 3 + (int) (Math.random() * 4); // Sumo 3 porque los ids de los túneles son 3, 4, 5 y 6
                Tunel tunel = apocalipsis.getTunel(tunelID - 3);

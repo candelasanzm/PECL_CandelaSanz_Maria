@@ -2,6 +2,8 @@ package org.example.pecl_candelasanz_maria.Parte1;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
+import org.example.pecl_candelasanz_maria.Parte2.Paso;
+
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -29,6 +31,9 @@ public class Apocalipsis {
 
     // Inicialización de los log para escribirlos en un archivo txt
     private ApocalipsisLogs apocalipsisLogs = ApocalipsisLogs.getInstancia();
+
+    //Boton de parada
+    private Paso paso = new Paso();
 
     public Apocalipsis(TextField[] zonasTxtField, TextField humanosComida, TextField[] zombiesTxtField) {
         this.zonasTxtField = zonasTxtField;
@@ -88,6 +93,10 @@ public class Apocalipsis {
 
     public Tunel getTunel(int idTunel){
         return tuneles[idTunel];
+    }
+
+    public Paso getPaso() {
+        return paso;
     }
 
     // Humano empieza en Zona Común

@@ -18,7 +18,8 @@ public class ImplementacionApocalipsisRMI extends UnicastRemoteObject implements
 
     @Override
     public int getHumanosRefugio() throws RemoteException {
-        return apocalipsis.getListaHumanosEnZona(0).getListado().size();
+        //común + descanso + comedor
+        return apocalipsis.getListaHumanosEnZona(0).getListado().size() + apocalipsis.getListaHumanosEnZona(1).getListado().size() + apocalipsis.getListaHumanosEnZona(2).getListado().size();
     }
 
     @Override
@@ -82,8 +83,10 @@ public class ImplementacionApocalipsisRMI extends UnicastRemoteObject implements
         enEjecucion = !enEjecucion;
 
         if (enEjecucion){
+            apocalipsis.getPaso().abrir();
             System.out.println("Simulación Reanudada");
         } else {
+            apocalipsis.getPaso().cerrar();
             System.out.println("Simulación Detenida");
         }
     }

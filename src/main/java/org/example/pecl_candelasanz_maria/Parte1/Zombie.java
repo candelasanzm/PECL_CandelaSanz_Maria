@@ -37,6 +37,9 @@ public class Zombie extends Thread{
 
             while(!Thread.currentThread().isInterrupted()){
 
+                //Comprobar paso
+                apocalipsis.getPaso().mirar();
+
                 // Elige la zona a la que moverse
                 int nuevaZona = 15 + (int) (Math.random() * 4); // genera un id entre 15 y 18 ya que las zonas de riesgo son la 15, 16, 17 y 18
                 apocalipsis.moverZonaZombie(this, nuevaZona);
