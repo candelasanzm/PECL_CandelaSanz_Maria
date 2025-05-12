@@ -23,8 +23,9 @@ public class ListaHilosHumano {
     }
 
     public synchronized void sacarLista(Humano h){
-        listado.remove(h);
-        imprimirLista();
+        if (listado.remove(h)) {
+            imprimirLista();
+        }
     }
 
     public void imprimirLista(){

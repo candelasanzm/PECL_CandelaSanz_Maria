@@ -1,6 +1,7 @@
 package org.example.pecl_candelasanz_maria.Parte1;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Humano extends Thread {
@@ -49,24 +50,9 @@ public class Humano extends Thread {
     public void setMarcado(boolean marcado) {
         this.marcado = marcado;
     }
-
-    public ReentrantLock getCerrojoAtaque(){
+    public Lock getCerrojoAtaque(){
         return cerrojoAtaque;
     }
-
-    /*private boolean isZombie(){
-        boolean esZombie = false;
-        for(int i = 0; i < apocalipsis.getListaZombies().length; i++){
-            ListaHilosZombie listaActual = apocalipsis.getListaZombies()[i];
-            for(int j = 0; j < listaActual.getListado().size(); j++){
-                Zombie zombieActual = listaActual.getListado().get(j);
-                if(zombieActual.getID().contains(this.id.substring(1))){ // Cojo el id del humano quitándole la H para verificar si existe un zombie con ese id
-                    esZombie = true;
-                }
-            }
-        }
-        return esZombie;
-    }*/
 
     public void run(){
         try{
@@ -90,16 +76,11 @@ public class Humano extends Thread {
                if (! isVivo()) {
                    apocalipsisLogs.registrarEvento("Humano " + id + " no pudo defenderse y muere");
                    break;
-
-               } else if (isMarcado()) {
-                   //Si le atacan vuelve directamente a la zona de descanso
-                   apocalipsis.moverHumano(apocalipsis.getZonas(1), this); // Si el humano se consigue defender pasa a la zona de descanso sin recoger la comida
+               }else if (isMarcado()) {
+                   apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y regresa a la zona segura sin recolectar comida");
                    sleep((int) (Math.random() * 2000) + 3000);
-                   setMarcado(false);
-
-               } else { // Si no es atacado
-                   // El humano vuelve a la zona segura
+               } else {
                    apocalipsisLogs.registrarEvento("Humano " + id + " recolecta 2 piezas de comida y vuelve al refugio");
                    tunel.irRefugio(this);
 
@@ -117,10 +98,17 @@ public class Humano extends Thread {
                apocalipsis.cogerComida(this);
                sleep((int) (Math.random() * 3000) + 2000);
 
-               // Regresa a la Zona Común
-               apocalipsis.moverHumano(apocalipsis.getZonas(0), this);
-           }
-        } catch(Exception e){
+                if (isMarcado()) {
+                    apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
+                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y vuelve a descansar");
+                    sleep((int)(Math.random() * 2000) + 3000);
+                    setMarcado(false);
+                }
+
+                apocalipsis.moverHumano(apocalipsis.getZonas(0), this);
+            }
+
+        }catch(Exception e){
             Thread.currentThread().interrupt();
             apocalipsisLogs.registrarEvento("Error en humano" + e);
         }
