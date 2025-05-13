@@ -65,6 +65,7 @@ public class ClienteRMIController {
 
     private ApocalipsisRMI apocalipsisRMI;
     private Thread hilo;
+    private ApocalipsisLogs apocalipsisLogs = ApocalipsisLogs.getInstancia();
 
     @FXML
     public void initialize() {
@@ -74,9 +75,9 @@ public class ClienteRMIController {
 
             btnEjecucion.setOnAction(event -> ejecucion());
         } catch (IOException e){
-            System.out.println("Error al conectar RMI: " + e.getMessage());
+            apocalipsisLogs.registrarEvento("Error al conectar RMI: " + e.getMessage());
         } catch (Exception e){
-            System.out.println("Error al conectar RMI: " + e.getMessage());
+            apocalipsisLogs.registrarEvento("Error al conectar RMI: " + e.getMessage());
         }
     }
 
@@ -86,7 +87,7 @@ public class ClienteRMIController {
             apocalipsisRMI.ejecucion();
             actualizarBoton();
         } catch (Exception ex) {
-            System.out.println("Error al cambiar de estado de ejecución: " + ex.getMessage());
+            apocalipsisLogs.registrarEvento("Error al cambiar de estado de ejecución: " + ex.getMessage());
         }
     }
 
@@ -99,7 +100,7 @@ public class ClienteRMIController {
                     Thread.sleep(3000);
                 }
             } catch (Exception e){
-                System.out.println("Error al actualizar RMI: " + e.getMessage());
+                apocalipsisLogs.registrarEvento("Error al actualizar RMI: " + e.getMessage());
             }
         });
         hilo.start();
@@ -133,7 +134,7 @@ public class ClienteRMIController {
 
             rankingZombies.getItems().setAll(apocalipsisRMI.getZombiesLetales());
         } catch (Exception e) {
-            System.out.println("Error al actualizar interfaz: " + e.getMessage());
+            apocalipsisLogs.registrarEvento("Error al actualizar interfaz: " + e.getMessage());
         }
     }
 
@@ -143,7 +144,7 @@ public class ClienteRMIController {
             boolean enEjecucion = apocalipsisRMI.estadoEjecucion();
             btnEjecucion.setText(enEjecucion ? "Detener Ejecución" : "Reanudar Ejecución");
         } catch (Exception e) {
-            System.out.println("Error al actualizar Boton: " + e.getMessage());
+            apocalipsisLogs.registrarEvento("Error al actualizar Boton: " + e.getMessage());
         }
     }
 }
