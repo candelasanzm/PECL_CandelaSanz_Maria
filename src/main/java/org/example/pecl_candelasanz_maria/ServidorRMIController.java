@@ -98,7 +98,7 @@ public class ServidorRMIController {
 
     @FXML
     protected void crearHumano() {
-        for(int i = 0; i < 30; i++) {
+        for(int i = 0; i < 10000; i++) {
             try{
                 Humano h = new Humano(apocalipsis, apocalipsis.getZonas(0));
                 h.start();
