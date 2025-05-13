@@ -35,10 +35,10 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-        <TextField fx:id="txtZombiesZonasRiesgo" editable="false" layoutX="426.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo1" editable="false" layoutX="426.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
         <TextField fx:id="txtZombiesZonaRiesgo2" editable="false" layoutX="510.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtZombiesZonasRiesgo3" editable="false" layoutX="594.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtZombiesZonasRiesgo4" editable="false" layoutX="680.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo3" editable="false" layoutX="594.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo4" editable="false" layoutX="680.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
 
         <Label layoutX="136.0" layoutY="327.0" prefHeight="40.0" prefWidth="206.0" text="Ranking Zombies Más Letales:">
          <font>

@@ -50,6 +50,7 @@ public class Humano extends Thread {
     public void setMarcado(boolean marcado) {
         this.marcado = marcado;
     }
+
     public Lock getCerrojoAtaque(){
         return cerrojoAtaque;
     }

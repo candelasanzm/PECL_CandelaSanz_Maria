@@ -62,18 +62,20 @@ class Apocalipsis{
 -zombiesTxtField : TextField[]
 -tuneles : Tunel[]
 -apocalipsisLogs : ApocalipsisLogs
+-paso : Paso
 
 +Apocalipsis(zonasTxtField : TextField[], humanosComida : TextField, zombiesTxtField : TextField[])
 +getListaHumanosEnZona(zona : int) : ListaHilosHumano
++getListaZombies() : ListaHilosZombie[]
 +getZonas(zona : int) : Zona
 +getTunel(idTunel : int) : Tunel
++getPaso() : Paso
 +empiezaZonaComun(zona : Zona, h : Humano)
 +moverHumano(zonaDestino : Zona, h : Humano)
 +cogerComida(h : Humano)
 +dejarComida(h : Humano, comida : int)
 +imprimirComida()
 +moverZonaZombie(z : Zombie, zona : int)
-+isDefendido() : boolean
 +defenderse(humano : Humano, zombie : Zombie)
 -obtenerHumano(listaZona : ListaHilosHumano) : Humano
 +comprobarParaAtacar(zombie : Zombie, zona : Zona)
@@ -120,6 +122,7 @@ class ApocalipsisLogs{
 -recursoCompartido : ApocalipsisLogs
 -nombreArchivo = "apocalipsis.txt" : String
 -formatoFecha : DateTimeFormatter
+-escribirArchivo : BufferedWriter
 +ApocalipsisLogs()
 +getInstancia() : ApocalipsisLogs
 +registrarEvento(mensaje : String)
