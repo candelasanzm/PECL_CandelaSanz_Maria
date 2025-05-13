@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte2;
+package org.example.pecl_candelasanz_maria;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class ApocalipsisRMIController {
+public class ClienteRMIController {
     @FXML
     private TextField txtHumanosZonaComun;
 

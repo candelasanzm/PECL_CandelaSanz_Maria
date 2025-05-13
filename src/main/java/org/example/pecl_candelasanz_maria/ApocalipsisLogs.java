@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte1;
+package org.example.pecl_candelasanz_maria;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

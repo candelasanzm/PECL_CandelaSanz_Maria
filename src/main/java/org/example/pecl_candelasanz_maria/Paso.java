@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte2;
+package org.example.pecl_candelasanz_maria;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

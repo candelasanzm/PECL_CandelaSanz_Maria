@@ -1,8 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte2;
-
-import org.example.pecl_candelasanz_maria.Parte1.Apocalipsis;
-import org.example.pecl_candelasanz_maria.Parte1.ListaHilosZombie;
-import org.example.pecl_candelasanz_maria.Parte1.Zombie;
+package org.example.pecl_candelasanz_maria;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

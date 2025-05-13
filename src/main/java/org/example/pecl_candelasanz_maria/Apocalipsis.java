@@ -1,8 +1,7 @@
-package org.example.pecl_candelasanz_maria.Parte1;
+package org.example.pecl_candelasanz_maria;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
-import org.example.pecl_candelasanz_maria.Parte2.Paso;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

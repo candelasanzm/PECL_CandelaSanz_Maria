@@ -17,4 +17,6 @@ module org.example.pecl_candelasanz_maria {
     exports org.example.pecl_candelasanz_maria.Parte2;
     exports org.example.pecl_candelasanz_maria.Parte1;
     opens org.example.pecl_candelasanz_maria.Parte1 to javafx.fxml;
+    exports org.example.pecl_candelasanz_maria;
+    opens org.example.pecl_candelasanz_maria to javafx.fxml;
 }

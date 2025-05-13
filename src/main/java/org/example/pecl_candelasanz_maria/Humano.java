@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte1;
+package org.example.pecl_candelasanz_maria;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;

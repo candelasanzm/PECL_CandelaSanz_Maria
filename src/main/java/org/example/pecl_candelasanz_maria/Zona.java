@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte1;
+package org.example.pecl_candelasanz_maria;
 
 public class Zona {
     private int idZona;

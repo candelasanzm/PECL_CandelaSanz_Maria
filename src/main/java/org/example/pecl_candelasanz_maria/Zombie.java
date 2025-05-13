@@ -1,4 +1,4 @@
-package org.example.pecl_candelasanz_maria.Parte1;
+package org.example.pecl_candelasanz_maria;
 
 public class Zombie extends Thread{
     private Apocalipsis apocalipsis;

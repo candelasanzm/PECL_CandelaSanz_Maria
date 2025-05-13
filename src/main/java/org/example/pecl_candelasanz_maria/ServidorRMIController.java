@@ -1,9 +1,9 @@
-package org.example.pecl_candelasanz_maria.Parte1;
+package org.example.pecl_candelasanz_maria;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class ApplicationController {
+public class ServidorRMIController {
     @FXML
     private TextField HumanosZonaComun;
     @FXML
@@ -96,7 +96,7 @@ public class ApplicationController {
     }
 
     @FXML
-    protected void crearZombie() { //Paciente 0
+    protected void crearZombie() { // Paciente 0
         try {
             Zombie z = new Zombie(apocalipsis,"Z0000");
             z.start();
