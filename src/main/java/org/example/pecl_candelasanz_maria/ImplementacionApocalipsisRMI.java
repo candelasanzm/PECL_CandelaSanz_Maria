@@ -19,6 +19,21 @@ public class ImplementacionApocalipsisRMI extends UnicastRemoteObject implements
     }
 
     @Override
+    public int getHumanosZonaComun() throws RemoteException {
+        return apocalipsis.getListaHumanosEnZona(0).getListado().size();
+    }
+
+    @Override
+    public int getHumanosComedor() throws RemoteException {
+        return apocalipsis.getListaHumanosEnZona(2).getListado().size();
+    }
+
+    @Override
+    public int getHumanosZonaDescanso() throws RemoteException {
+        return apocalipsis.getListaHumanosEnZona(1).getListado().size();
+    }
+
+    @Override
     public int[] getHumanosTuneles() throws RemoteException {
         return new int[] {
                 apocalipsis.getListaHumanosEnZona(7).getListado().size(),

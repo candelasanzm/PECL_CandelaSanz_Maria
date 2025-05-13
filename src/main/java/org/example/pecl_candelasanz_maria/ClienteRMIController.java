@@ -8,8 +8,18 @@ import java.io.IOException;
 import java.rmi.Naming;
 
 public class ClienteRMIController {
+
+    @FXML
+    private TextField txtHumanosRefugio;
+
     @FXML
     private TextField txtHumanosZonaComun;
+
+    @FXML
+    private TextField txtHumanosComedor;
+
+    @FXML
+    private TextField txtHumanosZonaDescanso;
 
     @FXML
     private TextField txtHumanosTunel1;
@@ -98,7 +108,10 @@ public class ClienteRMIController {
     // Actualiza los valores que tienen que aparecer en la interfaz
     private void actualizarInterfaz(){
         try {
-            txtHumanosZonaComun.setText(String.valueOf(apocalipsisRMI.getHumanosRefugio()));
+            txtHumanosRefugio.setText(String.valueOf(apocalipsisRMI.getHumanosRefugio()));
+            txtHumanosZonaComun.setText(String.valueOf(apocalipsisRMI.getHumanosZonaComun()));
+            txtHumanosComedor.setText(String.valueOf(apocalipsisRMI.getHumanosComedor()));
+            txtHumanosZonaDescanso.setText(String.valueOf(apocalipsisRMI.getHumanosZonaDescanso()));
 
             int[] tuneles = apocalipsisRMI.getHumanosTuneles();
             txtHumanosTunel1.setText(String.valueOf(tuneles[0]));

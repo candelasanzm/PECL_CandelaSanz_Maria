@@ -7,46 +7,52 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pecl_candelasanz_maria.ClienteRMIController">
 
     <children>
-        <Label layoutX="119.0" layoutY="68.0" text="Número de Humanos en Zona Común:">
+        <Label layoutX="134.0" layoutY="88.0" text="Número de Humanos en Refugio:">
          <font>
             <Font size="14.0" />
          </font></Label>
-        <TextField fx:id="txtHumanosZonaComun" editable="false" layoutX="426.0" layoutY="58.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosRefugio" editable="false" layoutX="426.0" layoutY="78.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosZonaComun" editable="false" layoutX="510.0" layoutY="78.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosComedor" editable="false" layoutX="594.0" layoutY="78.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosZonaDescanso" editable="false" layoutX="680.0" layoutY="78.0" prefHeight="40.0" prefWidth="59.0" />
 
-        <Label layoutX="136.0" layoutY="137.0" text="Número de Humanos en Túneles:">
+        <Label layoutX="136.0" layoutY="150.0" text="Número de Humanos en Túneles:">
          <font>
             <Font size="14.0" />
          </font></Label>
-        <TextField fx:id="txtHumanosTunel1" editable="false" layoutX="426.0" layoutY="127.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtHumanosTunel2" editable="false" layoutX="510.0" layoutY="127.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtHumanosTunel3" editable="false" layoutX="594.0" layoutY="127.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtHumanosTunel4" editable="false" layoutX="680.0" layoutY="127.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosTunel1" editable="false" layoutX="426.0" layoutY="140.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosTunel2" editable="false" layoutX="510.0" layoutY="140.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosTunel3" editable="false" layoutX="594.0" layoutY="140.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosTunel4" editable="false" layoutX="680.0" layoutY="140.0" prefHeight="40.0" prefWidth="59.0" />
 
-        <Label layoutX="108.0" layoutY="204.0" text="Número de Humanos en Zonas de Riesgo:">
+        <Label layoutX="108.0" layoutY="211.0" text="Número de Humanos en Zonas de Riesgo:">
          <font>
             <Font size="14.0" />
          </font></Label>
-        <TextField fx:id="txtHumanosZonaRiesgo1" editable="false" layoutX="426.0" layoutY="194.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtHumanosZonaRiesgo2" editable="false" layoutX="510.0" layoutY="194.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtHumanosZonaRiesgo3" editable="false" layoutX="594.0" layoutY="194.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtHumanosZonaRiesgo4" editable="false" layoutX="680.0" layoutY="194.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosZonaRiesgo1" editable="false" layoutX="426.0" layoutY="201.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosZonaRiesgo2" editable="false" layoutX="510.0" layoutY="201.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosZonaRiesgo3" editable="false" layoutX="594.0" layoutY="201.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtHumanosZonaRiesgo4" editable="false" layoutX="680.0" layoutY="201.0" prefHeight="40.0" prefWidth="59.0" />
 
-        <Label layoutX="111.0" layoutY="273.0" text="Número de Zombies en Zonas de Riesgo:">
+        <Label layoutX="111.0" layoutY="275.0" text="Número de Zombies en Zonas de Riesgo:">
          <font>
             <Font size="14.0" />
          </font></Label>
-        <TextField fx:id="txtZombiesZonaRiesgo1" editable="false" layoutX="426.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtZombiesZonaRiesgo2" editable="false" layoutX="510.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtZombiesZonaRiesgo3" editable="false" layoutX="594.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
-        <TextField fx:id="txtZombiesZonaRiesgo4" editable="false" layoutX="680.0" layoutY="263.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo1" editable="false" layoutX="426.0" layoutY="265.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo2" editable="false" layoutX="510.0" layoutY="265.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo3" editable="false" layoutX="594.0" layoutY="265.0" prefHeight="40.0" prefWidth="59.0" />
+        <TextField fx:id="txtZombiesZonaRiesgo4" editable="false" layoutX="680.0" layoutY="265.0" prefHeight="40.0" prefWidth="59.0" />
 
-        <Label layoutX="136.0" layoutY="327.0" prefHeight="40.0" prefWidth="206.0" text="Ranking Zombies Más Letales:">
+        <Label layoutX="136.0" layoutY="330.0" prefHeight="40.0" prefWidth="206.0" text="Ranking Zombies Más Letales:">
          <font>
             <Font size="14.0" />
          </font></Label>
-        <ListView fx:id="rankingZombies" editable="false" layoutX="114.0" layoutY="365.0" prefHeight="100" prefWidth="250" />
+        <ListView fx:id="rankingZombies" editable="false" layoutX="114.0" layoutY="370.0" prefHeight="100" prefWidth="250" />
 
-        <Button fx:id="btnEjecucion" layoutX="510.0" layoutY="423.0" onAction="#ejecucion" prefHeight="40.0" prefWidth="200.0" text="Detener Ejecución" />
+        <Button fx:id="btnEjecucion" layoutX="510.0" layoutY="393.0" onAction="#ejecucion" prefHeight="40.0" prefWidth="200.0" text="Detener Ejecución" />
+      <Label layoutX="505.0" layoutY="54.0" prefHeight="20.0" prefWidth="69.0" text="Zona Común" />
+      <Label layoutX="599.0" layoutY="55.0" text="Comedor" />
+      <Label layoutX="670.0" layoutY="55.0" text="Zona Descanso" />
     </children>
 
 </AnchorPane>
