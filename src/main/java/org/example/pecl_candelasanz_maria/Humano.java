@@ -85,6 +85,7 @@ public class Humano extends Thread {
                if (! isVivo()) {
                    apocalipsisLogs.registrarEvento("Humano " + id + " no pudo defenderse y muere");
                    break;
+
                }else if (isMarcado()) {
                    //Comprobar paso
                    apocalipsis.getPaso().mirar();
@@ -92,6 +93,7 @@ public class Humano extends Thread {
                    apocalipsis.moverHumano(apocalipsis.getZonas(1), this);
                    apocalipsisLogs.registrarEvento("Humano " + id + " está marcado y regresa a la zona segura sin recolectar comida");
                    sleep((int) (Math.random() * 2000) + 3000);
+
                } else {
                    //Comprobar paso
                    apocalipsis.getPaso().mirar();
