@@ -9,70 +9,9 @@ class ServidorRMI
 class ClienteRMI
 class Apocalipsis
 
-interface ApocalipsisRMI{
-+getHumanosRefugio() : int
-+getHumanosTuneles() : int[]
-+getHumanosZonaRiesgo() : int[]
-+getZombiesZonaRiesgo() : int[]
-+getZombiesLetales() : String[]
-+ejecucion()
-+estadoEjecucion() : boolean
-}
 
-class ImplementacionApocalipsisRMI{
--apocalipsis : Apocalipsis
--enEjecucion = true : boolean
-+getHumanosRefugio() : int
-+getHumanosTuneles() : int[]
-+getHumanosZonaRiesgo() : int[]
-+getZombiesZonaRiesgo() : int[]
-+getZombiesLetales() : String[]
-+ejecucion()
-+estadoEjecucion() : boolean
-}
 
-class ApocalipsisRMIController {
--txtHumanosZonaComun : TextField
--txtHumanosTunel1 : TextField
--txtHumanosTunel2 : TextField
--txtHumanosTunel3 : TextField
--txtHumanosTunel4 : TextField
--txtHumanosZonaRiesgo1 : TextField
--txtHumanosZonaRiesgo2 : TextField
--txtHumanosZonaRiesgo3 : TextField
--txtHumanosZonaRiesgo4 : TextField
--txtZombiesZonaRiesgo1 : TextField
--txtZombiesZonaRiesgo2 : TextField
--txtZombiesZonaRiesgo3 : TextField
--txtZombiesZonaRiesgo4 : TextField
--rankingZombies : ListView<String>
--btnEjecucion : Button
--apocalipsis : ApocalipsisRMI
--hilo : Thread
-+initialize()
--ejecucion()
--conectarRMI()
--inicializarActualizacion()
--actualizarInterfaz()
--actualizarBoton()
-}
 
-class Paso {
--cerrado = False : boolean
--cerrojo : Lock
--parar : Condition
-+mirar()
-+abrir()
-+cerrar()
-}
-
-class ServidorRMI {
-+main(String[] args)
-}
-
-class ClienteRMI {
-+main(String[] args)
-}
 
 class Apocalipsis{
 -zonas : Zona[]
@@ -106,13 +45,6 @@ class Apocalipsis{
 +renacerComoZombie(h : Humano, zona : Zona)
 }
 
-Remote --|> ApocalipsisRMI
-ImplementacionApocalipsisRMI --|> UnicastRemoteObject
-ImplementacionApocalipsisRMI <|.. ApocalipsisRMI
-ServidorRMI --> ImplementacionApocalipsisRMI
-ClienteRMI --> ApocalipsisRMI
-ApocalipsisRMIController --> ApocalipsisRMI
-ApocalipsisRMIController --> Apocalipsis
-ImplementacionApocalipsisRMI --> Apocalipsis
+
 
 @enduml

@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 public class ServidorRMI extends Application {
     @Override
@@ -25,16 +23,6 @@ public class ServidorRMI extends Application {
     }
 
     public static void main(String[] args) {
-        try {
-            Apocalipsis apocalipsis = new Apocalipsis(null, null, null);
-            ImplementacionApocalipsisRMI servicio = new ImplementacionApocalipsisRMI(apocalipsis);
-
-            Registry registry = LocateRegistry.createRegistry(1099);
-            registry.rebind("ApocalipsisService", servicio);
-
-            System.out.println("Servidor Apocalipsis RMI Arrancado");
-        } catch (IOException e){
-            System.out.println("Error en el Servidor: " + e.getMessage());
-        }
+        launch(args);
     }
 }

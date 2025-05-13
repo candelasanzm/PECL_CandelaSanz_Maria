@@ -3,6 +3,10 @@ package org.example.pecl_candelasanz_maria;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 public class ServidorRMIController {
     @FXML
     private TextField HumanosZonaComun;
@@ -73,6 +77,17 @@ public class ServidorRMIController {
 
         //Crear apocalipsis
         apocalipsis = new Apocalipsis(zonasTxtField, HumanosComida, zombiesTxtField);
+
+        try {
+            ImplementacionApocalipsisRMI servicio = new ImplementacionApocalipsisRMI(apocalipsis);
+
+            Registry registry = LocateRegistry.createRegistry(1099);
+            registry.rebind("ApocalipsisService", servicio);
+
+            apocalipsisLogs.registrarEvento("Servidor Apocalipsis RMI Arrancado");
+        } catch (IOException e){
+            apocalipsisLogs.registrarEvento("Error en el Servidor: " + e.getMessage());
+        }
 
         //Crear primer zombie
         crearZombie();

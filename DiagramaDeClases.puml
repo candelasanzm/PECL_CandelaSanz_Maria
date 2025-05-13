@@ -1,0 +1,257 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Apocalipsis
+class ApocalipsisLogs
+class ServidorRMIController
+class Humano
+class ListaHilosHumano
+class ListaHilosZombie
+class Tunel
+class Zombie
+class Zona
+class ServidorRMI
+
+interface ApocalipsisRMI
+class ImplementacionApocalipsisRMI
+class ClienteRMIController
+class Paso
+class ClienteRMI
+
+class Apocalipsis{
+-zonas : Zona[]
+-listaHumanos : ListaHilosHumano[]
+-zonasTxtField : TextField[]
+-cantComida = 0 : int
+-HumanosComida : TextField
+-comidaLock : Lock
+-comidaDisponible : Condition
+-listaZombies : ListaHilosZombie[]
+-zombiesTxtField : TextField[]
+-tuneles : Tunel[]
+-apocalipsisLogs : ApocalipsisLogs
+-paso : Paso
+
++Apocalipsis(zonasTxtField : TextField[], humanosComida : TextField, zombiesTxtField : TextField[])
++getListaHumanosEnZona(zona : int) : ListaHilosHumano
++getListaZombies() : ListaHilosZombie[]
++getZonas(zona : int) : Zona
++getTunel(idTunel : int) : Tunel
++getPaso() : Paso
++empiezaZonaComun(zona : Zona, h : Humano)
++moverHumano(zonaDestino : Zona, h : Humano)
++cogerComida(h : Humano)
++dejarComida(h : Humano, comida : int)
++imprimirComida()
++moverZonaZombie(z : Zombie, zona : int)
++defenderse(humano : Humano, zombie : Zombie)
+-obtenerHumano(listaZona : ListaHilosHumano) : Humano
++comprobarParaAtacar(zombie : Zombie, zona : Zona)
++renacerComoZombie(h : Humano, zona : Zona)
+}
+
+class ApocalipsisLogs{
+-recursoCompartido : ApocalipsisLogs
+-nombreArchivo = "apocalipsis.txt" : String
+-formatoFecha : DateTimeFormatter
+-escribirArchivo : BufferedWriter
++ApocalipsisLogs()
++getInstancia() : ApocalipsisLogs
++registrarEvento(mensaje : String)
+}
+
+class ServidorRMIController{
+-HumanosZonaComun : TextField
+-EntradaTunel1 : TextField
+-EntradaTunel2 : TextField
+-EntradaTunel3 : TextField
+-EntradaTunel4 : TextField
+-Tunel1 : TextField
+-Tunel2 : TextField
+-Tunel3 : TextField
+-Tunel4 : TextField
+-SalidaTunel1 : TextField
+-SalidaTunel2 : TextField
+-SalidaTunel3 : TextField
+-SalidaTunel4 : TextField
+-HumanosRiesgo1 : TextField
+-HumanosRiesgo2 : TextField
+-HumanosRiesgo3 : TextField
+-HumanosRiesgo4 : TextField
+-HumanosZonaDescanso : TextField
+-HumanosComedor : TextField
+-HumanosComida : TextField
+-ZombiesRiesgo1 : TextField
+-ZombiesRiesgo2 : TextField
+-ZombiesRiesgo3 : TextField
+-ZombiesRiesgo4 : TextField
+-apocalipsis : Apocalipsis
+-apocalipsisLogs : ApocalipsisLogs
++initialize()
+#crearHumano()
+#crearZombie()
+}
+
+class Humano {
+-apocalipsis : Apocalipsis
+-id : String
+-contador = 0 : AtomicInteger
+-zona : Zona
+-apocalipsisLogs : ApocalipsisLogs
+-vivo = true : boolean
+-marcado = false : boolean
+-cerrojoAtaque : ReentrantLock
++Humano(apocalipsis : Apocalipsis, zona : Zona)
++getID() : String
++getZona() : Zona
++setZona(zona : Zona)
++isVivo() : boolean
++setVivo(vivo : boolean)
++isMarcado() : boolean
++setMarcado(marcado : boolean)
++getCerrojoAtaque() : ReentrantLock
++run()
+}
+
+class ListaHilosHumano{
+-listado : ArrayList<Humano>
+-txt : TextField
++getListado() : ArrayList<Humano>
++ListaHilosHumano(txt : TextField)
++meterLista(h : Humano)
++sacarLista(h : Humano)
++imprimirLista()
+}
+
+class ListaHilosZombie{
+-listado : ArrayList<Zombie>
+-txt : TextField
++getListado() : ArrayList<Zombie>
++ListaHilosZombie(txt : TextField)
++meterLista(z : Zombie)
++sacarLista(z : Zombie)
++imprimirLista()
+}
+
+class Tunel{
+-apocalipsis : Apocalipsis
+-semaforoTunel : Semaphore
+-id : int
+-barrier : CyclicBarrier
+-colaTunel : LinkedBlockingQueue<Humano>
+-apocalipsisLogs : ApocalipsisLogs
++Tunel(id : int, apocalipsis : Apocalipsis)
++salirExterior(h : Humano)
++irRefugio(h : Humano)
+}
+
+class Zombie {
+-apocalipsis : Apocalipsis
+-id : String
+-zona = -1 : int
+-contadorMuertes = 0 : int
+-apocalipsisLogs : ApocalipsisLogs
++Zombie(apocalipsis : Apocalipsis, id : String)
++getZona() : int
++setZona(zona : int)
++getID() : String
++anadirMuerte()
++getContadorMuertes() : int
++run()
+}
+
+class Zona{
+-idZona : int
+-nombre : String
++getIdZona() : int
++getNombre() : String
+}
+
+class ServidorRMI {
++start(stage : Stage)
++main(args : String[])
+}
+
+interface ApocalipsisRMI{
++getHumanosRefugio() : int
++getHumanosTuneles() : int[]
++getHumanosZonaRiesgo() : int[]
++getZombiesZonaRiesgo() : int[]
++getZombiesLetales() : String[]
++ejecucion()
++estadoEjecucion() : boolean
+}
+
+class ImplementacionApocalipsisRMI{
+-apocalipsis : Apocalipsis
+-enEjecucion = true : boolean
++getHumanosRefugio() : int
++getHumanosTuneles() : int[]
++getHumanosZonaRiesgo() : int[]
++getZombiesZonaRiesgo() : int[]
++getZombiesLetales() : String[]
++ejecucion()
++estadoEjecucion() : boolean
+}
+
+class ClienteRMIController {
+-txtHumanosZonaComun : TextField
+-txtHumanosTunel1 : TextField
+-txtHumanosTunel2 : TextField
+-txtHumanosTunel3 : TextField
+-txtHumanosTunel4 : TextField
+-txtHumanosZonaRiesgo1 : TextField
+-txtHumanosZonaRiesgo2 : TextField
+-txtHumanosZonaRiesgo3 : TextField
+-txtHumanosZonaRiesgo4 : TextField
+-txtZombiesZonaRiesgo1 : TextField
+-txtZombiesZonaRiesgo2 : TextField
+-txtZombiesZonaRiesgo3 : TextField
+-txtZombiesZonaRiesgo4 : TextField
+-rankingZombies : ListView<String>
+-btnEjecucion : Button
+-apocalipsisRMI : ApocalipsisRMI
+-hilo : Thread
++initialize()
+-ejecucion()
+-inicializarActualizacion()
+-actualizarInterfaz()
+-actualizarBoton()
+}
+
+class Paso {
+-cerrado = False : boolean
+-cerrojo : Lock
+-parar : Condition
++mirar()
++abrir()
++cerrar()
+}
+
+class ClienteRMI {
++start(stage : Stage)
++main(args : String[])
+}
+
+Apocalipsis *-- Zona
+Apocalipsis *-- ListaHilosHumano
+Apocalipsis *-- ListaHilosZombie
+Apocalipsis *-- Tunel
+Humano --> Zona
+Zombie --> Zona
+ServidorRMIController *-- Apocalipsis
+ApocalipsisLogs --> Apocalipsis
+ApocalipsisLogs --> Humano
+ApocalipsisLogs --> Zombie
+ApocalipsisLogs --> Tunel
+
+Remote --|> ApocalipsisRMI
+ImplementacionApocalipsisRMI --|> UnicastRemoteObject
+ImplementacionApocalipsisRMI <|.. ApocalipsisRMI
+ServidorRMI --> ImplementacionApocalipsisRMI
+ClienteRMI --> ApocalipsisRMI
+ClienteRMIController --> ApocalipsisRMI
+ClienteRMIController --> Apocalipsis
+ImplementacionApocalipsisRMI --> Apocalipsis
+
+@enduml

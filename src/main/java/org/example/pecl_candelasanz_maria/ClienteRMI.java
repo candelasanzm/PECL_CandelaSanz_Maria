@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.Naming;
 
 public class ClienteRMI extends Application {
     @Override
@@ -24,14 +23,6 @@ public class ClienteRMI extends Application {
     }
 
     public static void main(String[] args) {
-        try {
-            ApocalipsisRMI apocalipsisRMI = (ApocalipsisRMI) Naming.lookup("ApocalipsisService");
-
-
-        } catch (IOException e){
-            System.out.println("Error en el cliente: " + e.getMessage());
-        } catch (Exception e){
-            System.out.println("Error en el cliente: " + e.getMessage());
-        }
+        launch(args);
     }
 }

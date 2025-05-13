@@ -5,8 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.rmi.Naming;
 
 public class ClienteRMIController {
     @FXML
@@ -54,34 +53,30 @@ public class ClienteRMIController {
     @FXML
     private Button btnEjecucion;
 
-    private ApocalipsisRMI apocalipsis;
+    private ApocalipsisRMI apocalipsisRMI;
     private Thread hilo;
 
     @FXML
     public void initialize() {
-        conectarRMI();
-        inicializarActualizacion();
+        try {
+            apocalipsisRMI = (ApocalipsisRMI) Naming.lookup("ApocalipsisService");
+            inicializarActualizacion();
+
+            btnEjecucion.setOnAction(event -> ejecucion());
+        } catch (IOException e){
+            System.out.println("Error al conectar RMI: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println("Error al conectar RMI: " + e.getMessage());
+        }
     }
 
     @FXML
     private void ejecucion(){
         try {
-            apocalipsis.ejecucion();
+            apocalipsisRMI.ejecucion();
             actualizarBoton();
         } catch (Exception ex) {
             System.out.println("Error al cambiar de estado de ejecución: " + ex.getMessage());
-        }
-    }
-
-    // Establece la conexión con el servicio RMI obteniendo la referencia al servidor remoto
-    private void conectarRMI(){
-        try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            apocalipsis = (ApocalipsisRMI) registry.lookup("ApocalipsisService");
-        } catch (IOException e){
-            System.out.println("Error al conectar RMI: " + e.getMessage());
-        } catch (Exception e){
-            System.out.println("Error al conectar RMI: " + e.getMessage());
         }
     }
 
@@ -91,6 +86,7 @@ public class ClienteRMIController {
             try {
                 while (!Thread.currentThread().isInterrupted()){
                     Platform.runLater(this::actualizarInterfaz);
+                    Thread.sleep(3000);
                 }
             } catch (Exception e){
                 System.out.println("Error al actualizar RMI: " + e.getMessage());
@@ -102,27 +98,27 @@ public class ClienteRMIController {
     // Actualiza los valores que tienen que aparecer en la interfaz
     private void actualizarInterfaz(){
         try {
-            txtHumanosZonaComun.setText(String.valueOf(apocalipsis.getHumanosRefugio()));
+            txtHumanosZonaComun.setText(String.valueOf(apocalipsisRMI.getHumanosRefugio()));
 
-            int[] tuneles = apocalipsis.getHumanosTuneles();
+            int[] tuneles = apocalipsisRMI.getHumanosTuneles();
             txtHumanosTunel1.setText(String.valueOf(tuneles[0]));
             txtHumanosTunel2.setText(String.valueOf(tuneles[1]));
             txtHumanosTunel3.setText(String.valueOf(tuneles[2]));
             txtHumanosTunel4.setText(String.valueOf(tuneles[3]));
 
-            int[] humanosZonasRiesgo = apocalipsis.getHumanosZonaRiesgo();
+            int[] humanosZonasRiesgo = apocalipsisRMI.getHumanosZonaRiesgo();
             txtHumanosZonaRiesgo1.setText(String.valueOf(humanosZonasRiesgo[0]));
             txtHumanosZonaRiesgo2.setText(String.valueOf(humanosZonasRiesgo[1]));
             txtHumanosZonaRiesgo3.setText(String.valueOf(humanosZonasRiesgo[2]));
             txtHumanosZonaRiesgo4.setText(String.valueOf(humanosZonasRiesgo[3]));
 
-            int[] zombiesZonaRiesgo = apocalipsis.getZombiesZonaRiesgo();
+            int[] zombiesZonaRiesgo = apocalipsisRMI.getZombiesZonaRiesgo();
             txtZombiesZonaRiesgo1.setText(String.valueOf(zombiesZonaRiesgo[0]));
             txtZombiesZonaRiesgo2.setText(String.valueOf(zombiesZonaRiesgo[1]));
             txtZombiesZonaRiesgo3.setText(String.valueOf(zombiesZonaRiesgo[2]));
             txtZombiesZonaRiesgo4.setText(String.valueOf(zombiesZonaRiesgo[3]));
 
-            rankingZombies.getItems().setAll(apocalipsis.getZombiesLetales());
+            rankingZombies.getItems().setAll(apocalipsisRMI.getZombiesLetales());
         } catch (Exception e) {
             System.out.println("Error al actualizar interfaz: " + e.getMessage());
         }
@@ -131,7 +127,7 @@ public class ClienteRMIController {
     // Cambia el texto del botón en función de si la ejecución está en curso o detenida
     private void actualizarBoton() {
         try {
-            boolean enEjecucion = apocalipsis.estadoEjecucion();
+            boolean enEjecucion = apocalipsisRMI.estadoEjecucion();
             btnEjecucion.setText(enEjecucion ? "Detener Ejecución" : "Reanudar Ejecución");
         } catch (Exception e) {
             System.out.println("Error al actualizar Boton: " + e.getMessage());
