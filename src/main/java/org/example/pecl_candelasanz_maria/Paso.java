@@ -36,6 +36,7 @@ public class Paso {
         try {
             cerrojo.lock();
             cerrado = true;
+            parar.signalAll();
         } finally {
             cerrojo.unlock();
         }
